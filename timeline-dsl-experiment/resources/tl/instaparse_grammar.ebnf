@@ -8,7 +8,7 @@ timeline = &isodate ( entry <EOL?> )*
 entry = reference-date? time-partition-start detail*
 
 reference-date = isodate <EOL>
-time-partition-start = hhmm-time <" "> subject <EOS>
+<time-partition-start> = hhmm-time <" "> subject <EOS>
 detail =  <no-time " "> rest-of-line <EOS>
 
 subject = rest-of-line
