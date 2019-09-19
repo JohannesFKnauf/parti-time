@@ -5,15 +5,21 @@ timeline = &isodate ( entry <EOL?> )*
 (* An entry starts with an optional isodate as explicit frame of reference. A missing date will be interpreted as "next best date for the timestamp at hand". *)
 (* The start-on-project is mandatory and can not be ommitted. *)
 (* Entries may be annotated by an arbitrary number of sub-items. *)
-entry = isodate? start-on-project occupation*
+entry = reference-date? time-partition-start detail*
 
+reference-date = isodate <EOL>
+time-partition-start = hhmm-time <" "> subject <EOS>
+detail =  <no-time " "> rest-of-line <EOS>
 
-start-on-project = hhmm-time <" book on "> project-identifier <EOL>
-occupation =  <no-time> ( <" work on "> | <"         "> ) occupation-description <EOL>
-isodate = #"\p{Digit}{4}-\p{Digit}{2}-\p{Digit}{2}" <EOL>
+subject = rest-of-line
+
+<isodate> = #"\p{Digit}{4}-\p{Digit}{2}-\p{Digit}{2}"
 hhmm-time = #"\p{Digit}{4}"
-no-time = <#" {4}">
-project-identifier = #"[- \p{Alnum}]*"
-occupation-description = #"[^\r\n]*"
-EOL = #"\r?\n" | EOF
+no-time = #" {4}"
+
+<rest-of-line> = #"[^\r\n]*"
+
+(* EOF is considered equivalent to EOL. *)
+EOS = EOL | EOF
+EOL = #"\r?\n"
 EOF = #"\z"
