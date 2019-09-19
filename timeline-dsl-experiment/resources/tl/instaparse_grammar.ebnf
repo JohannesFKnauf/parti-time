@@ -1,0 +1,10 @@
+timeline = ( entry <EOL?> )*
+entry = isodate | project | occupation
+project = hhmm-time <" book on "> project-identifier
+occupation =  <no-time> ( <" work on "> | <"         "> ) occupation-description
+isodate = #"\p{Digit}{4}-\p{Digit}{2}-\p{Digit}{2}"
+hhmm-time = #"\p{Digit}{4}"
+no-time = <#" {4}">
+project-identifier = #"[- \p{Alnum}]*"
+occupation-description = #"[^\r\n]*"
+EOL = #"\r?\n"

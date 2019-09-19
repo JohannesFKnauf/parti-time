@@ -1,1 +1,9 @@
+# Emacs backup files
 *~
+
+# Lein temporary files
+.lein-failures
+.lein-repl-history
+
+# Lein result files
+target/
