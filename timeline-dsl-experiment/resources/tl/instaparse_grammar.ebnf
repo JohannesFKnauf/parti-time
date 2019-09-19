@@ -1,10 +1,19 @@
-timeline = ( entry <EOL?> )*
-entry = isodate | project | occupation
-project = hhmm-time <" book on "> project-identifier
-occupation =  <no-time> ( <" work on "> | <"         "> ) occupation-description
-isodate = #"\p{Digit}{4}-\p{Digit}{2}-\p{Digit}{2}"
+(* A timeline starts with a mandatory isodate providing the inital frame of reference. *)
+(* A timeline consists of a series of entries. *)
+timeline = &isodate ( entry <EOL?> )*
+
+(* An entry starts with an optional isodate as explicit frame of reference. A missing date will be interpreted as "next best date for the timestamp at hand". *)
+(* The start-on-project is mandatory and can not be ommitted. *)
+(* Entries may be annotated by an arbitrary number of sub-items. *)
+entry = isodate? start-on-project occupation*
+
+
+start-on-project = hhmm-time <" book on "> project-identifier <EOL>
+occupation =  <no-time> ( <" work on "> | <"         "> ) occupation-description <EOL>
+isodate = #"\p{Digit}{4}-\p{Digit}{2}-\p{Digit}{2}" <EOL>
 hhmm-time = #"\p{Digit}{4}"
 no-time = <#" {4}">
 project-identifier = #"[- \p{Alnum}]*"
 occupation-description = #"[^\r\n]*"
-EOL = #"\r?\n"
+EOL = #"\r?\n" | EOF
+EOF = #"\z"

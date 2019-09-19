@@ -3,24 +3,17 @@
             [clojure.test :as t]))
 
 (t/deftest work-tl-parser
-  (t/testing "Date parsing"
+  (t/testing "Entry parsing"
     (t/is (= [:timeline
               [:entry
-               [:isodate "2019-02-03"]]]
-             (sut/work-tl "2019-02-03"))))
-   (t/testing "Project parsing"
-    (t/is (= [:timeline
-              [:entry
-               [:project
+               [:isodate "2019-02-03"]
+               [:start-on-project
                 [:hhmm-time "1215"]
-                [:project-identifier "Some Project"]]]]
-             (sut/work-tl "1215 book on Some Project"))))
-   (t/testing "Occupations parsing"
-    (t/is (= [:timeline
-              [:entry
-               [:occupation
-                [:occupation-description "Something to do"]]]]
-             (sut/work-tl "             Something to do")))))
+                [:project-identifier "Some Project"]]
+               [:occupation [:occupation-description "Something to do"]]]]
+             (sut/work-tl (str "2019-02-03\n"
+                               "1215 book on Some Project\n"
+                               "             Something to do"))))))
 
 (t/deftest timeline-transformation
   )
