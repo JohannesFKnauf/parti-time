@@ -10,7 +10,8 @@
                [:reference-date "2019-02-03"]
                [:hhmm-time "1215"]
                [:subject "Some Project"]
-               [:detail "Something to do"]]]
+               [:details
+                [:detail "Something to do"]]]]
              (sut/timeline-parser (str "2019-02-03\n"
                                        "1215 Some Project\n"
                                        "     Something to do")))
@@ -20,11 +21,13 @@
                [:reference-date "2019-02-03"]
                [:hhmm-time "1215"]
                [:subject "Some Project"]
-               [:detail "Something to do"]]
+               [:details
+                [:detail "Something to do"]]]
               [:entry
                [:hhmm-time "1515"]
                [:subject "Some other Project"]
-               [:detail "Something else to do"]]]
+               [:details
+                [:detail "Something else to do"]]]]
              (sut/timeline-parser (str "2019-02-03\n"
                                        "1215 Some Project\n"
                                        "     Something to do\n"
@@ -36,8 +39,9 @@
                [:reference-date "2019-02-03"]
                [:hhmm-time "1215"]
                [:subject "Some Project"]
-               [:detail "Something to do"]
-               [:detail "Something else to do"]]]
+               [:details
+                [:detail "Something to do"]
+                [:detail "Something else to do"]]]]
              (sut/timeline-parser (str "2019-02-03\n"
                                        "1215 Some Project\n"
                                        "     Something to do\n"
@@ -57,12 +61,60 @@
     (t/is (= [{:reference-date (java-time/local-date "2019-02-03")
                :time (java-time/local-time "12:15")
                :subject "Some Project"
-               :detail "Something to do"}]
+               :details ["Something to do"]}]
              (sut/ast->entries
               [:timeline
                [:entry
                 [:reference-date "2019-02-03"]
                 [:hhmm-time "1215"]
                 [:subject "Some Project"]
-                [:detail "Something to do"]]])))))
+                [:details
+                 [:detail "Something to do"]]]]))
+          "Single sane entry")
+    (t/is (= [{:reference-date (java-time/local-date "2019-02-03")
+               :time (java-time/local-time "12:15")
+               :subject "Some Project"
+               :details ["Something to do"]}
+              {:time (java-time/local-time "15:15")
+               :subject "Some other Project"
+               :details ["Something else to do"]}]
+             (sut/ast->entries
+              [:timeline
+               [:entry
+                [:reference-date "2019-02-03"]
+                [:hhmm-time "1215"]
+                [:subject "Some Project"]
+                [:details
+                 [:detail "Something to do"]]]
+               [:entry
+                [:hhmm-time "1515"]
+                [:subject "Some other Project"]
+                [:details
+                 [:detail "Something else to do"]]]]))
+             "Additional entry without reference date")
+    (t/is (= [{:reference-date (java-time/local-date "2019-02-03")
+               :time (java-time/local-time "12:15")
+               :subject "Some Project"
+               :details ["Something to do"
+                         "Something else to do"]}]
+             (sut/ast->entries
+              [:timeline
+               [:entry
+                [:reference-date "2019-02-03"]
+                [:hhmm-time "1215"]
+                [:subject "Some Project"]
+                [:details
+                 [:detail "Something to do"]
+                 [:detail "Something else to do"]]]]))
+          "Additional detail")
+    (t/is (= [{:reference-date (java-time/local-date "2019-02-03")
+               :time (java-time/local-time "12:15")
+               :subject "Some Project"}]
+             (sut/ast->entries
+              [:timeline
+               [:entry
+                [:reference-date "2019-02-03"]
+                [:hhmm-time "1215"]
+                [:subject "Some Project"]]]))
+          "Entry without detail")))
 

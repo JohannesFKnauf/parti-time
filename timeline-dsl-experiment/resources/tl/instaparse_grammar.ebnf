@@ -5,7 +5,9 @@ timeline = &isodate ( entry <EOL?> )*
 (* An entry starts with an optional isodate as explicit frame of reference. A missing date will be interpreted as "next best date for the timestamp at hand". *)
 (* The start-on-project is mandatory and can not be ommitted. *)
 (* Entries may be annotated by an arbitrary number of sub-items. *)
-entry = reference-date? time-partition-start detail*
+entry = reference-date? time-partition-start details?
+
+details = detail+
 
 reference-date = isodate <EOL>
 <time-partition-start> = hhmm-time <" "> subject <EOS>

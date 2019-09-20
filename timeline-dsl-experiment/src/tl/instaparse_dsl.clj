@@ -11,11 +11,10 @@
    (insta/transform {:reference-date #(hash-map :reference-date (java-time/local-date "yyyy-MM-dd" %))
                      :hhmm-time #(hash-map :time (java-time/local-time "HHmm" %))
                      :subject #(hash-map :subject %)
-                     :detail #(hash-map :detail %)
+                     :detail identity
+                     :details #(hash-map :details (apply vector %&))
                      :entry merge
                      :timeline vector}
                     ast)))
 
 
-(defn work-timeline [parsed-timeline]
-  )
