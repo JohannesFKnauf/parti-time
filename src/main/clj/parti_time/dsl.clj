@@ -1,9 +1,9 @@
-(ns tl.instaparse-dsl
+(ns parti-time.dsl
   (:require [instaparse.core :as insta]
             [java-time]))
 
 (insta/defparser timeline-parser
-  "./resources/tl/instaparse_grammar.ebnf")
+  "./src/main/resources/dsl/timeline_grammar.ebnf")
 
 (defn ast->entries
   "Transforms the abstract syntax tree of a timeline DSL parsing result into a proper timeline."

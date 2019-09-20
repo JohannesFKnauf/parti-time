@@ -1,5 +1,5 @@
-(ns tl.instaparse-dsl-test
-  (:require [tl.instaparse-dsl :as sut]
+(ns parti-time.dsl-test
+  (:require [parti-time.dsl :as sut]
             [clojure.test :as t]
             [java-time]))
 
