@@ -1,0 +1,66 @@
+---
+- starting_from: "2019-08-12t05:45"
+  location: Train N -> SomeCity
+  project: Customer X 2019-08
+  occupation: Some Task
+- starting_from: "2019-08-12t07:00"
+  location: Train SomeCity -> SiteCustomerX
+  project: Metamorphant
+  occupation: "Proof-Reading Metamorphant Blog"
+- starting_from: "2019-08-12t07:45"
+  location: SiteCustomerX
+  project: Customer X 2019-08
+  occupation: Development of Blarz, Interesting other stuff
+- starting_from: "2019-08-12t11:30"
+  location: SiteCustomerX Restaurant
+  project: Private
+  occupation: Lunch Break
+- starting_from: "2019-08-12t12:00"
+  location: SiteCustomerX
+  project: Customer X 2019-08
+  occupation: Architecture Whiteboard Session, Incident Blubb
+- starting_from: "2019-08-12t15:45"
+  location: Train SiteCustomerX -> SomeCity
+  project: Private
+  occupation: "Reading Awesome Clojure"
+- starting_from: "2019-08-12t16:15"
+  location: Train SomeCity -> Nx
+  project: Customer X 2019-08
+  occupation: Decision draft Project Y
+- starting_from: "2019-08-12t17:30"
+  location: N
+  project: Private
+  occupation: ""
+- starting_from: "2019-08-13t05:45"
+  location: Train N -> SomeCity
+  project: Customer X 2019-08
+  occupation: Roadmap planning
+- starting_from: "2019-08-13t07:00"
+  location: Train SomeCity -> SiteCustomerX
+  project: Private
+  occupation: "Reading Wonderful Clojure"
+- starting_from: "2019-08-13t07:45"
+  location: SiteCustomerX
+  project: Customer X 2019-08
+  occupation: Legacy Stack Analysis, Visualisation of Dependencies
+- starting_from: "2019-08-13t11:30"
+  location: SiteCustomerX Restaurant
+  project: Private
+  occupation: Lunch Break
+- starting_from: "2019-08-13t12:00"
+  location: SiteCustomerX
+  project: Customer X 2019-08
+  occupation: Monitoring stack, Log shipping Integration
+- starting_from: "2019-08-13t16:15"
+  location: Train SiteCustomerX -> SomeCity
+  project: Metamorphant
+  occupation: "Phone call with customer Z"
+- starting_from: "2019-08-13t17:00"
+  location: Train SomeCity -> N
+  project: Customer Z 2019-08
+  occupation: Automated DEV host setup, Build pipelines
+- starting_from: "2019-08-13t18:00"
+  location: N
+  project: Private
+  occupation: ""
+...

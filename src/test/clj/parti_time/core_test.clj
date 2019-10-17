@@ -1,8 +1,7 @@
 (ns parti-time.core-test
   (:require [java-time]
             [clojure.test :as t]
-            [parti-time.core :as sut]
-            [parti-time.yaml]))
+            [parti-time.core :as sut]))
 
 (t/deftest time-window-test
   (t/testing "Time-Line Interpretation"

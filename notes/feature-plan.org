@@ -1,0 +1,26 @@
+* Feature: Multi-dimension hierarchies
+** project -> occupation
+** location
+* Feature: Emacs plugin
+** Syntax highlighting
+** Templates
+** Navigation
+** Autocompletion
+* Text UI
+** shortcuts
+*** insert before current time-slice
+*** insert after current time-slice
+*** insert time-window inside current time-slice
+* Feature: query time-windows for
+** aggregations (by single dimension-hierarchy, by time slices)
+** point-in-time combinations (what was I doing at ...)
+* Feature: Timesheet upload / upstream edit on Google Sheets
+* Feature: Timesheet Google Sheets Export with Formulae
+* Feature: Invoice Reports PDF Export
+* Feature: Project validation
+** against a permitted list?
+* Feature: side-by-side view of dimensions
+** Text export
+** Text UI
+** Web UI
+** Emacs Mode
