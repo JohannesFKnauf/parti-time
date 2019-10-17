@@ -25,7 +25,7 @@ In v1 we still lack the separation of dimensions, i.e. project, location, occupa
 
 ### v1: The legacy YAML format
 
-In ```[src/itest/resources/examples/v1_yaml/TimeTracker.sample.yml](https://github.com/JohannesFKnauf/parti-time/blob/master/src/itest/resources/examples/v1_yaml/TimeTracker.sample.yml)``` you find a 2-day sample v1 time partitioning.
+In [```src/itest/resources/examples/v1_yaml/TimeTracker.sample.yml```](https://github.com/JohannesFKnauf/parti-time/blob/master/src/itest/resources/examples/v1_yaml/TimeTracker.sample.yml) you find a 2-day sample v1 time partitioning.
 
 ### v2: tl, the timeline DSL
 
@@ -56,7 +56,7 @@ Here is a sample day's declaration as timeline:
          Decision draft Project Y
     1730 Private
 
-In ```[src/itest/resources/examples/v2_tl/TimeTracker.sample.tl](https://github.com/JohannesFKnauf/parti-time/blob/master/src/itest/resources/examples/v2_tl/TimeTracker.sample.tl)``` you find a tl version of the complete 2-day sample time partitioning for the project dimension.
+In [```src/itest/resources/examples/v2_tl/TimeTracker.sample.tl```](https://github.com/JohannesFKnauf/parti-time/blob/master/src/itest/resources/examples/v2_tl/TimeTracker.sample.tl) you find a tl version of the complete 2-day sample time partitioning for the project dimension.
 
 ## Getting Started with CLI frontend
 
