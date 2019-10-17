@@ -25,11 +25,38 @@ In v1 we still lack the separation of dimensions, i.e. project, location, occupa
 
 ### v1: The legacy YAML format
 
-In ```src/itest/resources/examples/v1_yaml/TimeTracker.sample.yml``` you find a 2-day sample v1 time partitioning.
+In ```[src/itest/resources/examples/v1_yaml/TimeTracker.sample.yml](https://github.com/JohannesFKnauf/parti-time/blob/master/src/itest/resources/examples/v1_yaml/TimeTracker.sample.yml)``` you find a 2-day sample v1 time partitioning.
 
 ### v2: tl, the timeline DSL
 
-In ```src/itest/resources/examples/v2_tl/TimeTracker.sample.tl``` you find a tl version of the 2-day sample time partitioning for the project dimension.
+tl has been designed to be
+* concise
+* precise
+* human-editable with ease
+* human-readable
+* simple to parse
+* visually clean
+
+Here is a sample day's declaration as timeline:
+
+    2019-08-12
+    0545 Customer X 2019-08
+         Some Task
+    0700 Metamorphant
+         Proof-Reading Metamorphant Blog
+    0745 Customer X 2019-08
+         Development of Blarz, Interesting other stuff
+    1130 Private
+         Lunch Break
+    1200 Customer X 2019-08
+         Architecture Whiteboard Session, Incident Blubb
+    1545 Private
+         Reading Awesome Clojure
+    1615 Customer X 2019-08
+         Decision draft Project Y
+    1730 Private
+
+In ```[src/itest/resources/examples/v2_tl/TimeTracker.sample.tl](https://github.com/JohannesFKnauf/parti-time/blob/master/src/itest/resources/examples/v2_tl/TimeTracker.sample.tl)``` you find a tl version of the complete 2-day sample time partitioning for the project dimension.
 
 ## Getting Started with CLI frontend
 
