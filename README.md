@@ -6,6 +6,16 @@ Partitioning implies:
 * no undeclared gaps
 * no double booking
 * 1 timeline per tracked dimension (location, occupation, ...)
+* strict order
+
+Otherwise keeping a partitioned timeline is similar to classical time-tracking. People use it to remember e.g.
+* how long they were working on which projects and occupations
+* which locations they visited
+* ...
+
+parti-time enables users to
+* keep their timeline in plain test
+* create reports about their working hours
 
 ## A comment about the roadmap
 
@@ -15,15 +25,21 @@ In v1 we still lack the separation of dimensions, i.e. project, location, occupa
 
 ### v1: The legacy YAML format
 
-In ```examples/v1_yaml/TimeTracker.sample.yml``` you find a 2-day sample v1 time partitioning.
+In ```src/itest/resources/examples/v1_yaml/TimeTracker.sample.yml``` you find a 2-day sample v1 time partitioning.
+
+### v2: tl, the timeline DSL
+
+In ```src/itest/resources/examples/v2_tl/TimeTracker.sample.tl``` you find a tl version of the 2-day sample time partitioning for the project dimension.
 
 ## Getting Started with CLI frontend
+
+For all CLI commands tl files and yaml files can be used interchangeably. parti-time decides based on filename extension how to properly read the file.
 
 ### Get project summary
 
     lein run projects examples/v1_yaml/TimeTracker.sample.yml
 	
-	["Customer X 2019-08" 19.25]
+    ["Customer X 2019-08" 19.25]
     ["Metamorphant" 1.5]
     ["Private" 14.5]
     ["Customer Z 2019-08" 1.0]
