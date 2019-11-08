@@ -50,6 +50,7 @@
 
 (defn import-timeline [tl-timeline]
   (->> tl-timeline
+       strip-comments
        timeline-parser
        ast->entries
        fill-in-missing-reference-dates
