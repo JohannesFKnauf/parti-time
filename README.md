@@ -80,7 +80,7 @@ Reports a summary of hours booked per project. Unsorted. This is used for basic 
 	2019-08-12,05:45,17:30,01:45,10:00,"Some Task, Development of Blarz, Interesting other stuff, Architecture Whiteboard Session, Incident Blubb, Decision draft Project Y"
     2019-08-13,05:45,16:15,01:15,09:15,"Roadmap planning, Legacy Stack Analysis, Visualisation of Dependencies, Monitoring stack, Log shipping Integration"
 
-Creates a CSV report with a daily summary of booked times on a selected project. The report satisfies the usual german [https://www.gesetze-im-internet.de/arbschg/](Gesetz über die Durchführung von Maßnahmen des Arbeitsschutzes zur Verbesserung der Sicherheit und des Gesundheitsschutzes der Beschäftigten bei der Arbeit (Arbeitsschutzgesetz - ArbSchG)) conditions. This is typically demanded for consulting projects with a labor leasing time & material contract model (cf. [http://www.gesetze-im-internet.de/a_g/](Gesetz zur Regelung der Arbeitnehmerüberlassung)).
+Creates a CSV report with a daily summary of booked times on a selected project. The report satisfies the usual german [Gesetz über die Durchführung von Maßnahmen des Arbeitsschutzes zur Verbesserung der Sicherheit und des Gesundheitsschutzes der Beschäftigten bei der Arbeit (Arbeitsschutzgesetz - ArbSchG)](https://www.gesetze-im-internet.de/arbschg/) conditions. This is typically demanded for consulting projects with a labor leasing time & material contract model (cf. [Gesetz zur Regelung der Arbeitnehmerüberlassung](http://www.gesetze-im-internet.de/a_g/)).
 
 Rules typically involve
 
