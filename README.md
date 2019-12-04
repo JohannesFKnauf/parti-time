@@ -1,6 +1,6 @@
-# parti-time -- partition your time
+# parti-time -- track and partition your time in plain text
 
-parti-time is a tool for partitioning timelines.
+parti-time is a tool for partitioning timelines and tracking your time in plain text.
 
 Partitioning implies:
 * no undeclared gaps
@@ -14,7 +14,7 @@ Otherwise keeping a partitioned timeline is similar to classical time-tracking. 
 * ...
 
 parti-time enables users to
-* keep their timeline in plain test
+* keep their timeline in plain text
 * create reports about their working hours
 
 ## A comment about the roadmap
@@ -112,3 +112,20 @@ The list of occupations is meant as a reminder for the involved parties about th
     2019-08-13,17:00,18:00,,"Automated DEV host setup, Build pipelines",Customer Z 2019-08
 
 The timesheet feature generates a report that follows the usual format of classical timesheets, i.e. is time-slice oriented.
+
+
+# Known limitations
+
+## CLI util Startup time
+
+Startup time is awkwardly slow for a command line util.
+
+We consider this a minor limitation as the command line functions are used with low frequency as compared to the editing of your timeline. The editing performance is limited only by your editor of choice.
+
+We might still want to fix it. [GraalVM Native Image](https://www.graalvm.org/docs/reference-manual/native-image/) and [lein-native-image](https://github.com/taylorwood/lein-native-image) might improve the situation a bit. Going to a fast-client-/cached-server-pattern would be the best and also enable other user interfaces than the CLI. See also the pattern of how [groovyserv](https://kobo.github.io/groovyserv/) does it: CLI client written in [go](https://golang.org/) and server in [Apache Groovy](http://groovy-lang.org/). See also prior art from the lisp community: [emacs daemon and emacsclient](https://www.emacswiki.org/emacs/EmacsAsDaemon).
+
+## Predefined reports
+
+As of now, there are only predefined reports. They are not nice and beautiful, either.
+
+We consider this a major limitation and envision something like a report query language to create arbitrary reports in a crosstab-like fashion.
