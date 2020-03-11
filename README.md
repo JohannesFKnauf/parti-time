@@ -129,3 +129,9 @@ We might still want to fix it. [GraalVM Native Image](https://www.graalvm.org/do
 As of now, there are only predefined reports. They are not nice and beautiful, either.
 
 We consider this a major limitation and envision something like a report query language to create arbitrary reports in a crosstab-like fashion.
+
+# Media coverage
+
+parti-time has been featured in
+
+* blog article https://metamorphant.de/blog/posts/2019-11-27-parti-time-plain-text-time-tracking-for-nerds/
