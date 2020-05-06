@@ -8,7 +8,7 @@
   (t/testing "Timestamp Parsing"
     (t/is (= (java-time/local-date-time 2019 7 2 11 30)
              (sut/parse-iso-time "2019-07-02t11:30")))
-    (t/is (thrown? java.lang.NullPointerException
+    (t/is (thrown? java.lang.Exception
                    (sut/parse-iso-time nil))))
   (t/testing "Timeslice Mapping"
     (t/is (= {:start-time (java-time/local-date-time 2019 7 2 11 30)

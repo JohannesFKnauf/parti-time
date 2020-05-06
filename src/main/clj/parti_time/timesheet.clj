@@ -1,5 +1,5 @@
 (ns parti-time.timesheet
-  (:require [java-time]
+  (:require [tick.alpha.api :as tick]
             [clojure-csv.core :as csv]
             [parti-time.core]))
 
@@ -7,9 +7,9 @@
   (let [occupations (->> entry
                          (:occupation)
                          (flatten))]
-    [(java-time/format "yyyy-MM-dd" (java-time/local-date (:start-time entry)))
-     (java-time/format "HH:mm" (:start-time entry))
-     (java-time/format "HH:mm" (:end-time entry))
+    [(tick/format (tick/formatter "yyyy-MM-dd") (tick/date (:start-time entry)))
+     (tick/format (tick/formatter "HH:mm") (:start-time entry))
+     (tick/format (tick/formatter "HH:mm") (:end-time entry))
      ""
      (clojure.string/join ", " occupations)
      (:project entry)]))

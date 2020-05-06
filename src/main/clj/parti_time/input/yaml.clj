@@ -1,10 +1,10 @@
 (ns parti-time.input.yaml
-  (:require [java-time]
+  (:require [tick.alpha.api :as tick]
             [yaml.core :as yaml]
             [parti-time.input.api :as api]))
 
 (defn parse-iso-time [timestamp]
-  (java-time/local-date-time timestamp))
+  (tick/date-time timestamp))
 
 (defn import-yaml-timeslice [{:keys [starting_from project location occupation] :or {project "" location "" occupation ""}}]
   {:start-time (parse-iso-time starting_from)

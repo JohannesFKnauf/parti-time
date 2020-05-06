@@ -1,7 +1,8 @@
 (ns parti-time.cli
+  (:gen-class)
   (:require [parti-time.input.api]
-            [parti-time.input.yaml]
             [parti-time.input.tl]
+            [parti-time.input.yaml]
             [parti-time.invoice-report]
             [parti-time.timesheet]
             [parti-time.summary]))
