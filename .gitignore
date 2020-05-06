@@ -2,8 +2,19 @@
 *~
 
 # Lein temporary files
-.lein-failures
-.lein-repl-history
+/.lein-failures
+/.lein-repl-history
 
 # Lein result files
-target/
+/target/
+
+# Cider repl temp files
+/.nrepl-port
+
+# Input files in the project root
+/*.tl
+/*.yml
+
+# Output files in the project root
+/*.csv
+
