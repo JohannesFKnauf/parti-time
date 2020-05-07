@@ -8,7 +8,6 @@
                  [io.forward/yaml "1.0.9"]
                  [clojure-csv "2.0.2"]
                  [instaparse "1.4.10"]
-                 [tick "0.4.23-alpha"]
                  [medley "1.2.0"]]
   :plugins [[io.taylorwood/lein-native-image "0.3.1"]]
 

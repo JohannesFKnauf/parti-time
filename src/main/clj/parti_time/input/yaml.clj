@@ -1,13 +1,10 @@
 (ns parti-time.input.yaml
-  (:require [tick.alpha.api :as tick]
-            [yaml.core :as yaml]
-            [parti-time.input.api :as api]))
-
-(defn parse-iso-time [timestamp]
-  (tick/date-time timestamp))
+  (:require [yaml.core :as yaml]
+            [parti-time.input.api :as api]
+            [parti-time.util.time :as time]))
 
 (defn import-yaml-timeslice [{:keys [starting_from project location occupation] :or {project "" location "" occupation ""}}]
-  {:start-time (parse-iso-time starting_from)
+  {:start-time (time/parse-iso-date-time starting_from)
    :project project
    :location location
    :occupation (clojure.string/split occupation #",\s*")})

@@ -1,7 +1,8 @@
 (ns parti-time.input.tl
   (:require [instaparse.core :as insta]
-            [tick.alpha.api :as tick]
-            [parti-time.input.api :as api]))
+            [parti-time.util.time :as time]
+            [parti-time.input.api :as api])
+  (:import [java.time LocalDate LocalTime]))
 
 (defn comment? [s]
   (clojure.string/starts-with? s "#"))
@@ -18,8 +19,8 @@
 (defn ast->entries
   "Transforms the abstract syntax tree of a timeline DSL parsing result into a proper timeline."
   ([ast]
-   (insta/transform {:reference-date #(hash-map :reference-date (cljc.java-time.local-date/parse % (tick/formatter "yyyy-MM-dd")))
-                     :hhmm-time #(hash-map :time (cljc.java-time.local-time/parse % (tick/formatter "HHmm")))
+   (insta/transform {:reference-date #(hash-map :reference-date (time/parse-date "yyyy-MM-dd" %))
+                     :hhmm-time #(hash-map :time (time/parse-time "HHmm" %))
                      :subject #(hash-map :subject %)
                      :detail identity
                      :details #(hash-map :details (apply vector %&))
@@ -27,8 +28,8 @@
                      :timeline vector}
                     ast)))
 
-(defn entry->timeslice [{:keys [^java.time.LocalDate reference-date
-                                ^java.time.LocalTime time
+(defn entry->timeslice [{:keys [^LocalDate reference-date
+                                ^LocalTime time
                                 subject
                                 details] :or {details []}}]
   {:start-time (.atTime reference-date time)

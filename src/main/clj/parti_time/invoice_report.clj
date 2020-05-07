@@ -1,5 +1,5 @@
 (ns parti-time.invoice-report
-  (:require [tick.alpha.api :as tick]
+  (:require [parti-time.util.time :as time]
             [clojure-csv.core :as csv]
             [parti-time.core]))
 
@@ -12,10 +12,10 @@
   (partial if-cmp cmp-fn))
 
 (def min-time
-  (cmp-time tick/<))
+  (cmp-time time/date-time-before?))
 
 (def max-time
-  (cmp-time tick/>))
+  (cmp-time (complement time/date-time-before?)))
 
 (defn format-duration [minutes]
   (->> [minutes 60]
@@ -29,7 +29,7 @@
         business-day-end-time (->> day-entries
                                    (map :end-time)
                                    (reduce max-time))
-        business-minutes (tick/minutes (tick/between business-day-start-time business-day-end-time))
+        business-minutes (time/minutes-between business-day-start-time business-day-end-time)
         work-minutes (->> day-entries
                         (map :duration-minutes)
                         (reduce +))
@@ -38,9 +38,9 @@
                          (map :occupation)
                          (filter #(not (= [""] %)))
                          (flatten))]
-    [(tick/format (tick/formatter "yyyy-MM-dd") date)
-     (tick/format (tick/formatter "HH:mm") business-day-start-time)
-     (tick/format (tick/formatter "HH:mm") business-day-end-time)
+    [(time/format-date "yyyy-MM-dd" date)
+     (time/format-date-time "HH:mm" business-day-start-time)
+     (time/format-date-time "HH:mm" business-day-end-time)
      (format-duration break-minutes)
      (format-duration work-minutes)
      (clojure.string/join ", " occupations)]))
@@ -52,6 +52,6 @@
 (defn csv-report [time-line project-name]
   (let [records (parti-time.core/time-windows time-line)
         project-records (filter #(matches-project? project-name %) records)
-        day-entries (group-by #(tick/date (:start-time %1)) project-records)
+        day-entries (group-by #(time/date-time->date (:start-time %1)) project-records)
         day-records (map day-record day-entries)]
     (csv/write-csv day-records)))

@@ -1,14 +1,14 @@
 (ns parti-time.core
-  (:require [tick.alpha.api :as tick]))
+  (:require [parti-time.util.time :as time]))
 
 (defn time-window [time-frame next-time-frame]
   (let [{start-time :start-time} time-frame
         {end-time :start-time} next-time-frame]
-    (if (tick/< end-time start-time)
+    (if (time/date-time-before? end-time start-time)
       (throw (java.lang.IllegalArgumentException. "End time predates start time. Times must be strictly ordered."))
       (assoc time-frame
              :end-time end-time
-             :duration-minutes (tick/minutes (tick/between start-time end-time))))))
+             :duration-minutes (time/minutes-between start-time end-time)))))
 
 (defn time-windows [time-line]
   (mapv time-window
