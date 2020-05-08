@@ -1,5 +1,5 @@
 (ns parti-time.input.tl-test
-  (:require [java-time]
+  (:require [parti-time.util.time :as time]
             [clojure.test :as t]
             [parti-time.input.tl :as sut]))
 
@@ -58,8 +58,8 @@
 
 (t/deftest timeline-transformation
   (t/testing "Conversion to proper hash-map"
-    (t/is (= [{:reference-date (java-time/local-date "2019-02-03")
-               :time (java-time/local-time "12:15")
+    (t/is (= [{:reference-date (time/parse-iso-date "2019-02-03")
+               :time (time/parse-iso-time "12:15:00")
                :subject "Some Project"
                :details ["Something to do"]}]
              (sut/ast->entries
@@ -71,11 +71,11 @@
                 [:details
                  [:detail "Something to do"]]]]))
           "Single sane entry")
-    (t/is (= [{:reference-date (java-time/local-date "2019-02-03")
-               :time (java-time/local-time "12:15")
+    (t/is (= [{:reference-date (time/parse-iso-date "2019-02-03")
+               :time (time/parse-iso-time "12:15:00")
                :subject "Some Project"
                :details ["Something to do"]}
-              {:time (java-time/local-time "15:15")
+              {:time (time/parse-iso-time "15:15:00")
                :subject "Some other Project"
                :details ["Something else to do"]}]
              (sut/ast->entries
@@ -92,8 +92,8 @@
                 [:details
                  [:detail "Something else to do"]]]]))
              "Additional entry without reference date")
-    (t/is (= [{:reference-date (java-time/local-date "2019-02-03")
-               :time (java-time/local-time "12:15")
+    (t/is (= [{:reference-date (time/parse-iso-date "2019-02-03")
+               :time (time/parse-iso-time "12:15:00")
                :subject "Some Project"
                :details ["Something to do"
                          "Something else to do"]}]
@@ -107,8 +107,8 @@
                  [:detail "Something to do"]
                  [:detail "Something else to do"]]]]))
           "Additional detail")
-    (t/is (= [{:reference-date (java-time/local-date "2019-02-03")
-               :time (java-time/local-time "12:15")
+    (t/is (= [{:reference-date (time/parse-iso-date "2019-02-03")
+               :time (time/parse-iso-time "12:15:00")
                :subject "Some Project"}]
              (sut/ast->entries
               [:timeline
@@ -161,44 +161,44 @@
 
 (t/deftest entry->timeslice
   (t/testing "Valid entries"
-    (t/is (= {:start-time (java-time/local-date-time 2019 2 3 12 15)
+    (t/is (= {:start-time (time/parse-iso-date-time "2019-02-03t12:15:00")
                :project "Some Project"
                :occupation ["Something to do"
                             "Another thing to do"]}
              (sut/entry->timeslice
-              {:reference-date (java-time/local-date "2019-02-03")
-               :time (java-time/local-time "12:15")
+              {:reference-date (time/parse-iso-date "2019-02-03")
+               :time (time/parse-iso-time "12:15")
                :subject "Some Project"
                :details ["Something to do"
                          "Another thing to do"]}))
           "Complete entry")
-    (t/is (= {:start-time (java-time/local-date-time 2019 2 3 12 15)
+    (t/is (= {:start-time (time/parse-iso-date-time "2019-02-03t12:15:00")
                :project "Some Project"
                :occupation []}
              (sut/entry->timeslice
-              {:reference-date (java-time/local-date "2019-02-03")
-               :time (java-time/local-time "12:15")
+              {:reference-date (time/parse-iso-date "2019-02-03")
+               :time (time/parse-iso-time "12:15")
                :subject "Some Project"}))
           "Details omitted")))
 
 (t/deftest fill-in-missing-reference-dates
   (t/testing "Valid entries"
-    (t/is (= [{:reference-date (java-time/local-date "2019-02-03")
+    (t/is (= [{:reference-date (time/parse-iso-date "2019-02-03")
                :whatever "something"}
-              {:reference-date (java-time/local-date "2019-02-03")
+              {:reference-date (time/parse-iso-date "2019-02-03")
                :whatever "else"}]
              (sut/fill-in-missing-reference-dates
-              [{:reference-date (java-time/local-date "2019-02-03")
+              [{:reference-date (time/parse-iso-date "2019-02-03")
                 :whatever "something"}
-               {:reference-date (java-time/local-date "2019-02-03")
+               {:reference-date (time/parse-iso-date "2019-02-03")
                 :whatever "else"}]))
           "Present reference dates are preserved.")
-    (t/is (= [{:reference-date (java-time/local-date "2019-02-03")
+    (t/is (= [{:reference-date (time/parse-iso-date "2019-02-03")
                :whatever "something"}
-              {:reference-date (java-time/local-date "2019-02-03")
+              {:reference-date (time/parse-iso-date "2019-02-03")
                :whatever "else"}]
              (sut/fill-in-missing-reference-dates
-              [{:reference-date (java-time/local-date "2019-02-03")
+              [{:reference-date (time/parse-iso-date "2019-02-03")
                 :whatever "something"}
                {:whatever "else"}]))
           "Missing reference dates are filled in with the previous reference date."))
@@ -206,17 +206,17 @@
     (t/is (thrown? RuntimeException
                    (sut/fill-in-missing-reference-dates
                     [{:whatever "something"}
-                     {:reference-date (java-time/local-date "2019-02-03")
+                     {:reference-date (time/parse-iso-date "2019-02-03")
                       :whatever "else"}]))
           "First entry is missing mandatory reference date.")))
 
 (t/deftest import-timeline
   (t/testing "Valid sample timeline"
-    (t/is (= [{:start-time (java-time/local-date-time 2019 2 3 12 15)
+    (t/is (= [{:start-time (time/parse-iso-date-time "2019-02-03t12:15:00")
                :project "Some Project"
                :occupation ["Something to do"
                             "Another thing to do"]}
-              {:start-time (java-time/local-date-time 2019 2 3 15 15)
+              {:start-time (time/parse-iso-date-time "2019-02-03t15:15:00")
                :project "Some other Project"
                :occupation ["Something else to do"]}]
              (sut/import-timeline (str "2019-02-03\n"
@@ -227,11 +227,11 @@
                                        "1515 Some other Project\n"
                                        "     Something else to do")))
           "Multiple entries, all with a reference date")
-    (t/is (= [{:start-time (java-time/local-date-time 2019 2 3 12 15)
+    (t/is (= [{:start-time (time/parse-iso-date-time "2019-02-03t12:15:00")
                :project "Some Project"
                :occupation ["Something to do"
                             "Another thing to do"]}
-              {:start-time (java-time/local-date-time 2019 2 3 15 15)
+              {:start-time (time/parse-iso-date-time "2019-02-03t15:15:00")
                :project "Some other Project"
                :occupation ["Something else to do"]}]
              (sut/import-timeline (str "2019-02-03\n"

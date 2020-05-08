@@ -38,9 +38,9 @@
                          (map :occupation)
                          (filter #(not (= [""] %)))
                          (flatten))]
-    [(time/format-date "yyyy-MM-dd" date)
-     (time/format-date-time "HH:mm" business-day-start-time)
-     (time/format-date-time "HH:mm" business-day-end-time)
+    [(time/format "yyyy-MM-dd" date)
+     (time/format "HH:mm" business-day-start-time)
+     (time/format "HH:mm" business-day-end-time)
      (format-duration break-minutes)
      (format-duration work-minutes)
      (clojure.string/join ", " occupations)]))
@@ -52,6 +52,6 @@
 (defn csv-report [time-line project-name]
   (let [records (parti-time.core/time-windows time-line)
         project-records (filter #(matches-project? project-name %) records)
-        day-entries (group-by #(time/date-time->date (:start-time %1)) project-records)
+        day-entries (group-by #(time/date (:start-time %1)) project-records)
         day-records (map day-record day-entries)]
     (csv/write-csv day-records)))
