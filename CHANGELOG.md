@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+- Experimental: Comments in tl format
+- Faster CLI (powered by GraalVM native image)
 
 ### Changed
 

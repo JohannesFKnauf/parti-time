@@ -113,16 +113,13 @@ The list of occupations is meant as a reminder for the involved parties about th
 
 The timesheet feature generates a report that follows the usual format of classical timesheets, i.e. is time-slice oriented.
 
+# Development
+
+## Building a native-image
+
+    lein native-image
 
 # Known limitations
-
-## CLI util Startup time
-
-Startup time is awkwardly slow for a command line util.
-
-We consider this a minor limitation as the command line functions are used with low frequency as compared to the editing of your timeline. The editing performance is limited only by your editor of choice.
-
-We might still want to fix it. [GraalVM Native Image](https://www.graalvm.org/docs/reference-manual/native-image/) and [lein-native-image](https://github.com/taylorwood/lein-native-image) might improve the situation a bit. Going to a fast-client-/cached-server-pattern would be the best and also enable other user interfaces than the CLI. See also the pattern of how [groovyserv](https://kobo.github.io/groovyserv/) does it: CLI client written in [go](https://golang.org/) and server in [Apache Groovy](http://groovy-lang.org/). See also prior art from the lisp community: [emacs daemon and emacsclient](https://www.emacswiki.org/emacs/EmacsAsDaemon).
 
 ## Predefined reports
 
