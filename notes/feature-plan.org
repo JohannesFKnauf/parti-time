@@ -1,26 +1,141 @@
-* Feature: Multi-dimension hierarchies
-** project -> occupation
-** location
-* Feature: Emacs plugin
-** Syntax highlighting
-** Templates
-** Navigation
-** Autocompletion
-* Text UI
-** shortcuts
-*** insert before current time-slice
-*** insert after current time-slice
-*** insert time-window inside current time-slice
-* Feature: query time-windows for
-** aggregations (by single dimension-hierarchy, by time slices)
-** point-in-time combinations (what was I doing at ...)
-* Feature: Timesheet upload / upstream edit on Google Sheets
-* Feature: Timesheet Google Sheets Export with Formulae
-* Feature: Invoice Reports PDF Export
-* Feature: Project validation
-** against a permitted list?
-* Feature: side-by-side view of dimensions
-** Text export
-** Text UI
-** Web UI
-** Emacs Mode
+* UX
+** Feature: Output color themes
+*** styles / CSS-like
+** Feature: Emacs plugin
+*** Syntax highlighting
+*** Templates
+*** Navigation
+*** Autocompletion
+** Feature: Text UI
+*** shortcuts
+**** insert before current time-slice
+**** insert after current time-slice
+**** insert time-window inside current time-slice
+** Feature: User-specific Configuration
+*** in XDG_CONFIG_DIR
+*** overridable on command line
+*** customizable locations with sensible defaults
+** Feature: tt-like CLI commands
+*** for bogdan & co
+** Feature: Web UI
+*** REST server + SPA
+** Feature: Bash completion
+** Feature: Interactive TUI / good edit mode bindings / Web UI
+*** simple operations
+**** append entry
+**** split time slice
+** Feature: Editor Templates / Snippets
+*** default
+*** yesterday
+*** recent X (carousel like)
+** Feature: clean new-style CLI
+*** projects ls
+*** projects add
+*** projects remove
+*** projects extend
+*** slice append
+*** slice split
+*** slice edit
+*** report csv ...
+**** yesterday
+**** today
+**** time range
+*** slices show (last X recent)
+* Reporting
+** Feature: query time-windows for
+*** aggregations (by single dimension-hierarchy, by time slices)
+*** point-in-time combinations (what was I doing at ...)
+** Feature: Report Query DSL
+*** Filtering / Limiting
+**** by project
+**** by time-range
+*** Sorting / Grouping
+** Feature: Configurable pre-defined reports
+** Feature: Templateable reports
+*** template language for displaying textual reports
+*** CSV as special case with corresponding template
+*** colors and styles
+** Feature: Invoice Reports PDF Export
+*** for customers
+** Feature: Generalized reports
+*** abstraction: output format
+**** CSV
+**** tab-separated command line
+**** PDF (by template)
+** Feature: Simple hierarchical reports
+*** e.g. by day, by project or vice versa
+** Feature: time charts
+*** show used time visually
+*** horizontal 1 line per day ? 
+*** vertical timeline?
+** Feature: Calendar Report
+** Feature: Cross-day entries for timesheet report
+*** currently not cleanly possible; calculations flawed
+* Integration
+** Feature: Timesheet upload / upstream edit on Google Sheets
+** Feature: Timesheet Google Sheets Export with Formulae
+** Feature: Extension API
+*** Custom output formatters (e.g. Jaspersoft)
+*** read / write other file formats into EDN
+* Domain
+** Planning
+*** Feature: Planned entries vs. actual entries
+**** pre-plan your days
+**** crosscheck and correct them later
+** Multi-dimension / Generalisation
+*** Feature: Multi-dimension hierarchies
+**** project -> occupation -> details
+**** logical location (e.g. at work, on bus from A to B)
+**** mood
+**** type declaration on top of file
+*** Feature: side-by-side view of dimensions
+**** Text export
+**** Text UI
+**** Web UI
+**** Emacs Mode
+*** Feature: Clearer, purpose-specific domain model
+**** Comments
+**** Tasks
+**** Projects
+**** Locations
+** Legal for Employees
+*** Feature: Special day tags (/ hour tags?)
+**** Vacation
+**** Holiday
+**** Sickness
+*** Feature: Generic Tags
+**** for entries
+**** for days
+**** tag synonyms?
+*** Feature: Local holidays
+**** from external file?
+**** as special tag for a day? same for sickness?
+***** part of the DSL
+**** used mainly for exports?
+** First class projects / classified entries
+*** Feature: Project validation
+**** against a permitted list?
+*** Feature: Project metadata enrichment
+**** Currency conversion / rate calculation
+**** Projects with date validity range
+**** Selecting projects in editor modes / on the CLI
+** tl DSL format
+*** Feature: Export of tl DSL files
+**** conversion from old yaml
+**** canonicalization of tl files
+**** bidirectional de/ser
+**** needs first class comments?
+*** Feature: Timeslice merge with conflict resolution
+**** different strategies
+**** to fix contradictory timeline sources
+**** preparation for distributed timeline management
+*** Feature: Composition of fact repos, Multi-file timeline directories
+**** combine from multiple files into a single timeline
+**** create virtual IDs for entries? e.g. for editing
+**** to which file is new stuff written?
+* Documentation
+** Documentation: Annotated screen recording
+*** screencast of typical session
+** Documentation: Literately Programmed Documentation
+*** a la .t tests
+*** executable, annotated usage session

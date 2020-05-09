@@ -1,0 +1,3 @@
+* unit test coverage
+** especially for reports
+* acceptance tests for the CLI

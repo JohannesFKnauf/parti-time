@@ -1,0 +1,4 @@
+* timesheet report
+** records that overlap days are unsupported
+*** result: record is reported (erroneously) as a single day entry with the corresponding start and end times in timesheet report
+*** should be split into 2+ records: 1 for the first day, 1 for each following day
