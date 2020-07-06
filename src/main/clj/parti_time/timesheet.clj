@@ -7,9 +7,9 @@
   (let [occupations (->> entry
                          (:occupation)
                          (flatten))]
-    [(time/format "yyyy-MM-dd" (:start-time entry))
-     (time/format "HH:mm" (:start-time entry))
-     (time/format "HH:mm" (:end-time entry))
+    [(time/format-time "yyyy-MM-dd" (:start-time entry))
+     (time/format-time "HH:mm" (:start-time entry))
+     (time/format-time "HH:mm" (:end-time entry))
      ""
      (clojure.string/join ", " occupations)
      (:project entry)]))

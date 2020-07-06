@@ -38,9 +38,9 @@
                          (map :occupation)
                          (filter #(not (= [""] %)))
                          (flatten))]
-    [(time/format "yyyy-MM-dd" date)
-     (time/format "HH:mm" business-day-start-time)
-     (time/format "HH:mm" business-day-end-time)
+    [(time/format-time "yyyy-MM-dd" date)
+     (time/format-time "HH:mm" business-day-start-time)
+     (time/format-time "HH:mm" business-day-end-time)
      (format-duration break-minutes)
      (format-duration work-minutes)
      (clojure.string/join ", " occupations)]))

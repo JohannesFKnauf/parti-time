@@ -6,8 +6,8 @@
 (defn formatter ^DateTimeFormatter [^String fmt]
   (DateTimeFormatter/ofPattern fmt))
 
-(defn format [^String fmt
-              ^TemporalAccessor ta]
+(defn format-time [^String fmt
+                   ^TemporalAccessor ta]
   (.format (formatter fmt) ta))
                   
 (defn parse-date [^String fmt
