@@ -10,7 +10,7 @@
 
 # Cider repl temp files
 /.nrepl-port
-/.cider-repl-history
+.cider-repl-history
 
 # Input files in the project root
 /*.tl
