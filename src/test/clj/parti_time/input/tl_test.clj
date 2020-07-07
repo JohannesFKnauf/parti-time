@@ -241,3 +241,15 @@
                                        "1515 Some other Project\n"
                                        "     Something else to do")))
           "Multiple entries, 1 without a reference date")))
+
+(t/deftest bogus-timeline
+  (t/testing "Syntactical errors"
+    (t/is (thrown-with-msg? RuntimeException #"Parse error at line 1, column 1:\na2019-02-03"
+                            (sut/import-timeline  (str "a2019-02-03\n"
+                                                       "1215 Some Project\n"
+                                                       "     Something to do\n"
+                                                       "     Another thing to do\n"
+                                                       "2019-02-03\n"
+                                                       "1515 Some other Project\n"
+                                                       "     Something else to do")))
+          "Wrong date")))

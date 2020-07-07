@@ -27,9 +27,15 @@
          println)))
 
 (defn -main [& args]
-  (let [[subcommand & subargs] args]
-    (case subcommand
-      "invoice-report" (apply invoice-report subargs)
-      "timesheet" (apply timesheet subargs)
-      "projects" (apply projects subargs)
-      (println "No valid subcommand given. Exiting."))))
+  (try
+    (let [[subcommand & subargs] args]
+      (case subcommand
+        "invoice-report" (apply invoice-report subargs)
+        "timesheet" (apply timesheet subargs)
+        "projects" (apply projects subargs)
+        (throw (RuntimeException. "No valid subcommand given. Exiting."))))
+    (catch RuntimeException ex
+      (binding [*out* *err*]
+        (println "An error occured:")
+        (println (.getMessage ex)))
+      (System/exit 1))))

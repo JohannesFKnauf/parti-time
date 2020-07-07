@@ -16,6 +16,17 @@
 (insta/defparser timeline-parser
   "./src/main/resources/tl/timeline_grammar.ebnf")
 
+(defn get-parse-error ^String [parser-failure]
+  (with-out-str
+    (-> parser-failure
+        insta/get-failure
+        print)))
+
+(defn throw-parse-errors [parser-result]
+  (when (insta/failure? parser-result)
+    (throw (RuntimeException. (get-parse-error parser-result))))
+  parser-result)
+
 (defn ast->entries
   "Transforms the abstract syntax tree of a timeline DSL parsing result into a proper timeline."
   ([ast]
@@ -56,6 +67,7 @@
   (->> tl-timeline
        strip-comments
        timeline-parser
+       throw-parse-errors
        ast->entries
        fill-in-missing-reference-dates
        (map entry->timeslice)))
