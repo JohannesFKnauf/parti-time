@@ -4,15 +4,6 @@
             [parti-time.input.api :as api])
   (:import [java.time LocalDate LocalTime]))
 
-(defn comment? [s]
-  (clojure.string/starts-with? s "#"))
-
-(defn strip-comments [s]
-  (->> s
-       clojure.string/split-lines
-       (remove comment?)
-       (clojure.string/join "\n")))
-
 (insta/defparser timeline-parser
   "./src/main/resources/tl/timeline_grammar.ebnf")
 
@@ -65,7 +56,6 @@
 
 (defn import-timeline [tl-timeline]
   (->> tl-timeline
-       strip-comments
        timeline-parser
        throw-parse-errors
        ast->entries

@@ -118,47 +118,6 @@
                 [:subject "Some Project"]]]))
           "Entry without detail")))
 
-(t/deftest strip-comments
-  (t/testing "Proper Comments"
-    (t/is (= (str "some line\n"
-                  "another line\n"
-                  "last line")
-             (sut/strip-comments
-              (str "# comment in the beginning\n"
-                   "some line\n"
-                   "another line\n"
-                   "last line")))
-          "Comment in the middle")
-    (t/is (= (str "some line\n"
-                  "another line\n"
-                  "last line")
-             (sut/strip-comments
-              (str "some line\n"
-                   "another line\n"
-                   "# a comment\n"
-                   "last line")))
-          "Comment in the middle"))
-  (t/testing "Corner-case Comments"
-    (t/is (= (str "some line\n"
-                  "another line\n"
-                  "last line")
-             (sut/strip-comments
-              (str "some line\n"
-                   "another line\n"
-                   "last line")))
-          "No Comments")
-    (t/is (= (str "some line\n"
-                  "another line\n"
-                   " # no comment\n"
-                  "last line")
-             (sut/strip-comments
-              (str "some line\n"
-                   "another line\n"
-                   " # no comment\n"
-                   "last line")))
-          "Line does not begin in pound sign")))
-
-
 (t/deftest entry->timeslice
   (t/testing "Valid entries"
     (t/is (= {:start-time (time/parse-iso-date-time "2019-02-03t12:15:00")
