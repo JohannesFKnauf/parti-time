@@ -78,6 +78,8 @@
 *** Custom output formatters (e.g. Jaspersoft)
 *** read / write other file formats into EDN
 * Domain
+** Anomaly detection
+*** missing days (which are also not holidays)
 ** Planning
 *** Feature: Planned entries vs. actual entries
 **** pre-plan your days
@@ -133,6 +135,9 @@
 **** combine from multiple files into a single timeline
 **** create virtual IDs for entries? e.g. for editing
 **** to which file is new stuff written?
+**** tl.d repos
+* Standards compliance
+** Read config from XDG_USER_CONFIG
 * Documentation
 ** Documentation: Annotated screen recording
 *** screencast of typical session
