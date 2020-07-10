@@ -6,117 +6,160 @@
 (t/deftest timeline-parser
   (t/testing "Entry parsing"
     (t/is (= [:timeline
-              [:entry
+              [:day
                [:reference-date "2019-02-03"]
-               [:hhmm-time "1215"]
-               [:subject "Some Project"]
-               [:details
-                [:detail "Something to do"]]]]
+               [:entries
+                [:entry
+                 [:hhmm-time "1215"]
+                 [:project "Some Project"]
+                 [:activities
+                  [:activity "Something to do"]]]]]]
              (sut/timeline-parser (str "2019-02-03\n"
                                        "1215 Some Project\n"
-                                       "     Something to do")))
+                                       "     Something to do\n")))
           "Single sane entry")
     (t/is (= [:timeline
-              [:entry
+              [:day
                [:reference-date "2019-02-03"]
-               [:hhmm-time "1215"]
-               [:subject "Some Project"]
-               [:details
-                [:detail "Something to do"]]]
-              [:entry
-               [:hhmm-time "1515"]
-               [:subject "Some other Project"]
-               [:details
-                [:detail "Something else to do"]]]]
+               [:entries
+                [:entry
+                 [:hhmm-time "1215"]
+                 [:project "Some Project"]
+                 [:activities
+                  [:activity "Something to do"]]]
+                [:entry
+                 [:hhmm-time "1515"]
+                 [:project "Some other Project"]
+                 [:activities
+                  [:activity "Something else to do"]]]]]]
              (sut/timeline-parser (str "2019-02-03\n"
                                        "1215 Some Project\n"
                                        "     Something to do\n"
                                        "1515 Some other Project\n"
-                                       "     Something else to do")))
-          "Additional entry without reference date")
+                                       "     Something else to do\n")))
+          "Multiple entries for a single day")
     (t/is (= [:timeline
-              [:entry
+              [:day
                [:reference-date "2019-02-03"]
-               [:hhmm-time "1215"]
-               [:subject "Some Project"]
-               [:details
-                [:detail "Something to do"]
-                [:detail "Something else to do"]]]]
+               [:entries
+                [:entry
+                 [:hhmm-time "1215"]
+                 [:project "Some Project"]
+                 [:activities
+                  [:activity "Something to do"]
+                  [:activity "Something else to do"]]]]]]
              (sut/timeline-parser (str "2019-02-03\n"
                                        "1215 Some Project\n"
                                        "     Something to do\n"
-                                       "     Something else to do")))
-          "Additional detail")
+                                       "     Something else to do\n")))
+          "Multiple activities")
     (t/is (= [:timeline
-              [:entry
+              [:day
                [:reference-date "2019-02-03"]
-               [:hhmm-time "1215"]
-               [:subject "Some Project"]]]
+               [:entries
+                [:entry
+                 [:hhmm-time "1215"]
+                 [:project "Some Project"]]]]]
              (sut/timeline-parser (str "2019-02-03\n"
-                                       "1215 Some Project")))
-          "Entry without detail")))
+                                       "1215 Some Project\n")))
+          "Entry without activities")))
+
 
 (t/deftest timeline-transformation
   (t/testing "Conversion to proper hash-map"
-    (t/is (= [{:reference-date (time/parse-iso-date "2019-02-03")
-               :time (time/parse-iso-time "12:15:00")
-               :subject "Some Project"
-               :details ["Something to do"]}]
+    (t/is (= [{:start-time (time/parse-iso-date-time "2019-02-03t12:15:00")
+               :project "Some Project"
+               :occupation ["Something to do"]}]
              (sut/ast->entries
               [:timeline
-               [:entry
+               [:day
                 [:reference-date "2019-02-03"]
-                [:hhmm-time "1215"]
-                [:subject "Some Project"]
-                [:details
-                 [:detail "Something to do"]]]]))
+                [:entries
+                 [:entry
+                  [:hhmm-time "1215"]
+                  [:project "Some Project"]
+                  [:activities
+                   [:activity "Something to do"]]]]]]))
           "Single sane entry")
-    (t/is (= [{:reference-date (time/parse-iso-date "2019-02-03")
-               :time (time/parse-iso-time "12:15:00")
-               :subject "Some Project"
-               :details ["Something to do"]}
-              {:time (time/parse-iso-time "15:15:00")
-               :subject "Some other Project"
-               :details ["Something else to do"]}]
+    (t/is (= [{:start-time (time/parse-iso-date-time "2019-02-03t12:15:00")
+               :project "Some Project"
+               :occupation ["Something to do"]}
+              {:start-time (time/parse-iso-date-time "2019-02-03t15:15:00")
+               :project "Some other Project"
+               :occupation ["Something else to do"]}]
              (sut/ast->entries
               [:timeline
-               [:entry
+               [:day
                 [:reference-date "2019-02-03"]
-                [:hhmm-time "1215"]
-                [:subject "Some Project"]
-                [:details
-                 [:detail "Something to do"]]]
-               [:entry
-                [:hhmm-time "1515"]
-                [:subject "Some other Project"]
-                [:details
-                 [:detail "Something else to do"]]]]))
-             "Additional entry without reference date")
-    (t/is (= [{:reference-date (time/parse-iso-date "2019-02-03")
-               :time (time/parse-iso-time "12:15:00")
-               :subject "Some Project"
-               :details ["Something to do"
-                         "Something else to do"]}]
+                [:entries
+                 [:entry
+                  [:hhmm-time "1215"]
+                  [:project "Some Project"]
+                  [:activities
+                   [:activity "Something to do"]]]
+                 [:entry
+                  [:hhmm-time "1515"]
+                  [:project "Some other Project"]
+                  [:activities
+                   [:activity "Something else to do"]]]]]]))
+             "Additional entry without its own reference date")
+    (t/is (= [{:start-time (time/parse-iso-date-time "2019-02-03t12:15:00")
+               :project "Some Project"
+               :occupation ["Something to do"
+                            "Something else to do"]}]
              (sut/ast->entries
               [:timeline
-               [:entry
+               [:day
                 [:reference-date "2019-02-03"]
-                [:hhmm-time "1215"]
-                [:subject "Some Project"]
-                [:details
-                 [:detail "Something to do"]
-                 [:detail "Something else to do"]]]]))
-          "Additional detail")
-    (t/is (= [{:reference-date (time/parse-iso-date "2019-02-03")
-               :time (time/parse-iso-time "12:15:00")
-               :subject "Some Project"}]
+                [:entries
+                 [:entry
+                  [:hhmm-time "1215"]
+                  [:project "Some Project"]
+                  [:activities
+                   [:activity "Something to do"]
+                   [:activity "Something else to do"]]]]]]))
+          "Additional activities")
+    (t/is (= [{:start-time (time/parse-iso-date-time "2019-02-03t12:15:00")
+               :project "Some Project"
+               :occupation []}]
              (sut/ast->entries
               [:timeline
-               [:entry
+               [:day
                 [:reference-date "2019-02-03"]
-                [:hhmm-time "1215"]
-                [:subject "Some Project"]]]))
-          "Entry without detail")))
+                [:entries
+                 [:entry
+                  [:hhmm-time "1215"]
+                  [:project "Some Project"]]]]]))
+          "Entry without activity")
+    (t/is (= [{:start-time (time/parse-iso-date-time "2019-02-03t12:15:00")
+               :project "Some Project"
+               :occupation ["Something to do"
+                            "Something else to do"]}
+              {:start-time (time/parse-iso-date-time "2019-02-04t12:15:00")
+               :project "Some Project"
+               :occupation ["Something to do"
+                            "Something else to do"]}]
+             (sut/ast->entries
+              [:timeline
+               [:day
+                [:reference-date "2019-02-03"]
+                [:entries
+                 [:entry
+                  [:hhmm-time "1215"]
+                  [:project "Some Project"]
+                  [:activities
+                   [:activity "Something to do"]
+                   [:activity "Something else to do"]]]]]
+               [:day
+                [:reference-date "2019-02-04"]
+                [:entries
+                 [:entry
+                  [:hhmm-time "1215"]
+                  [:project "Some Project"]
+                  [:activities
+                   [:activity "Something to do"]
+                   [:activity "Something else to do"]]]]]]))
+          "Multiple days")))
 
 (t/deftest entry->timeslice
   (t/testing "Valid entries"
@@ -125,49 +168,20 @@
                :occupation ["Something to do"
                             "Another thing to do"]}
              (sut/entry->timeslice
-              {:reference-date (time/parse-iso-date "2019-02-03")
-               :time (time/parse-iso-time "12:15")
-               :subject "Some Project"
-               :details ["Something to do"
-                         "Another thing to do"]}))
+              (time/parse-iso-date "2019-02-03")
+              {:time (time/parse-iso-time "12:15")
+               :project "Some Project"
+               :activities ["Something to do"
+                            "Another thing to do"]}))
           "Complete entry")
     (t/is (= {:start-time (time/parse-iso-date-time "2019-02-03t12:15:00")
                :project "Some Project"
                :occupation []}
              (sut/entry->timeslice
-              {:reference-date (time/parse-iso-date "2019-02-03")
-               :time (time/parse-iso-time "12:15")
-               :subject "Some Project"}))
+              (time/parse-iso-date "2019-02-03")
+              {:time (time/parse-iso-time "12:15")
+               :project "Some Project"}))
           "Details omitted")))
-
-(t/deftest fill-in-missing-reference-dates
-  (t/testing "Valid entries"
-    (t/is (= [{:reference-date (time/parse-iso-date "2019-02-03")
-               :whatever "something"}
-              {:reference-date (time/parse-iso-date "2019-02-03")
-               :whatever "else"}]
-             (sut/fill-in-missing-reference-dates
-              [{:reference-date (time/parse-iso-date "2019-02-03")
-                :whatever "something"}
-               {:reference-date (time/parse-iso-date "2019-02-03")
-                :whatever "else"}]))
-          "Present reference dates are preserved.")
-    (t/is (= [{:reference-date (time/parse-iso-date "2019-02-03")
-               :whatever "something"}
-              {:reference-date (time/parse-iso-date "2019-02-03")
-               :whatever "else"}]
-             (sut/fill-in-missing-reference-dates
-              [{:reference-date (time/parse-iso-date "2019-02-03")
-                :whatever "something"}
-               {:whatever "else"}]))
-          "Missing reference dates are filled in with the previous reference date."))
-  (t/testing "Invalid entries"
-    (t/is (thrown? RuntimeException
-                   (sut/fill-in-missing-reference-dates
-                    [{:whatever "something"}
-                     {:reference-date (time/parse-iso-date "2019-02-03")
-                      :whatever "else"}]))
-          "First entry is missing mandatory reference date.")))
 
 (t/deftest import-timeline
   (t/testing "Valid sample timeline"
@@ -182,9 +196,10 @@
                                        "1215 Some Project\n"
                                        "     Something to do\n"
                                        "     Another thing to do\n"
+                                       "\n"
                                        "2019-02-03\n"
                                        "1515 Some other Project\n"
-                                       "     Something else to do")))
+                                       "     Something else to do\n")))
           "Multiple entries, all with a reference date")
     (t/is (= [{:start-time (time/parse-iso-date-time "2019-02-03t12:15:00")
                :project "Some Project"
@@ -198,17 +213,46 @@
                                        "     Something to do\n"
                                        "     Another thing to do\n"
                                        "1515 Some other Project\n"
-                                       "     Something else to do")))
+                                       "     Something else to do\n")))
           "Multiple entries, 1 without a reference date")))
 
 (t/deftest bogus-timeline
   (t/testing "Syntactical errors"
-    (t/is (thrown-with-msg? RuntimeException #"Parse error at line 1, column 1:\na2019-02-03"
+    (t/is (thrown-with-msg? RuntimeException #"(?s)Parse error at line 1, column 1:\na2019-02-03.*Expected:\n#\"\\p\{Digit\}"
                             (sut/import-timeline  (str "a2019-02-03\n"
+                                                       "1215 Some Project\n")))
+          "Wrong date")
+    (t/is (thrown-with-msg? RuntimeException #"(?s)Parse error at line 2, column 18:.*Expected:\n#\"\\r\?\\n\""
+                            (sut/import-timeline  (str "2019-02-03\n"
+                                                       "1215 Some Project")))
+          "Missing mandatory trailing newline")
+    (t/is (thrown-with-msg? RuntimeException #"(?s)Parse error at line 4, column 1:.*Expected:\n#\"\\p\{Digit\}"
+                            (sut/import-timeline  (str "2019-02-03\n"
+                                                       "1215 Some Project\n"
+                                                       "\n")))
+          "Excess trailing newline")
+    (t/is (thrown-with-msg? RuntimeException #"(?s)Parse error at line 6, column 1:.*Expected:\n#\"\\p\{Digit\}"
+                            (sut/import-timeline  (str "2019-02-03\n"
+                                                       "1215 Some Project\n"
+                                                       "     Something to do\n"
+                                                       "     Another thing to do\n"
+                                                       "\n"
+                                                       "\n"
+                                                       "2019-02-03\n"
+                                                       "1515 Some other Project\n"
+                                                       "     Something else to do\n")))
+          "More than a single emtpy line between days")
+    (t/is (thrown-with-msg? RuntimeException #"(?s)Parse error at line 5, column 5:.*Expected:\n \n"
+                            (sut/import-timeline  (str "2019-02-03\n"
                                                        "1215 Some Project\n"
                                                        "     Something to do\n"
                                                        "     Another thing to do\n"
                                                        "2019-02-03\n"
                                                        "1515 Some other Project\n"
-                                                       "     Something else to do")))
-          "Wrong date")))
+                                                       "     Something else to do\n")))
+          "No emtpy line between days")
+    (t/is (thrown-with-msg? RuntimeException #"(?s)Parse error at line 1, column 1:.*Expected:\n#\"\\p\{Digit\}"
+                            (sut/import-timeline  (str "\n"
+                                                       "2019-02-03\n"
+                                                       "1215 Some Project\n")))
+          "Leading newline is invalid")))

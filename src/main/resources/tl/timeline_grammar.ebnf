@@ -1,19 +1,23 @@
-(* A timeline starts with a mandatory isodate providing the inital frame of reference. *)
-(* A timeline consists of a series of entries. *)
-timeline = &isodate ( entry <EOL?> )*
+(* A timeline represents one or multiple consecutive days. *)
+timeline = day ( <EOL> day )*
 
-(* An entry starts with an optional isodate as explicit frame of reference. A missing date will be interpreted as "next best date for the timestamp at hand". *)
-(* The start-on-project is mandatory and can not be ommitted. *)
-(* Entries may be annotated by an arbitrary number of sub-items. *)
-entry = reference-date? time-partition-start details?
-
-details = detail+
+(* A day block starts with a mandatory isodate as explicit frame of reference. *)
+(* The date may be followed by one or more time entries. *)
+day = reference-date entries
 
 reference-date = isodate <EOL>
-<time-partition-start> = hhmm-time <" "> subject <EOS>
-detail =  <no-time " "> rest-of-line <EOS>
 
-subject = rest-of-line
+entries = entry+
+
+(* An entry consists of a mandatory header and optional details. *)
+entry = entry-header activities?
+
+(* A entry header is given by the entry's start time and its project *)
+<entry-header> = hhmm-time <" "> project <EOL>
+project = rest-of-line
+
+activities = activity+
+activity =  <no-time " "> rest-of-line <EOL>
 
 <isodate> = #"\p{Digit}{4}-\p{Digit}{2}-\p{Digit}{2}"
 hhmm-time = #"\p{Digit}{4}"
