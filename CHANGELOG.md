@@ -4,21 +4,43 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [a.b.c] - Unreleased
+
 ## [1.0.0] - Unreleased
 
+This version introduces some minor changes to the grammar. The changes break backwards compatibility slightly: The grammar is less tolerant to use of whitespace.
+
+You should not have any trouble fixing invalid files. [instaparse](https://github.com/Engelberg/instaparse)'s excellent parsing errors will guide you.
+
 ### Added
-- Experimental: Comments in tl format
-- Faster CLI (powered by GraalVM native image)
+- Documentation: Architecture Desicision Record "Faster CLI"
+- Documentation: Architecture Desicision Record "Ridig Language"
 
 ### Changed
+- Corner cases in grammar were ruled out to make syntax less ambiguous
 
 ### Removed
+- Reference dates are not inferred from previous entries any more
+
+## [0.2.0] - 2020-07-13 - Boring Ballermann
+
+v0.2.0 is the first release that is published as binary distribution, i.e. native-image compiled with GraalVM.
+
+### Added
+- Faster CLI (powered by GraalVM native image)
 
 ### Fixed
 - Return proper exit code on error
 - Print detailed failure message on parse error (instead of misleading error message)
 
-## [0.1.0] - 2019-10-17
+## [0.1.0] - 2019-10-17 - Affengeiler Anfang
+
+v0.1.0 is the minimum viable version of parti-time. It already features the most exciting Timeline DSL.
+
+### Usage Advice
+
+* parti-time v0.1.0 can only be run from leiningen
+
 ### Added
 - Summaries: Project Summary
 - Timesheet Report
@@ -29,5 +51,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Integration test stubs
 
 [Unreleased]: https://github.com/JohannesFKnauf/parti-time/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/JohannesFKnauf/parti-time/compare/v0.1.0...v1.0.0
+[1.0.0]: https://github.com/JohannesFKnauf/parti-time/compare/v0.2.0...v1.0.0
+[0.2.0]: https://github.com/JohannesFKnauf/parti-time/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/JohannesFKnauf/parti-time/releases/tag/v0.1.0
