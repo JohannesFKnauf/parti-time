@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [a.b.c] - Unreleased
 
-## [1.0.0] - Unreleased
+## [1.0.0] - Cybernetic Club (2020-08-10)
 
 This version introduces some minor changes to the grammar. The changes break backwards compatibility slightly: The grammar is less tolerant to use of whitespace.
 
@@ -15,6 +15,7 @@ You should not have any trouble fixing invalid files. [instaparse](https://githu
 ### Added
 - Documentation: Architecture Desicision Record "Faster CLI"
 - Documentation: Architecture Desicision Record "Ridig Language"
+- CLI frontend driven by [cli-matic](https://github.com/l3nz/cli-matic)
 
 ### Changed
 - Corner cases in grammar were ruled out to make syntax less ambiguous
@@ -22,7 +23,7 @@ You should not have any trouble fixing invalid files. [instaparse](https://githu
 ### Removed
 - Reference dates are not inferred from previous entries any more
 
-## [0.2.0] - 2020-07-13 - Boring Ballermann
+## [0.2.0] - Boring Ballermann (2020-07-13)
 
 v0.2.0 is the first release that is published as binary distribution, i.e. native-image compiled with GraalVM.
 
@@ -33,7 +34,7 @@ v0.2.0 is the first release that is published as binary distribution, i.e. nativ
 - Return proper exit code on error
 - Print detailed failure message on parse error (instead of misleading error message)
 
-## [0.1.0] - 2019-10-17 - Affengeiler Anfang
+## [0.1.0] - Affengeiler Anfang (2019-10-17)
 
 v0.1.0 is the minimum viable version of parti-time. It already features the most exciting Timeline DSL.
 

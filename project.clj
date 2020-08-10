@@ -1,4 +1,4 @@
-(defproject parti-time "0.1.0-SNAPSHOT"
+(defproject parti-time "1.0.0"
   :description "parti-time is a tool for partitioning timelines."
   :url "https://github.com/JohannesFKnauf/parti-time"
   :min-lein-version "2.8.1"
@@ -6,6 +6,7 @@
   :dependencies [[org.clojure/clojure "1.10.2-alpha1"]
                  [org.flatland/ordered "1.5.7"]
                  [io.forward/yaml "1.0.9"]
+                 [cli-matic "0.4.3"]
                  [clojure-csv "2.0.2"]
                  [instaparse "1.4.10"]
                  [medley "1.2.0"]]
