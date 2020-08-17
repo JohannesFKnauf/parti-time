@@ -40,6 +40,9 @@
                      :timeline concat}
                     ast)))
 
+
+;; No in-depth validation of invariants, e.g. time ordering, at this point.
+;; Validation happens at the place, when the properties are needed, e.g. in parti-time.core/time-window.
 (defn import-timeline [tl-timeline]
   (->> tl-timeline
        timeline-parser

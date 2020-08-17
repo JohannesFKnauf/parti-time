@@ -5,6 +5,8 @@
             [parti-time.input.tl]        ; import for side-effect: multimethod registration
             [parti-time.input.yaml]      ; import for side-effect: multimethod registration
             [parti-time.invoice-report]
+            [parti-time.output.api]
+            [parti-time.output.tl]        ; import for side-effect: multimethod registration
             [parti-time.timesheet]
             [parti-time.summary]))
 
@@ -34,6 +36,14 @@
          (clojure.string/join "\n")
          println)))
 
+(defn convert [{:keys [input-parti-file
+                       output-parti-file]}]
+  (assert-mandatory-argument input-parti-file "input-parti-file")
+  (assert-mandatory-argument output-parti-file "output-parti-file")
+  (->> input-parti-file
+      (parti-time.input.api/read-timeline)
+      (parti-time.output.api/write-timeline output-parti-file)))
+
 (defn with-error-printer [command]
   (fn [args]
     (try
@@ -49,7 +59,7 @@
 (def APP-CONFIGURATION
   {:app {:command "parti-time"
          :description "Partition your time"
-         :version "1.0.0"}
+         :version "1.1.0-SNAPSHOT"}
    :commands [{:command "invoice-report"
                :description ""
                :opts [{:option "parti-file" :as "" :type :string :short 0}
@@ -62,10 +72,12 @@
               {:command "projects"
                :description ""
                :opts [{:option "parti-file" :as "" :type :string :short 0}]
-               :runs (with-error-printer projects)}]})
+               :runs (with-error-printer projects)}
+              {:command "convert"
+               :description "Convert between parti-time formats"
+               :opts [{:option "input-parti-file" :as "" :type :string :short 0}
+                      {:option "output-parti-file" :as "" :type :string :short 1}]
+               :runs (with-error-printer convert)}]})
 
 (defn -main [& args]
   (cli-matic.core/run-cmd args APP-CONFIGURATION))
-
-
-
