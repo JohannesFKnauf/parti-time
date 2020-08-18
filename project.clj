@@ -4,6 +4,7 @@
   :min-lein-version "2.8.1"
   :global-vars {*warn-on-reflection* true}
   :dependencies [[org.clojure/clojure "1.10.2-alpha1"]
+                 [org.clojure/data.json "1.0.0"]
                  [org.flatland/ordered "1.5.7"]
                  [io.forward/yaml "1.0.9"]
                  [cli-matic "0.4.3"]

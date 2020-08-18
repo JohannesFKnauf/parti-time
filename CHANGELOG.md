@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Feature: New subcommand convert for format conversion
+- Feature: Reading tt JSON files
 
 ## [1.0.0] - Cybernetic Club (2020-08-10)
 

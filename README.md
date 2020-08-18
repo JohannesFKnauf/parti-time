@@ -127,8 +127,13 @@ As of now, there are only predefined reports. They are not nice and beautiful, e
 
 We consider this a major limitation and envision something like a report query language to create arbitrary reports in a crosstab-like fashion.
 
+## No timezones
+
+As of now, all times are limited to local times of a single timezone. There is no handling of different timezones, switching timezones etc. No time travel, as well.
+
 # Media coverage
 
 parti-time has been featured in
 
 * blog article https://metamorphant.de/blog/posts/2019-11-27-parti-time-plain-text-time-tracking-for-nerds/
+
