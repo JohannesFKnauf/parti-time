@@ -3,6 +3,7 @@
   (:require [cli-matic.core :as cli]
             [parti-time.input.api]
             [parti-time.input.tl]        ; import for side-effect: multimethod registration
+            [parti-time.input.tt]        ; import for side-effect: multimethod registration
             [parti-time.input.yaml]      ; import for side-effect: multimethod registration
             [parti-time.invoice-report]
             [parti-time.output.api]
