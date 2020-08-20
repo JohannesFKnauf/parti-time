@@ -71,9 +71,9 @@
 (defn import-timeline
   "Returns the timeline described by the JSON string tt-json."
   [tt-json]
-  (->> tt-json
-       json/read-str
-       tt-worklog->timeline))
+  (-> tt-json
+      (json/read-str :key-fn keyword)
+      tt-worklog->timeline))
 
 (defn read-timeline [filename]
   (-> filename
