@@ -10,7 +10,7 @@
     (t/is (= {:start-time (time/parse-iso-date-time "2019-07-02t11:30:00")
               :project "A Project"
               :location "Somewhere"
-              :occupation ["This" "That" "Yet another" "Even More"]}
+              :occupations ["This" "That" "Yet another" "Even More"]}
              (sut/import-yaml-timeslice
               {:starting_from "2019-07-02t11:30"
                :project "A Project"

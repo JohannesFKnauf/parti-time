@@ -22,11 +22,11 @@
 (defn export-entry [entry previous-entry]
   (let [{:keys [start-time
                 project
-                occupation]} entry
+                occupations]} entry
         {previous-start-time :start-time} previous-entry]
     (str (export-day start-time previous-start-time)
          (export-time-and-project start-time project)
-         (export-occupations occupation))))
+         (export-occupations occupations))))
 
 (defn export-timeline [timeline]
   (apply str (map export-entry timeline (cons nil timeline))))

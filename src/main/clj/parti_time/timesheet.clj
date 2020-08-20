@@ -5,7 +5,7 @@
 
 (defn day-record [entry]
   (let [occupations (->> entry
-                         (:occupation)
+                         (:occupations)
                          (flatten))]
     [(time/format-time "yyyy-MM-dd" (:start-time entry))
      (time/format-time "HH:mm" (:start-time entry))

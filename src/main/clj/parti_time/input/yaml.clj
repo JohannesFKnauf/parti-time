@@ -7,7 +7,7 @@
   {:start-time (time/parse-iso-date-time starting_from)
    :project project
    :location location
-   :occupation (clojure.string/split occupation #",\s*")})
+   :occupations (clojure.string/split occupation #",\s*")})
 
 (defn import-yaml-timeline [yaml-timeline]
   (->> yaml-timeline

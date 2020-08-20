@@ -9,7 +9,7 @@
                   "1215 Some Project\n")
              (sut/export-timeline [{:start-time (time/parse-iso-date-time "2019-02-03t12:15:00")
                                     :project "Some Project"
-                                    :occupation []}]))
+                                    :occupations []}]))
           "Single entry without occupations")
     (t/is (= (str "2019-02-03\n"
                   "1215 Some Project\n"
@@ -17,8 +17,8 @@
                   "     Another thing to do\n")
              (sut/export-timeline [{:start-time (time/parse-iso-date-time "2019-02-03t12:15:00")
                                     :project "Some Project"
-                                    :occupation ["Something to do"
-                                                 "Another thing to do"]}]))
+                                    :occupations ["Something to do"
+                                                  "Another thing to do"]}]))
           "Single entry")
     (t/is (= (str "2019-02-03\n"
                   "1215 Some Project\n"
@@ -28,11 +28,11 @@
                   "     Something else to do\n")
              (sut/export-timeline [{:start-time (time/parse-iso-date-time "2019-02-03t12:15:00")
                                     :project "Some Project"
-                                    :occupation ["Something to do"
-                                                 "Another thing to do"]}
+                                    :occupations ["Something to do"
+                                                  "Another thing to do"]}
                                    {:start-time (time/parse-iso-date-time "2019-02-03t15:15:00")
                                     :project "Some other Project"
-                                    :occupation ["Something else to do"]}]))
+                                    :occupations ["Something else to do"]}]))
           "Multiple entries")
     (t/is (= (str "2019-02-03\n"
                   "1215 Some Project\n"
@@ -46,12 +46,12 @@
                   "     Yet another thing to do\n")
              (sut/export-timeline [{:start-time (time/parse-iso-date-time "2019-02-03t12:15:00")
                                     :project "Some Project"
-                                    :occupation ["Something to do"
-                                                 "Another thing to do"]}
+                                    :occupations ["Something to do"
+                                                  "Another thing to do"]}
                                    {:start-time (time/parse-iso-date-time "2019-02-04t08:15:00")
                                     :project "Some other Project"
-                                    :occupation ["Something else to do"]}
+                                    :occupations ["Something else to do"]}
                                    {:start-time (time/parse-iso-date-time "2019-02-04t15:15:00")
                                     :project "Yet another Project"
-                                    :occupation ["Yet another thing to do"]}]))
+                                    :occupations ["Yet another thing to do"]}]))
           "Multiple entries, multiple days")))

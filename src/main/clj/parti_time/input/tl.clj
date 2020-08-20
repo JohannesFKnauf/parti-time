@@ -24,7 +24,7 @@
                                 activities] :or {activities []}}]
   {:start-time (.atTime reference-date time)
    :project project
-   :occupation activities})
+   :occupations activities})
 
 (defn ast->entries
   "Transforms the abstract syntax tree of a timeline DSL parsing result into a proper timeline."

@@ -69,7 +69,7 @@
   (t/testing "Conversion to proper hash-map"
     (t/is (= [{:start-time (time/parse-iso-date-time "2019-02-03t12:15:00")
                :project "Some Project"
-               :occupation ["Something to do"]}]
+               :occupations ["Something to do"]}]
              (sut/ast->entries
               [:timeline
                [:day
@@ -83,10 +83,10 @@
           "Single sane entry")
     (t/is (= [{:start-time (time/parse-iso-date-time "2019-02-03t12:15:00")
                :project "Some Project"
-               :occupation ["Something to do"]}
+               :occupations ["Something to do"]}
               {:start-time (time/parse-iso-date-time "2019-02-03t15:15:00")
                :project "Some other Project"
-               :occupation ["Something else to do"]}]
+               :occupations ["Something else to do"]}]
              (sut/ast->entries
               [:timeline
                [:day
@@ -105,8 +105,8 @@
              "Additional entry without its own reference date")
     (t/is (= [{:start-time (time/parse-iso-date-time "2019-02-03t12:15:00")
                :project "Some Project"
-               :occupation ["Something to do"
-                            "Something else to do"]}]
+               :occupations ["Something to do"
+                             "Something else to do"]}]
              (sut/ast->entries
               [:timeline
                [:day
@@ -121,7 +121,7 @@
           "Additional activities")
     (t/is (= [{:start-time (time/parse-iso-date-time "2019-02-03t12:15:00")
                :project "Some Project"
-               :occupation []}]
+               :occupations []}]
              (sut/ast->entries
               [:timeline
                [:day
@@ -133,12 +133,12 @@
           "Entry without activity")
     (t/is (= [{:start-time (time/parse-iso-date-time "2019-02-03t12:15:00")
                :project "Some Project"
-               :occupation ["Something to do"
-                            "Something else to do"]}
+               :occupations ["Something to do"
+                             "Something else to do"]}
               {:start-time (time/parse-iso-date-time "2019-02-04t12:15:00")
                :project "Some Project"
-               :occupation ["Something to do"
-                            "Something else to do"]}]
+               :occupations ["Something to do"
+                             "Something else to do"]}]
              (sut/ast->entries
               [:timeline
                [:day
@@ -165,8 +165,8 @@
   (t/testing "Valid entries"
     (t/is (= {:start-time (time/parse-iso-date-time "2019-02-03t12:15:00")
                :project "Some Project"
-               :occupation ["Something to do"
-                            "Another thing to do"]}
+               :occupations ["Something to do"
+                             "Another thing to do"]}
              (sut/entry->timeslice
               (time/parse-iso-date "2019-02-03")
               {:time (time/parse-iso-time "12:15")
@@ -176,7 +176,7 @@
           "Complete entry")
     (t/is (= {:start-time (time/parse-iso-date-time "2019-02-03t12:15:00")
                :project "Some Project"
-               :occupation []}
+               :occupations []}
              (sut/entry->timeslice
               (time/parse-iso-date "2019-02-03")
               {:time (time/parse-iso-time "12:15")
@@ -187,11 +187,11 @@
   (t/testing "Valid sample timeline"
     (t/is (= [{:start-time (time/parse-iso-date-time "2019-02-03t12:15:00")
                :project "Some Project"
-               :occupation ["Something to do"
-                            "Another thing to do"]}
+               :occupations ["Something to do"
+                             "Another thing to do"]}
               {:start-time (time/parse-iso-date-time "2019-02-03t15:15:00")
                :project "Some other Project"
-               :occupation ["Something else to do"]}]
+               :occupations ["Something else to do"]}]
              (sut/import-timeline (str "2019-02-03\n"
                                        "1215 Some Project\n"
                                        "     Something to do\n"
@@ -203,11 +203,11 @@
           "Multiple entries, all with a reference date")
     (t/is (= [{:start-time (time/parse-iso-date-time "2019-02-03t12:15:00")
                :project "Some Project"
-               :occupation ["Something to do"
-                            "Another thing to do"]}
+               :occupations ["Something to do"
+                             "Another thing to do"]}
               {:start-time (time/parse-iso-date-time "2019-02-03t15:15:00")
                :project "Some other Project"
-               :occupation ["Something else to do"]}]
+               :occupations ["Something else to do"]}]
              (sut/import-timeline (str "2019-02-03\n"
                                        "1215 Some Project\n"
                                        "     Something to do\n"

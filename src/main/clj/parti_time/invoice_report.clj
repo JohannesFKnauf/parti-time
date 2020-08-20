@@ -35,7 +35,7 @@
                         (reduce +))
         break-minutes (- business-minutes work-minutes)
         occupations (->> day-entries
-                         (map :occupation)
+                         (map :occupations)
                          (filter #(not (= [""] %)))
                          (flatten))]
     [(time/format-time "yyyy-MM-dd" date)
