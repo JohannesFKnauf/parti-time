@@ -21,9 +21,11 @@
 *** REST server + SPA
 ** Feature: Bash completion
 ** Feature: Interactive TUI / good edit mode bindings / Web UI
+*** navigate timeslices
 *** simple operations
 **** append entry
 **** split time slice
+*** interactive reporting on time windows
 ** Feature: Editor Templates / Snippets
 *** default
 *** yesterday
@@ -73,6 +75,7 @@
 *** currently not cleanly possible; calculations flawed
 * Integration
 ** Feature: Timesheet upload / upstream edit on Google Sheets
+** Feature: Timesheet download from Google Sheets
 ** Feature: Timesheet Google Sheets Export with Formulae
 ** Feature: Extension API
 *** Custom output formatters (e.g. Jaspersoft)
@@ -136,11 +139,16 @@
 **** create virtual IDs for entries? e.g. for editing
 **** to which file is new stuff written?
 **** tl.d repos
+* Performance
+** Use upx to pack binaries
 * Standards compliance
 ** Read config from XDG_USER_CONFIG
+*** cli-matic global-opts for defaults?
 * Documentation
 ** Documentation: Annotated screen recording
 *** screencast of typical session
 ** Documentation: Literately Programmed Documentation
 *** a la .t tests
 *** executable, annotated usage session
+* Delivery
+** github actions graalvm native-image packaging and releasing on tag creation

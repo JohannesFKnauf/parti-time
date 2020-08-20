@@ -1,3 +1,7 @@
 * unit test coverage
 ** especially for reports
 * acceptance tests for the CLI
+** needs a bigger refactoring
+* end-to-end tests
+** src/main/itest
+*** Exercise the main method or at least its subcommands
