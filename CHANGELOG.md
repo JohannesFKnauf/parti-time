@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [?.?.?] - Geriatric Go-go (Unreleased)
+
+## [?.?.?] - Feuriger Feierabend (Unreleased)
+
+## [?.?.?] - Effective Ecstasy (Unreleased)
+
 ## [1.1.0] - Disco Dance (Unreleased)
 
 
@@ -11,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Feature: New subcommand convert for format conversion
 - Feature: Reading tt JSON files
+- Contrib: Emacs configuration snippet for an ad-hoc tl-mode with syntax highlighting
 
 ## [1.0.0] - Cybernetic Club (2020-08-10)
 
