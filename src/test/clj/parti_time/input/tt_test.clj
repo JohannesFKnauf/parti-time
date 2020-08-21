@@ -166,7 +166,7 @@
                                                                :end "2020-08-17T13:00:00.000000Z"
                                                                :name "Some other Project"
                                                                :notes []}]}))
-          "Missing end tag throws Exception -- even in end position")))
+          "Overlap between entries throws Exception")))
 
 
 
