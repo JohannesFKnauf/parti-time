@@ -45,19 +45,16 @@
 
 (defn emit-timeslices
   [entry next-entry]
-  (if (and (not (nil? next-entry))
+  (when (and (not (nil? next-entry))
            (time/date-time-before? (:start next-entry) (:end entry)))
-    (throw (RuntimeException. (str "Overlapping entries detected. Start time '" (:start next-entry) "' is before end time '" (:end entry) "' of previous entry.")))
-    (let [first-timeslice {:start-time (:start entry)
-                           :project (:name entry)
-                           :occupations (:notes entry)}]
-      (if (= (:start next-entry) (:end entry)) ;; no gap, no problem
-        [first-timeslice]
-        ;; else: if there is a gap, fill it with Private time
-        [first-timeslice
-         {:start-time (:end entry)
-          :project "Private"
-          :occupations []}]))))
+    (throw (RuntimeException. (str "Overlapping entries detected. Start time '" (:start next-entry) "' is before end time '" (:end entry) "' of previous entry."))))
+  (cons {:start-time (:start entry)
+         :project (:name entry)
+         :occupations (:notes entry)}
+        (when (not= (:start next-entry) (:end entry)) ; if there is a gap, fill it with Private time
+          [{:start-time (:end entry)
+            :project "Private"
+            :occupations []}])))
 
 (defn tt-worklog->timeline [tt-worklog]
   (->> tt-worklog
