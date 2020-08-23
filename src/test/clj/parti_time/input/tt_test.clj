@@ -76,6 +76,35 @@
         "notes are passed through"))
 
 
+(t/deftest emit-timeslices
+  (t/is (= [{:start-time (time/parse-iso-date-time "2020-08-12T10:00:00")
+             :project "Some project"
+             :occupations []}]
+           (sut/emit-timeslices {:start (time/parse-iso-date-time "2020-08-12T10:00:00")
+                                 :end (time/parse-iso-date-time "2020-08-12T12:00:00")
+                                 :name "Some project"
+                                 :notes []}
+                                {:start (time/parse-iso-date-time "2020-08-12T12:00:00")
+                                 :end (time/parse-iso-date-time "2020-08-12T14:00:00")
+                                 :name "Irrelevant"
+                                 :notes []}))
+        "A single timeslice is emitted for adjoined entries")
+  (t/is (= [{:start-time (time/parse-iso-date-time "2020-08-12T10:00:00")
+             :project "Some project"
+             :occupations []}
+            {:start-time (time/parse-iso-date-time "2020-08-12T12:00:00")
+             :project "Private"
+             :occupations []}]
+           (sut/emit-timeslices {:start (time/parse-iso-date-time "2020-08-12T10:00:00")
+                                 :end (time/parse-iso-date-time "2020-08-12T12:00:00")
+                                 :name "Some project"
+                                 :notes []}
+                                {:start (time/parse-iso-date-time "2020-08-12T13:00:00")
+                                 :end (time/parse-iso-date-time "2020-08-12T15:00:00")
+                                 :name "Irrelevant"
+                                 :notes []}))
+        "A private filler timeslice is emitted additionally for entries with a gap in between"))
+
 (t/deftest worklog-to-timeline
   (t/testing "Empty worklog"
     (t/is (= []
