@@ -1,6 +1,9 @@
 * UX
-** Feature: Output color themes
-*** styles / CSS-like
+** Feature: Output color
+*** --no-color
+*** switch on by default when on terminal
+*** color themes
+**** styles / CSS-like
 ** Feature: Emacs plugin
 *** Syntax highlighting
 *** Templates
@@ -31,10 +34,10 @@
 *** yesterday
 *** recent X (carousel like)
 ** Feature: clean new-style CLI
-*** projects ls
-*** projects add
-*** projects remove
-*** projects extend
+*** project ls
+*** project add
+*** project remove
+*** project extend
 *** slice append
 *** slice split
 *** slice edit
@@ -42,7 +45,9 @@
 **** yesterday
 **** today
 **** time range
-*** slices show (last X recent)
+*** slice show (last X recent)
+** Feature: CLI command shortcuts
+*** uniquely identifiable combination is enough
 * Reporting
 ** Feature: query time-windows for
 *** aggregations (by single dimension-hierarchy, by time slices)
@@ -66,6 +71,7 @@
 **** PDF (by template)
 ** Feature: Simple hierarchical reports
 *** e.g. by day, by project or vice versa
+*** aggregates per grain + totals
 ** Feature: time charts
 *** show used time visually
 *** horizontal 1 line per day ? 
