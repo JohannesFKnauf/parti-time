@@ -14,7 +14,7 @@ syntax match partiDate "^\v\d{4}-\d{2}-\d{2}"
 highlight default link partiDate Structure
 
 "" the time in military notation, also at the start of a line
-syntax match partiTime "^\v\d{4} "
+syntax match partiTime "^\v\d{4}\ze "
 highlight default link partiTime Number
 
 "" notes, that get attached to the tracked interval
