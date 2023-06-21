@@ -13,9 +13,16 @@ endif
 syntax match partiDate "^\v\d{4}-\d{2}-\d{2}"
 highlight default link partiDate Structure
 
+"" categories of entries
+syntax match partiCategory "\v \zs.+" contained
+highlight default link partiCategory Statement
+
 "" the time in military notation, also at the start of a line
-syntax match partiTime "^\v\d{4}\ze "
+syntax match partiTime "^\v\d{4}\ze " nextgroup=partiCategory contained
 highlight default link partiTime Number
+
+"" partiLines are lines that contain both a partiTime and a partiCategory
+syntax match partiLine "\v^\d{4} .+" contains=partiTime,partiCategory
 
 "" notes, that get attached to the tracked interval
 syntax match partiNote "^\v {5}.+"
