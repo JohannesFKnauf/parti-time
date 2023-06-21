@@ -18,7 +18,7 @@ syntax match partiTime "^\v\d{4}\ze "
 highlight default link partiTime Number
 
 "" notes, that get attached to the tracked interval
-syntax match partiNote "^\v\s+.+"
+syntax match partiNote "^\v {5}.+"
 highlight default link partiNote SpecialComment
 
 let b:current_syntax = 'parti-time'
