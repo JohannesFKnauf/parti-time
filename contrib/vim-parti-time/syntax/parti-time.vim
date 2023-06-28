@@ -25,7 +25,10 @@ highlight default link partiTime Number
 syntax match partiLine "\v^\d{4} .+" contains=partiTime,partiCategory
 
 "" notes, that get attached to the tracked interval
-syntax match partiNote "\v^ {5}.+"
+"" the four spaces are the logical equivalent of the "hhmm" partiTime above
+"" the space after that is the separator, so denote it separately
+"" start the partiNote as the text after the whitespace
+syntax match partiNote "\v^ {4} \zs.+"
 highlight default link partiNote SpecialComment
 
 let b:current_syntax = 'parti-time'
