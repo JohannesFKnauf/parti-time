@@ -1,2 +1,2 @@
 " ftdetect/parti-time.vim
-autocmd BufNewFile,BufRead *.tl setfiletype parti-time
+autocmd BufNewFile,BufRead *.tl set ft=parti-time
