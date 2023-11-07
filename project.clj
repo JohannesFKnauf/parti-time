@@ -1,16 +1,16 @@
-(defproject parti-time "1.1.0-SNAPSHOT"
+(defproject parti-time "1.1.1-SNAPSHOT"
   :description "parti-time is a tool for partitioning timelines."
   :url "https://github.com/JohannesFKnauf/parti-time"
-  :min-lein-version "2.8.1"
+  :min-lein-version "2.10.0"
   :global-vars {*warn-on-reflection* true}
-  :dependencies [[org.clojure/clojure "1.10.2-alpha1"]
-                 [org.clojure/data.json "1.0.0"]
-                 [org.flatland/ordered "1.5.7"]
-                 [io.forward/yaml "1.0.9"]
-                 [cli-matic "0.4.3"]
+  :dependencies [[org.clojure/clojure "1.11.1"]
+                 [org.clojure/data.json "2.4.0"]
+                 [org.flatland/ordered "1.15.11"]
+                 [io.forward/yaml "1.0.11"]
+                 [cli-matic "0.5.4"]
                  [clojure-csv "2.0.2"]
-                 [instaparse "1.4.10"]
-                 [medley "1.2.0"]]
+                 [instaparse "1.4.12"]
+                 [medley "1.4.0"]]
   :plugins [[io.taylorwood/lein-native-image "0.3.1"]]
 
   :source-paths ["src/main/clj"]
@@ -24,7 +24,7 @@
   :clean-targets ["target"]
 
   :native-image {:name "parti-time"
-                 :graal-bin "/home/vagrant/graalvm-ce-java11-19.3.1/"
+                 :graal-bin ~(str (System/getenv "HOME") "/graalvm-jdk-21.0.1+12.1")
                  :opts ["--verbose"
                         "--initialize-at-build-time"
                         "--report-unsupported-elements-at-runtime"
