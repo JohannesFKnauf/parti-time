@@ -13,7 +13,7 @@
 
 (t/deftest tt-import-timeline
   (t/testing "JSON validation"
-    (t/is (thrown-with-msg? Exception #"JSON error \(unexpected character\)"
+    (t/is (thrown-with-msg? Exception #"JSON error \(non-string key in object\)"
                             (sut/import-timeline (str "{ ... }")))
           "Invalid JSON throws exception")))
 
