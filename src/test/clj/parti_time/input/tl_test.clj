@@ -214,7 +214,17 @@
                                        "     Another thing to do\n"
                                        "1515 Some other Project\n"
                                        "     Something else to do\n")))
-          "Multiple entries, 1 without a reference date")))
+          "Multiple entries, 1 without a reference date")
+        (t/is (= [{:start-time (time/parse-iso-date-time "2019-02-03t12:03:00")
+               :project "Some Project"
+               :occupations []}
+              {:start-time (time/parse-iso-date-time "2019-02-03t15:12:00")
+               :project "Some other Project"
+               :occupations []}]
+             (sut/import-timeline (str "2019-02-03\n"
+                                       "1203 Some Project\n"
+                                       "1512 Some other Project\n")))
+          "Entries without 15-minute timeboxes")))
 
 (t/deftest bogus-timeline
   (t/testing "Syntactical errors"
