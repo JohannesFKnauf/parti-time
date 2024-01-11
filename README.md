@@ -5,27 +5,29 @@ parti-time is a tool for partitioning timelines and tracking your time in plain 
 Partitioning implies:
 * no undeclared gaps
 * no double booking
-* 1 timeline per tracked dimension (location, occupation, ...)
+* 1 single timeline
 * strict order
 
-Otherwise keeping a partitioned timeline is similar to classical time-tracking. People use it to remember e.g.
-* how long they were working on which projects and occupations
-* which locations they visited
-* ...
+Otherwise keeping a partitioned timeline is similar to classical time-tracking. People typically use it to remember e.g. how long they were working on which projects and occupations.
 
 parti-time enables users to
 * keep their timeline in plain text
 * create reports about their working hours
 
-## A comment about the roadmap
+## Feature roadmap
 
-In experiment v1 we started with a baby-step in that direction: Time-slices are declared only by start timestamp instead. The end timestamp is implicit and is derived from the start timestamp of the following time record.
+Status quo:
+* tl file based reporting
+* editor support for tl files in emacs and vi
 
-In v1 we still lack the separation of dimensions, i.e. project, location, occupation are all part of the same time record. As a consequence, they are also tracked in the same file.
+2024-Q1:
+* Google Sheet append
+* tl lenses: Separate storage from tl editor view
 
-### v1: The legacy YAML format
-
-In [```src/itest/resources/examples/v1_yaml/TimeTracker.sample.yml```](https://github.com/JohannesFKnauf/parti-time/blob/master/src/itest/resources/examples/v1_yaml/TimeTracker.sample.yml) you find a 2-day sample v1 time partitioning.
+post 2024-Q1:
+* tt-like command line operations
+* Web App
+* Tightly scoped access tokens for untrusted customer devices
 
 ### v2: tl, the timeline DSL
 
@@ -137,3 +139,11 @@ parti-time has been featured in
 
 * blog article https://metamorphant.de/blog/posts/2019-11-27-parti-time-plain-text-time-tracking-for-nerds/
 
+
+# Legacy features
+
+## v1: The legacy YAML format
+
+In [```src/itest/resources/examples/v1_yaml/TimeTracker.sample.yml```](https://github.com/JohannesFKnauf/parti-time/blob/master/src/itest/resources/examples/v1_yaml/TimeTracker.sample.yml) you find a 2-day sample v1 time partitioning. You won't need it, except if you have legacy files that you want to convert to a new format.
+
+v1 YAML timelines are deprecated and will be removed in future versions.
