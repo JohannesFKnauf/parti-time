@@ -37,7 +37,8 @@
         occupations (->> day-entries
                          (map :occupations)
                          (filter #(not (= [""] %)))
-                         (flatten))]
+                         (flatten)
+                         (distinct))]
     [(time/format-time "yyyy-MM-dd" date)
      (time/format-time "HH:mm" business-day-start-time)
      (time/format-time "HH:mm" business-day-end-time)
