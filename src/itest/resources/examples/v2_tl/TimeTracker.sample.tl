@@ -11,6 +11,7 @@
 1200 Customer X 2019-08
      Architecture Whiteboard Session
      Incident Blubb
+     Development of Blarz
 1545 Private
      Reading Awesome Clojure
 1615 Customer X 2019-08
@@ -29,6 +30,7 @@
      Lunch Break
 1200 Customer X 2019-08
      Monitoring stack
+     Legacy Stack Analysis
      Log shipping Integration
 1615 Metamorphant
      Phone call with customer Z
