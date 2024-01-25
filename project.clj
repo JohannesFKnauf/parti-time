@@ -24,7 +24,6 @@
   :clean-targets ["target"]
 
   :native-image {:name "parti-time"
-                 :graal-bin ~(str (System/getenv "HOME") "/graalvm-jdk-21.0.1+12.1")
                  :opts ["--verbose"
                         "--initialize-at-build-time"
                         "--report-unsupported-elements-at-runtime"

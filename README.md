@@ -117,9 +117,22 @@ The timesheet feature generates a report that follows the usual format of classi
 
 # Development
 
-## Building a native-image
+## Prerequisites
 
-    lein native-image
+* Install Oracle GraalVM >= 21.0.1+12.1
+* Setup an environment variable `GRAALVM_HOME` pointing to your graalvm installation (e.g. in your `~/.bashrc`)
+
+## Run tests
+
+```
+lein test
+```
+
+## Build a native-image
+
+```
+lein native-image
+```
 
 # Known limitations
 
