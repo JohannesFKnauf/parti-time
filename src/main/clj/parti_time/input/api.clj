@@ -2,14 +2,11 @@
 
 
 (defn file-extension [filename]
-  (re-find #"(?<=\.)[^.]+$" filename))
+  (or (re-find #"(?<=\.)[^.]+$" filename)
+      "tl"))
 
 (defmulti read-timeline
   file-extension)
-
-(defmethod read-timeline nil [filename]
-  (throw (RuntimeException.
-          (str "Filename extension for given file '" filename "' could not be detected"))))
 
 (defmethod read-timeline :default [filename]
   (throw (RuntimeException.
