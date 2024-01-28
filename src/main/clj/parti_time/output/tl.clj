@@ -37,4 +37,6 @@
        (spit filename)))
   
 (defmethod api/write-timeline "tl" [filename timeline]
-  (write-timeline filename timeline))
+  (if (= filename "-")
+    (write-timeline *out* timeline))
+    (write-timeline filename timeline))
