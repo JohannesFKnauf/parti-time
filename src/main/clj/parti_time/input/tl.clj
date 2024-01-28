@@ -55,4 +55,6 @@
       import-timeline))
 
 (defmethod api/read-timeline "tl" [filename]
-  (read-timeline filename))
+  (if (= filename "-")
+    (read-timeline *in*)
+    (read-timeline filename)))
