@@ -1,7 +1,7 @@
 (defproject parti-time "1.1.1-SNAPSHOT"
   :description "parti-time is a tool for partitioning timelines."
   :url "https://github.com/JohannesFKnauf/parti-time"
-  :min-lein-version "2.10.0"
+  :min-lein-version "2.11.1"
   :global-vars {*warn-on-reflection* true}
   :dependencies [[org.clojure/clojure "1.11.1"]
                  [org.clojure/data.json "2.4.0"]
