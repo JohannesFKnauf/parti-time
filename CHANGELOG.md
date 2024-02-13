@@ -10,11 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [?.?.?] - Effective Ecstasy (Unreleased)
 
-## [1.1.0] - Disco Dance (Unreleased)
 
 
+## [1.1.0] - Default Disco (2024-02-13)
 
 ### Added
+- Feature: Default to "tl" format for files without extension
 - Feature: New subcommand convert for format conversion
 - Feature: Reading tt JSON files
 - Contrib: Emacs configuration snippet for an ad-hoc tl-mode with syntax highlighting
