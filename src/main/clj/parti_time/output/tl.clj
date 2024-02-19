@@ -36,7 +36,7 @@
        export-timeline
        (spit filename)))
   
-(defmethod api/write-timeline "tl" [filename timeline]
+(defmethod api/write-timeline "tl" [format filename timeline]
   (if (= filename "-")
     (write-timeline *out* timeline))
     (write-timeline filename timeline))

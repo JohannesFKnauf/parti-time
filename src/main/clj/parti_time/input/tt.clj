@@ -77,5 +77,5 @@
       slurp
       import-timeline))
 
-(defmethod api/read-timeline "tt" [filename]
+(defmethod api/read-timeline "tt" [format filename]
   (read-timeline filename))

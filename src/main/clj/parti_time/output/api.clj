@@ -1,12 +1,11 @@
 (ns parti-time.output.api)
 
-(defn file-extension [filename timeline]
-  (or (re-find #"(?<=\.)[^.]+$" filename)
-      "tl"))
+(defn file-type [format filename timeline]
+  format)
 
 (defmulti write-timeline
-  file-extension)
+  file-type)
 
-(defmethod write-timeline :default [filename timeline]
+(defmethod write-timeline :default [format filename timeline]
   (throw (RuntimeException.
-          (str "parti-time does not know (yet) how to write filename '" filename "' with extension " (file-extension filename)))))
+          (str "parti-time does not know (yet) how to write file format '" format "'"))))

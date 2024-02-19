@@ -1,13 +1,11 @@
 (ns parti-time.input.api)
 
-
-(defn file-extension [filename]
-  (or (re-find #"(?<=\.)[^.]+$" filename)
-      "tl"))
+(defn file-type [format filename]
+  format)
 
 (defmulti read-timeline
-  file-extension)
+  file-type)
 
-(defmethod read-timeline :default [filename]
+(defmethod read-timeline :default [format filename]
   (throw (RuntimeException.
-          (str "parti-time does not know (yet) how to read filename '" filename "' with extension " (file-extension filename)))))
+          (str "parti-time does not know (yet) how to read file format '" format "'"))))
