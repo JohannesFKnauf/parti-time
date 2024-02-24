@@ -78,4 +78,6 @@
       import-timeline))
 
 (defmethod api/read-timeline "tt" [format filename]
-  (read-timeline filename))
+  (if (= filename "-")
+    (read-timeline *in*)
+    (read-timeline filename)))

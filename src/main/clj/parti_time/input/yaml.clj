@@ -23,4 +23,6 @@
   (read-yaml-timeline filename))
 
 (defmethod api/read-timeline "yaml" [format filename]
-  (read-yaml-timeline filename))
+  (if (= filename "-")
+    (read-yaml-timeline *in*)
+    (read-yaml-timeline filename)))

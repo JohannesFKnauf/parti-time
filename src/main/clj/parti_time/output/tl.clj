@@ -38,5 +38,5 @@
   
 (defmethod api/write-timeline "tl" [format filename timeline]
   (if (= filename "-")
-    (write-timeline *out* timeline))
-    (write-timeline filename timeline))
+    (write-timeline *out* timeline)
+    (write-timeline filename timeline)))
