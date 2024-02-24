@@ -4,13 +4,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [?.?.?] - Knorker Kaffeeklatsch (Unreleased)
+
+## [?.?.?] - Jolly Jubilee (Unreleased)
+
+## [?.?.?] - Irresistable Inn (Unreleased)
+
+## [?.?.?] - Hyper Happening (Unreleased)
+
 ## [?.?.?] - Geriatric Go-go (Unreleased)
 
 ## [?.?.?] - Feuriger Feierabend (Unreleased)
 
-## [?.?.?] - Effective Ecstasy (Unreleased)
 
+## [1.2.0] - Effective Ecstasy (2024-02-24)
 
+### Added
+
+- Feature: Command cat for concatenating multiple files
+- Feature: Read from STDIN by providing filename "-"
+- Feature: Write to STDOUT by providing filename "-"
+- Fix: Remove wrapping brackets '[...]' from projects command output
 
 ## [1.1.0] - Default Disco (2024-02-13)
 
