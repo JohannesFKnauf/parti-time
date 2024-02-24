@@ -1,4 +1,4 @@
-(defproject parti-time "1.2.0"
+(defproject parti-time "1.2.1-SNAPSHOT"
   :description "parti-time is a tool for partitioning timelines."
   :url "https://github.com/JohannesFKnauf/parti-time"
   :min-lein-version "2.11.1"
