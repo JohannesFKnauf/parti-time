@@ -32,6 +32,8 @@
   (let [timeline (parti-time.input.api/read-timeline input-format parti-file)]
     (->> timeline
          parti-time.summary/project-summary
+         (sort-by first)
+         (map (fn [[project hours]] (str "\"" project "\" " hours)))
          (clojure.string/join "\n")
          println)))
 
