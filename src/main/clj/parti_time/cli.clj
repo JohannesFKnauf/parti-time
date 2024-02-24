@@ -37,6 +37,16 @@
          (clojure.string/join "\n")
          println)))
 
+;; the function is named cmd-cat instead of cat, in order not to shadow clojure.core/cat
+(defn cmd-cat [{input-files :_arguments
+                :keys [input-format
+                       output-format
+                       output-file]}]
+  (->> input-files
+       (map (partial parti-time.input.api/read-timeline input-format))
+       (apply concat)
+       (parti-time.output.api/write-timeline output-format output-file)))
+
 (defn convert [{:keys [input-format
                        input-parti-file
                        output-format
@@ -53,21 +63,27 @@
          :description "Partition your time"
          :version "1.1.0-SNAPSHOT"}
    :commands [{:command "invoice-report"
-               :description ""
+               :description "Print an importable invoice report CSV"
                :opts [{:option "input-format" :as "Input file format" :type :string :default "tl"}
                       {:option "parti-file" :as "Input filename" :type :string :short 0}
                       {:option "project" :as "Project" :type :string :short 1}]
                :runs (parti-time.util.cli/with-error-printer invoice-report)}
               {:command "timesheet"
-               :description ""
+               :description "Print an importable timesheet CSV"
                :opts [{:option "input-format" :as "Input file format" :type :string :default "tl"}
                       {:option "parti-file" :as "" :type :string :short 0}]
                :runs (parti-time.util.cli/with-error-printer timesheet)}
               {:command "projects"
-               :description ""
+               :description "Print a report about the hours spent by project"
                :opts [{:option "input-format" :as "Input file format" :type :string :default "tl"}
                       {:option "parti-file" :as "" :type :string :short 0}]
                :runs (parti-time.util.cli/with-error-printer projects)}
+              {:command "cat"
+               :description "Read multiple input files and concatenate them to a single output file -- Beware! Performs no validation of the resulting output! Garbage-in, garbage-out."
+               :opts [{:option "input-format" :as "Input file format" :type :string :default "tl"}
+                      {:option "output-format" :as "Output file format" :type :string :default "tl"}
+                      {:option "output-file" :as "Output file name. Defaults to '-', i.e. output to STDOUT." :type :string :default "-"}]
+               :runs (parti-time.util.cli/with-error-printer cmd-cat)}
               {:command "convert"
                :description "Convert between parti-time formats"
                :opts [{:option "input-format" :as "Input file format" :type :string :default "tl"}
