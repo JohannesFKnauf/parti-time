@@ -61,7 +61,7 @@
 (def APP-CONFIGURATION
   {:app {:command "parti-time"
          :description "Partition your time"
-         :version "1.1.0-SNAPSHOT"}
+         :version "1.2.0"}
    :commands [{:command "invoice-report"
                :description "Print an importable invoice report CSV"
                :opts [{:option "input-format" :as "Input file format" :type :string :default "tl"}
