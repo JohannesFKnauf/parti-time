@@ -19,10 +19,8 @@
       slurp
       import-yaml-timeline))
 
-(defmethod api/read-timeline "yml" [format filename]
-  (read-yaml-timeline filename))
+(defmethod api/read-timeline-from-reader "yml" [format reader-like]
+  (read-yaml-timeline reader-like))
 
-(defmethod api/read-timeline "yaml" [format filename]
-  (if (= filename "-")
-    (read-yaml-timeline *in*)
-    (read-yaml-timeline filename)))
+(defmethod api/read-timeline-from-reader "yaml" [format reader-like]
+  (read-yaml-timeline reader-like))

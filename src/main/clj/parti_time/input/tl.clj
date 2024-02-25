@@ -54,7 +54,5 @@
       slurp
       import-timeline))
 
-(defmethod api/read-timeline "tl" [format filename]
-  (if (= filename "-")
-    (read-timeline *in*)
-    (read-timeline filename)))
+(defmethod api/read-timeline-from-reader "tl" [format reader-like]
+  (read-timeline reader-like))
