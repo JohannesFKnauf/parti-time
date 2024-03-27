@@ -1,6 +1,8 @@
 (ns parti-time.cli
   (:gen-class)
   (:require [cli-matic.core :as cli]
+            [parti-time.google-sheets.client]
+            [parti-time.google-sheets.timeline]
             [parti-time.input.api]
             [parti-time.input.tl]        ; import for side-effect: multimethod registration
             [parti-time.input.tt]        ; import for side-effect: multimethod registration
@@ -57,6 +59,24 @@
       (parti-time.input.api/read-timeline input-format)
       (parti-time.output.api/write-timeline output-format output-parti-file)))
 
+(defn download [{:keys [google-sheet-id
+                        output-format
+                        output-parti-file]}]
+  (parti-time.util.cli/assert-mandatory-argument google-sheet-id)
+  (let [credentials (parti-time.google-sheets.client/get-credentials)]
+    (->> google-sheet-id
+         (parti-time.google-sheets.timeline/google-sheet->timeline credentials)
+         (parti-time.output.api/write-timeline output-format output-parti-file))))
+
+(defn append [{:keys [google-sheet-id
+                      input-format
+                      input-parti-file]}]
+  (parti-time.util.cli/assert-mandatory-argument google-sheet-id)
+  (let [credentials (parti-time.google-sheets.client/get-credentials)
+        timeline (parti-time.input.api/read-timeline input-format input-parti-file)]
+    (parti-time.google-sheets.timeline/append-timeline! credentials google-sheet-id timeline)
+    (println (str "Successfully appended timeline to google sheet '" google-sheet-id "'"))))
+ 
 
 (def APP-CONFIGURATION
   {:app {:command "parti-time"
@@ -90,7 +110,19 @@
                       {:option "input-parti-file" :as "" :type :string :short 0}
                       {:option "output-format" :as "Input file format" :type :string :default "tl"}
                       {:option "output-parti-file" :as "" :type :string :short 1}]
-               :runs (parti-time.util.cli/with-error-printer convert)}]})
+               :runs (parti-time.util.cli/with-error-printer convert)}
+              {:command "download"
+               :description "Download your times from a Google Sheet"
+               :opts [{:option "google-sheet-id" :as "" :type :string}
+                      {:option "output-format" :as "" :type :string :default "tl"}
+                      {:option "output-parti-file" :as "" :type :string :default "-"}]
+               :runs (parti-time.util.cli/with-error-printer download)}
+              {:command "append"
+               :description "Append your times to a Google Sheet"
+               :opts [{:option "google-sheet-id" :as "" :type :string}
+                      {:option "input-format" :as "" :type :string :default "tl"}
+                      {:option "input-parti-file" :as "" :type :string :short 0}]
+               :runs (parti-time.util.cli/with-error-printer append)}]})
 
 (defn -main [& args]
   (cli-matic.core/run-cmd args APP-CONFIGURATION))

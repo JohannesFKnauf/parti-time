@@ -19,13 +19,13 @@ parti-time enables users to
 Status quo:
 * tl file based reporting
 * editor support for tl files in emacs and vi
-
-2024-Q1:
 * Google Sheet append
-* tl lenses: Separate storage from tl editor view
 
-post 2024-Q1:
+2024-Q2:
+* tl lenses: Separate storage from tl editor view
 * tt-like command line operations
+
+post 2024-Q2:
 * Web App
 * Tightly scoped access tokens for untrusted customer devices
 
@@ -58,7 +58,7 @@ Here is a sample day's declaration as timeline:
          Decision draft Project Y
     1730 Private
 
-In [```src/itest/resources/examples/v2_tl/TimeTracker.sample.tl```](https://github.com/JohannesFKnauf/parti-time/blob/master/src/itest/resources/examples/v2_tl/TimeTracker.sample.tl) you find a tl version of the complete 2-day sample time partitioning for the project dimension.
+In [`src/itest/resources/examples/v2_tl/TimeTracker.sample.tl`](https://github.com/JohannesFKnauf/parti-time/blob/master/src/itest/resources/examples/v2_tl/TimeTracker.sample.tl) you find a tl version of the complete 2-day sample time partitioning for the project dimension.
 
 ## Getting Started with CLI frontend
 
@@ -120,7 +120,12 @@ The timesheet feature generates a report that follows the usual format of classi
 ## Prerequisites
 
 * Install Oracle GraalVM >= 21.0.1+12.1
-* Setup an environment variable `GRAALVM_HOME` pointing to your graalvm installation (e.g. in your `~/.bashrc`)
+* Setup an environment variable `GRAALVM_HOME` pointing to your graalvm installation (e.g. in your `~/.bashrc`), e.g.
+
+```
+export GRAALVM_HOME="${HOME}/graalvm-jdk-22+36.1"
+```
+
 
 ## Run tests
 
@@ -129,6 +134,22 @@ lein test
 ```
 
 ## Build a native-image
+
+```
+lein native-image
+```
+
+## Create native-image reachability metadata
+
+Create a sample Google spreadsheet and get its spreadsheet ID.
+
+```
+lein uberjar
+${GRAALVM_HOME}/bin/java -agentlib:native-image-agent=config-merge-dir=src/main/resources/META-INF/native-image -jar target/parti-time-*-SNAPSHOT-standalone.jar download --google-sheet-id "1qpyC0XzvTcKT6EISywvqESX3A0MwQoFDE8pxBll4hps"
+${GRAALVM_HOME}/bin/java -agentlib:native-image-agent=config-merge-dir=src/main/resources/META-INF/native-image -jar target/parti-time-*-SNAPSHOT-standalone.jar append --google-sheet-id "1qpyC0XzvTcKT6EISywvqESX3A0MwQoFDE8pxBll4hps" --input-parti-file src/itest/resources/examples/v2_tl/TimeTracker.sample.tl
+```
+
+Create a native-image and remove the Clojure libraries that appear in the error messages.
 
 ```
 lein native-image

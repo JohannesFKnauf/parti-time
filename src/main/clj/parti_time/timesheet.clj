@@ -14,9 +14,13 @@
      (clojure.string/join ", " occupations)
      (:project entry)]))
 
-(defn csv-report [time-line]
+(defn report [time-line]
   (->> time-line
        parti-time.core/time-windows
        (filter #(not= "Private" (:project %1)))
-       (map day-record)
+       (map day-record)))
+
+(defn csv-report [time-line]
+  (->> time-line
+       report
        csv/write-csv))

@@ -1,0 +1,417 @@
+{
+  "resources":{
+  "includes":[{
+    "pattern":"\\QMETA-INF/services/java.lang.System$LoggerFinder\\E"
+  }, {
+    "pattern":"\\QMETA-INF/services/java.net.spi.InetAddressResolverProvider\\E"
+  }, {
+    "pattern":"\\QMETA-INF/services/java.net.spi.URLStreamHandlerProvider\\E"
+  }, {
+    "pattern":"\\QMETA-INF/services/java.time.zone.ZoneRulesProvider\\E"
+  }, {
+    "pattern":"\\Qcheshire/core.clj\\E"
+  }, {
+    "pattern":"\\Qcheshire/core.cljc\\E"
+  }, {
+    "pattern":"\\Qcheshire/core__init.class\\E"
+  }, {
+    "pattern":"\\Qcli_matic/core.clj\\E"
+  }, {
+    "pattern":"\\Qcli_matic/core.cljc\\E"
+  }, {
+    "pattern":"\\Qcli_matic/core__init.class\\E"
+  }, {
+    "pattern":"\\Qcli_matic/help_gen.clj\\E"
+  }, {
+    "pattern":"\\Qcli_matic/help_gen.cljc\\E"
+  }, {
+    "pattern":"\\Qcli_matic/help_gen__init.class\\E"
+  }, {
+    "pattern":"\\Qcli_matic/optionals.clj\\E"
+  }, {
+    "pattern":"\\Qcli_matic/optionals__init.class\\E"
+  }, {
+    "pattern":"\\Qcli_matic/platform.clj\\E"
+  }, {
+    "pattern":"\\Qcli_matic/platform__init.class\\E"
+  }, {
+    "pattern":"\\Qcli_matic/platform_macros.clj\\E"
+  }, {
+    "pattern":"\\Qcli_matic/platform_macros.cljc\\E"
+  }, {
+    "pattern":"\\Qcli_matic/platform_macros__init.class\\E"
+  }, {
+    "pattern":"\\Qcli_matic/presets.clj\\E"
+  }, {
+    "pattern":"\\Qcli_matic/presets.cljc\\E"
+  }, {
+    "pattern":"\\Qcli_matic/presets__init.class\\E"
+  }, {
+    "pattern":"\\Qcli_matic/specs.clj\\E"
+  }, {
+    "pattern":"\\Qcli_matic/specs.cljc\\E"
+  }, {
+    "pattern":"\\Qcli_matic/specs__init.class\\E"
+  }, {
+    "pattern":"\\Qcli_matic/utils.clj\\E"
+  }, {
+    "pattern":"\\Qcli_matic/utils.cljc\\E"
+  }, {
+    "pattern":"\\Qcli_matic/utils__init.class\\E"
+  }, {
+    "pattern":"\\Qcli_matic/utils_candidates.clj\\E"
+  }, {
+    "pattern":"\\Qcli_matic/utils_candidates.cljc\\E"
+  }, {
+    "pattern":"\\Qcli_matic/utils_candidates__init.class\\E"
+  }, {
+    "pattern":"\\Qcli_matic/utils_v2.clj\\E"
+  }, {
+    "pattern":"\\Qcli_matic/utils_v2.cljc\\E"
+  }, {
+    "pattern":"\\Qcli_matic/utils_v2__init.class\\E"
+  }, {
+    "pattern":"\\Qclj_yaml/core.clj\\E"
+  }, {
+    "pattern":"\\Qclj_yaml/core.cljc\\E"
+  }, {
+    "pattern":"\\Qclj_yaml/core__init.class\\E"
+  }, {
+    "pattern":"\\Qclojure/core.clj\\E"
+  }, {
+    "pattern":"\\Qclojure/core/async/impl/channels.clj\\E"
+  }, {
+    "pattern":"\\Qclojure/core/async/impl/channels.cljc\\E"
+  }, {
+    "pattern":"\\Qclojure/core/async/impl/channels__init.class\\E"
+  }, {
+    "pattern":"\\Qclojure/core/protocols.clj\\E"
+  }, {
+    "pattern":"\\Qclojure/core/protocols__init.class\\E"
+  }, {
+    "pattern":"\\Qclojure/core/server.clj\\E"
+  }, {
+    "pattern":"\\Qclojure/core/server__init.class\\E"
+  }, {
+    "pattern":"\\Qclojure/core__init.class\\E"
+  }, {
+    "pattern":"\\Qclojure/core_deftype.clj\\E"
+  }, {
+    "pattern":"\\Qclojure/core_deftype__init.class\\E"
+  }, {
+    "pattern":"\\Qclojure/core_print.clj\\E"
+  }, {
+    "pattern":"\\Qclojure/core_print__init.class\\E"
+  }, {
+    "pattern":"\\Qclojure/core_proxy.clj\\E"
+  }, {
+    "pattern":"\\Qclojure/core_proxy__init.class\\E"
+  }, {
+    "pattern":"\\Qclojure/data/json.clj\\E"
+  }, {
+    "pattern":"\\Qclojure/data/json__init.class\\E"
+  }, {
+    "pattern":"\\Qclojure/edn.clj\\E"
+  }, {
+    "pattern":"\\Qclojure/edn__init.class\\E"
+  }, {
+    "pattern":"\\Qclojure/genclass.clj\\E"
+  }, {
+    "pattern":"\\Qclojure/genclass__init.class\\E"
+  }, {
+    "pattern":"\\Qclojure/gvec.clj\\E"
+  }, {
+    "pattern":"\\Qclojure/gvec__init.class\\E"
+  }, {
+    "pattern":"\\Qclojure/instant.clj\\E"
+  }, {
+    "pattern":"\\Qclojure/instant__init.class\\E"
+  }, {
+    "pattern":"\\Qclojure/java/io.clj\\E"
+  }, {
+    "pattern":"\\Qclojure/java/io__init.class\\E"
+  }, {
+    "pattern":"\\Qclojure/main.clj\\E"
+  }, {
+    "pattern":"\\Qclojure/main__init.class\\E"
+  }, {
+    "pattern":"\\Qclojure/pprint.clj\\E"
+  }, {
+    "pattern":"\\Qclojure/pprint/cl_format.clj\\E"
+  }, {
+    "pattern":"\\Qclojure/pprint/cl_format__init.class\\E"
+  }, {
+    "pattern":"\\Qclojure/pprint/column_writer.clj\\E"
+  }, {
+    "pattern":"\\Qclojure/pprint/column_writer__init.class\\E"
+  }, {
+    "pattern":"\\Qclojure/pprint/dispatch.clj\\E"
+  }, {
+    "pattern":"\\Qclojure/pprint/dispatch__init.class\\E"
+  }, {
+    "pattern":"\\Qclojure/pprint/pprint_base.clj\\E"
+  }, {
+    "pattern":"\\Qclojure/pprint/pprint_base__init.class\\E"
+  }, {
+    "pattern":"\\Qclojure/pprint/pretty_writer.clj\\E"
+  }, {
+    "pattern":"\\Qclojure/pprint/pretty_writer__init.class\\E"
+  }, {
+    "pattern":"\\Qclojure/pprint/print_table.clj\\E"
+  }, {
+    "pattern":"\\Qclojure/pprint/print_table__init.class\\E"
+  }, {
+    "pattern":"\\Qclojure/pprint/utilities.clj\\E"
+  }, {
+    "pattern":"\\Qclojure/pprint/utilities__init.class\\E"
+  }, {
+    "pattern":"\\Qclojure/pprint__init.class\\E"
+  }, {
+    "pattern":"\\Qclojure/set.clj\\E"
+  }, {
+    "pattern":"\\Qclojure/set__init.class\\E"
+  }, {
+    "pattern":"\\Qclojure/spec/alpha.clj\\E"
+  }, {
+    "pattern":"\\Qclojure/spec/alpha__init.class\\E"
+  }, {
+    "pattern":"\\Qclojure/spec/gen/alpha.clj\\E"
+  }, {
+    "pattern":"\\Qclojure/spec/gen/alpha__init.class\\E"
+  }, {
+    "pattern":"\\Qclojure/string.clj\\E"
+  }, {
+    "pattern":"\\Qclojure/string__init.class\\E"
+  }, {
+    "pattern":"\\Qclojure/tools/cli.clj\\E"
+  }, {
+    "pattern":"\\Qclojure/tools/cli.cljc\\E"
+  }, {
+    "pattern":"\\Qclojure/tools/cli__init.class\\E"
+  }, {
+    "pattern":"\\Qclojure/uuid.clj\\E"
+  }, {
+    "pattern":"\\Qclojure/uuid__init.class\\E"
+  }, {
+    "pattern":"\\Qclojure/version.properties\\E"
+  }, {
+    "pattern":"\\Qclojure/walk.clj\\E"
+  }, {
+    "pattern":"\\Qclojure/walk__init.class\\E"
+  }, {
+    "pattern":"\\Qclojure_csv/core.clj\\E"
+  }, {
+    "pattern":"\\Qclojure_csv/core__init.class\\E"
+  }, {
+    "pattern":"\\Qcom/google/api/client/googleapis/google-api-client.properties\\E"
+  }, {
+    "pattern":"\\Qcom/google/api/client/googleapis/google.p12\\E"
+  }, {
+    "pattern":"\\Qcom/google/api/client/http/google-http-client.properties\\E"
+  }, {
+    "pattern":"\\Qdata_readers.clj\\E"
+  }, {
+    "pattern":"\\Qdata_readers.cljc\\E"
+  }, {
+    "pattern":"\\Qexpound/alpha.clj\\E"
+  }, {
+    "pattern":"\\Qexpound/alpha.cljc\\E"
+  }, {
+    "pattern":"\\Qexpound/alpha__init.class\\E"
+  }, {
+    "pattern":"\\Qexpound/ansi.clj\\E"
+  }, {
+    "pattern":"\\Qexpound/ansi.cljc\\E"
+  }, {
+    "pattern":"\\Qexpound/ansi__init.class\\E"
+  }, {
+    "pattern":"\\Qexpound/paths.clj\\E"
+  }, {
+    "pattern":"\\Qexpound/paths.cljc\\E"
+  }, {
+    "pattern":"\\Qexpound/paths__init.class\\E"
+  }, {
+    "pattern":"\\Qexpound/printer.clj\\E"
+  }, {
+    "pattern":"\\Qexpound/printer.cljc\\E"
+  }, {
+    "pattern":"\\Qexpound/printer__init.class\\E"
+  }, {
+    "pattern":"\\Qexpound/problems.clj\\E"
+  }, {
+    "pattern":"\\Qexpound/problems.cljc\\E"
+  }, {
+    "pattern":"\\Qexpound/problems__init.class\\E"
+  }, {
+    "pattern":"\\Qexpound/util.clj\\E"
+  }, {
+    "pattern":"\\Qexpound/util.cljc\\E"
+  }, {
+    "pattern":"\\Qexpound/util__init.class\\E"
+  }, {
+    "pattern":"\\Qflatland/ordered/common.clj\\E"
+  }, {
+    "pattern":"\\Qflatland/ordered/common__init.class\\E"
+  }, {
+    "pattern":"\\Qflatland/ordered/map.clj\\E"
+  }, {
+    "pattern":"\\Qflatland/ordered/map__init.class\\E"
+  }, {
+    "pattern":"\\Qflatland/ordered/set.clj\\E"
+  }, {
+    "pattern":"\\Qflatland/ordered/set__init.class\\E"
+  }, {
+    "pattern":"\\Qinstaparse/abnf.clj\\E"
+  }, {
+    "pattern":"\\Qinstaparse/abnf__init.class\\E"
+  }, {
+    "pattern":"\\Qinstaparse/auto_flatten_seq.clj\\E"
+  }, {
+    "pattern":"\\Qinstaparse/auto_flatten_seq__init.class\\E"
+  }, {
+    "pattern":"\\Qinstaparse/cfg.clj\\E"
+  }, {
+    "pattern":"\\Qinstaparse/cfg__init.class\\E"
+  }, {
+    "pattern":"\\Qinstaparse/combinators_source.clj\\E"
+  }, {
+    "pattern":"\\Qinstaparse/combinators_source__init.class\\E"
+  }, {
+    "pattern":"\\Qinstaparse/core.clj\\E"
+  }, {
+    "pattern":"\\Qinstaparse/core__init.class\\E"
+  }, {
+    "pattern":"\\Qinstaparse/failure.clj\\E"
+  }, {
+    "pattern":"\\Qinstaparse/failure__init.class\\E"
+  }, {
+    "pattern":"\\Qinstaparse/gll.clj\\E"
+  }, {
+    "pattern":"\\Qinstaparse/gll__init.class\\E"
+  }, {
+    "pattern":"\\Qinstaparse/line_col.clj\\E"
+  }, {
+    "pattern":"\\Qinstaparse/line_col__init.class\\E"
+  }, {
+    "pattern":"\\Qinstaparse/macros.clj\\E"
+  }, {
+    "pattern":"\\Qinstaparse/macros__init.class\\E"
+  }, {
+    "pattern":"\\Qinstaparse/print.clj\\E"
+  }, {
+    "pattern":"\\Qinstaparse/print__init.class\\E"
+  }, {
+    "pattern":"\\Qinstaparse/reduction.clj\\E"
+  }, {
+    "pattern":"\\Qinstaparse/reduction__init.class\\E"
+  }, {
+    "pattern":"\\Qinstaparse/repeat.clj\\E"
+  }, {
+    "pattern":"\\Qinstaparse/repeat__init.class\\E"
+  }, {
+    "pattern":"\\Qinstaparse/transform.clj\\E"
+  }, {
+    "pattern":"\\Qinstaparse/transform__init.class\\E"
+  }, {
+    "pattern":"\\Qinstaparse/util.clj\\E"
+  }, {
+    "pattern":"\\Qinstaparse/util__init.class\\E"
+  }, {
+    "pattern":"\\Qinstaparse/viz.clj\\E"
+  }, {
+    "pattern":"\\Qinstaparse/viz__init.class\\E"
+  }, {
+    "pattern":"\\Qmedley/core.clj\\E"
+  }, {
+    "pattern":"\\Qmedley/core.cljc\\E"
+  }, {
+    "pattern":"\\Qmedley/core__init.class\\E"
+  }, {
+    "pattern":"\\Qorchestra/spec/test.clj\\E"
+  }, {
+    "pattern":"\\Qorchestra/spec/test.cljc\\E"
+  }, {
+    "pattern":"\\Qorchestra/spec/test__init.class\\E"
+  }, {
+    "pattern":"\\Qparti_time/cli.clj\\E"
+  }, {
+    "pattern":"\\Qparti_time/cli__init.class\\E"
+  }, {
+    "pattern":"\\Qparti_time/core.clj\\E"
+  }, {
+    "pattern":"\\Qparti_time/core__init.class\\E"
+  }, {
+    "pattern":"\\Qparti_time/google_sheets/client.clj\\E"
+  }, {
+    "pattern":"\\Qparti_time/google_sheets/client__init.class\\E"
+  }, {
+    "pattern":"\\Qparti_time/google_sheets/timeline.clj\\E"
+  }, {
+    "pattern":"\\Qparti_time/google_sheets/timeline__init.class\\E"
+  }, {
+    "pattern":"\\Qparti_time/input/api.clj\\E"
+  }, {
+    "pattern":"\\Qparti_time/input/api__init.class\\E"
+  }, {
+    "pattern":"\\Qparti_time/input/tl.clj\\E"
+  }, {
+    "pattern":"\\Qparti_time/input/tl__init.class\\E"
+  }, {
+    "pattern":"\\Qparti_time/input/tt.clj\\E"
+  }, {
+    "pattern":"\\Qparti_time/input/tt__init.class\\E"
+  }, {
+    "pattern":"\\Qparti_time/input/yaml.clj\\E"
+  }, {
+    "pattern":"\\Qparti_time/input/yaml__init.class\\E"
+  }, {
+    "pattern":"\\Qparti_time/invoice_report.clj\\E"
+  }, {
+    "pattern":"\\Qparti_time/invoice_report__init.class\\E"
+  }, {
+    "pattern":"\\Qparti_time/output/api.clj\\E"
+  }, {
+    "pattern":"\\Qparti_time/output/api__init.class\\E"
+  }, {
+    "pattern":"\\Qparti_time/output/tl.clj\\E"
+  }, {
+    "pattern":"\\Qparti_time/output/tl__init.class\\E"
+  }, {
+    "pattern":"\\Qparti_time/summary.clj\\E"
+  }, {
+    "pattern":"\\Qparti_time/summary__init.class\\E"
+  }, {
+    "pattern":"\\Qparti_time/timesheet.clj\\E"
+  }, {
+    "pattern":"\\Qparti_time/timesheet__init.class\\E"
+  }, {
+    "pattern":"\\Qparti_time/util/cli.clj\\E"
+  }, {
+    "pattern":"\\Qparti_time/util/cli__init.class\\E"
+  }, {
+    "pattern":"\\Qparti_time/util/time.clj\\E"
+  }, {
+    "pattern":"\\Qparti_time/util/time__init.class\\E"
+  }, {
+    "pattern":"\\Quser.clj\\E"
+  }, {
+    "pattern":"\\Qyaml/core.clj\\E"
+  }, {
+    "pattern":"\\Qyaml/core__init.class\\E"
+  }, {
+    "pattern":"\\Qyaml/reader.clj\\E"
+  }, {
+    "pattern":"\\Qyaml/reader__init.class\\E"
+  }, {
+    "pattern":"\\Qyaml/writer.clj\\E"
+  }, {
+    "pattern":"\\Qyaml/writer__init.class\\E"
+  }, {
+    "pattern":"java.base:\\Qjdk/internal/icu/impl/data/icudt74b/nfkc.nrm\\E"
+  }, {
+    "pattern":"java.base:\\Qjdk/internal/icu/impl/data/icudt74b/uprops.icu\\E"
+  }, {
+    "pattern":"java.base:\\Qsun/net/idn/uidna.spp\\E"
+  }]},
+  "bundles":[]
+}
