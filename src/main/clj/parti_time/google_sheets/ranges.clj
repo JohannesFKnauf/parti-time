@@ -111,5 +111,6 @@
    :end-row (min end-row-1 end-row-2)})
 
 
-;; Known limitations:
-;;  -> intersect does not properly check for non-overlapping ranges
+;; Known limitation: intersect does not properly check for non-overlapping ranges
+
+;; Known limitation: the range parsing/printing does not properly support several special cases, e.g. no sheet, "A:F" without row numbers, "A3" single fields, ...
