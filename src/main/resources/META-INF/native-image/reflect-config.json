@@ -132,9 +132,6 @@
   "name":"clojure.core.protocols__init"
 },
 {
-  "name":"clojure.core.server__init"
-},
-{
   "name":"clojure.core__init"
 },
 {
@@ -148,9 +145,6 @@
 },
 {
   "name":"clojure.data.json.JSONWriter"
-},
-{
-  "name":"clojure.data.json__init"
 },
 {
   "name":"clojure.edn__init"
@@ -613,9 +607,6 @@
 },
 {
   "name":"flatland.ordered.map.TransientOrderedMap"
-},
-{
-  "name":"flatland.ordered.map__init"
 },
 {
   "name":"flatland.ordered.set.OrderedSet"
