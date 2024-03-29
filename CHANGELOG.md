@@ -14,8 +14,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [?.?.?] - Geriatric Go-go (Unreleased)
 
-## [?.?.?] - Feuriger Feierabend (Unreleased)
+## [1.3.0] - Feuriger Feierabend (2024-03-29)
 
+- Feature: First version of Google Sheets integration (download+append)
+- Improvement: github actions for tag builds build the native-image release
 
 ## [1.2.0] - Effective Ecstasy (2024-02-24)
 
