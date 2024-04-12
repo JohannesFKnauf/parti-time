@@ -63,18 +63,18 @@
                         output-format
                         output-parti-file]}]
   (parti-time.util.cli/assert-mandatory-argument google-sheet-id)
-  (let [credentials (parti-time.google-sheets.client/get-credentials)]
-    (->> google-sheet-id
-         (parti-time.google-sheets.timeline/google-sheet->timeline credentials)
-         (parti-time.output.api/write-timeline output-format output-parti-file))))
+  (parti-time.google-sheets.client/init!)
+  (->> google-sheet-id
+       (parti-time.google-sheets.timeline/google-sheet->timeline)
+       (parti-time.output.api/write-timeline output-format output-parti-file)))
 
 (defn append [{:keys [google-sheet-id
                       input-format
                       input-parti-file]}]
   (parti-time.util.cli/assert-mandatory-argument google-sheet-id)
-  (let [credentials (parti-time.google-sheets.client/get-credentials)
-        timeline (parti-time.input.api/read-timeline input-format input-parti-file)]
-    (parti-time.google-sheets.timeline/append-timeline! credentials google-sheet-id timeline)
+  (parti-time.google-sheets.client/init!)
+  (let [timeline (parti-time.input.api/read-timeline input-format input-parti-file)]
+    (parti-time.google-sheets.timeline/append-timeline! google-sheet-id timeline)
     (println (str "Successfully appended timeline to google sheet '" google-sheet-id "'"))))
  
 

@@ -2,5 +2,9 @@
 {
   "name":"java.lang.Boolean",
   "methods":[{"name":"getBoolean","parameterTypes":["java.lang.String"] }]
+},
+{
+  "name":"parti_time.cli",
+  "methods":[{"name":"main","parameterTypes":["java.lang.String[]"] }]
 }
 ]

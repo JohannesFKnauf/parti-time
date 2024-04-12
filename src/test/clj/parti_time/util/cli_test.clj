@@ -40,7 +40,7 @@
        ~@body)))
 
 (t/deftest error-printer
-  (t/is (= "An error occured:\nBla\n" (with-err-str
+  (t/is (= "An error occured:\njava.lang.RuntimeException: Bla\nBla\n" (with-err-str
                                         (let [thrower (fn [_] (throw (RuntimeException. "Bla")))
                                               wrapped-fn (sut/with-error-printer thrower)]
                                           (wrapped-fn nil)))))

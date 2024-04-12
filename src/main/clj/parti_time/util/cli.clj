@@ -25,6 +25,7 @@
       (catch Exception ex
         (binding [*out* *err*]
           (println "An error occured:")
+          (println (.toString ex))
           (println (.getMessage ex)))
         1   ; return code for cli-matic
         ))))
