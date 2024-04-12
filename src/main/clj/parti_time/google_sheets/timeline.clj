@@ -22,11 +22,10 @@
     (throw (RuntimeException. (format "Assertion failed: Value '%s' is blank." value)))))
 
 (defn check-headers
-  [credentials
-   google-sheet-id]
+  [google-sheet-id]
   (let [[[title name]
          empty
-         header-row] (:values (parti-time.google-sheets.client/get-cells credentials google-sheet-id "A1:F3"))]
+         header-row] (:values (parti-time.google-sheets.client/get-cells google-sheet-id "A1:F3"))]
     (assert-equals title "Zeitnachweis")
     (assert-non-blank name)
     (assert-equals empty [])
@@ -48,10 +47,9 @@
       time-window)
     (catch Exception ex (throw (RuntimeException. (str "Failed to parse row: " row) ex)))))
 
-(defn google-sheet->timeline [credentials
-                               google-sheet-id]
+(defn google-sheet->timeline [google-sheet-id]
   (let [{raw-timesheet :values
-         range :range} (parti-time.google-sheets.client/get-cells credentials google-sheet-id "A:F")
+         range :range} (parti-time.google-sheets.client/get-cells google-sheet-id "A:F")
         timesheet-with-header-row (drop-while (partial not= standard-header-row) raw-timesheet)
         timesheet (drop 1 timesheet-with-header-row)
         time-windows (map row->time-window timesheet)]
@@ -65,11 +63,10 @@
   dropped. Also, joining occupations by comma is not reversable, since
   an occupation can contain a comma itself (it's just discouraged, but
   not forbidden)."
-  [credentials
-   google-sheet-id
+  [google-sheet-id
    timeline]
-  (check-headers credentials google-sheet-id)
-  (let [{[last-row] :values} (parti-time.google-sheets.client/get-last-row credentials google-sheet-id "A:F")
+  (check-headers google-sheet-id)
+  (let [{[last-row] :values} (parti-time.google-sheets.client/get-last-row google-sheet-id "A:F")
         not-same-row? (fn [row1 row2]
                         (not= (row->time-window row1)
                               (row->time-window row2)))
@@ -77,7 +74,7 @@
         new-report (->> report
                         (drop-while (partial not-same-row? last-row))
                         (drop 1))]
-    (parti-time.google-sheets.client/append-rows credentials google-sheet-id new-report "A:F")))
+    (parti-time.google-sheets.client/append-rows google-sheet-id new-report "A:F")))
 
 
 ;; Known limitation: appending doesn't force-format all appended rows

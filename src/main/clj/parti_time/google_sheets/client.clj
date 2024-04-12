@@ -1,69 +1,49 @@
 (ns parti-time.google-sheets.client
-  (:import (com.google.api.client.extensions.java6.auth.oauth2 AuthorizationCodeInstalledApp)
-           (com.google.api.client.extensions.jetty.auth.oauth2 LocalServerReceiver$Builder)
-           (com.google.api.client.auth.oauth2 Credential)
-           (com.google.api.client.googleapis.auth.oauth2 GoogleAuthorizationCodeFlow$Builder
-                                                         GoogleClientSecrets)
-           (com.google.api.client.googleapis.javanet GoogleNetHttpTransport)
-           (com.google.api.client.json.gson GsonFactory)
-           (com.google.api.client.util.store FileDataStoreFactory)
-           (com.google.api.services.sheets.v4 Sheets
-                                              SheetsScopes
-                                              Sheets$Builder)
-           (com.google.api.services.sheets.v4.model AppendValuesResponse
-                                                    ValueRange))
-  (:require [clojure.java.io :as io]))
+  (:require [cheshire.core :as json]
+            [clojure.edn :as edn]
+            [clojure.java.io :as io]
+            [happygapi.sheets.spreadsheets :as gsheets]
+            [happy.oauth2-credentials :as credentials]))
 
-(defn default-http-transport []
-  (GoogleNetHttpTransport/newTrustedTransport))
+(def google-client-secret-path
+  (str (System/getProperty "user.home") "/.config/parti-time/credentials.json"))
 
-(defn default-json-factory []
-  (GsonFactory/getDefaultInstance))
+(def credentials-cache-path
+  (str (System/getProperty "user.home") "/.cache/parti-time/tokens"))
 
-(def default-data-store-factory
-  (->> "/.cache/parti-time/tokens"
-       (str (System/getProperty "user.home"))
-       (io/file)
-       (FileDataStoreFactory.)))
+(def *credentials-cache
+  (atom nil))
 
-(defn get-client-secrets []
-  (->> "/.config/parti-time/credentials.json"
-       (str (System/getProperty "user.home"))
-       (io/input-stream)
-       (io/reader)
-       (GoogleClientSecrets/load (default-json-factory))))
+(defn fetch-credentials [user]
+  (or (get @*credentials-cache user)
+      (let [credentials-file (io/file credentials-cache-path (str user ".edn"))]
+        (when (.exists credentials-file)
+          (edn/read-string (slurp credentials-file))))))
 
-(defn get-credentials
-  "Get OAuth credentials from Google by performing the Authorization Flow.
+(defn save-credentials [user new-credentials]
+  (when (not= @*credentials-cache new-credentials)
+    (swap! *credentials-cache assoc user new-credentials)
+    (spit (io/file (doto (io/file credentials-cache-path) (.mkdirs))
+                   (str user ".edn"))
+          new-credentials)))
 
-  The user will have to confirm access in a browser window. parti-time
-  will start a server listening on localhost and the browser window
-  will redirect the user to this local server, to return the
-  authorization result.
+(def default-oauth-callback-port
+  42424)
 
-  Requires the app credentials JSON file. The app credentials are not
-  secret, since they are only used for rate limiting, not for access
-  control. They can be persisted safely."
-  []
-  (let [flow (.. (GoogleAuthorizationCodeFlow$Builder. (default-http-transport)
-                                                       (default-json-factory)
-                                                       (get-client-secrets)
-                                                       [(SheetsScopes/SPREADSHEETS)])
-                 (setDataStoreFactory ^FileDataStoreFactory default-data-store-factory)
-                 (setAccessType "offline")
-                 (build))
-        receiver (.. (LocalServerReceiver$Builder.)
-                     (setPort -1)  ; find unused port
-                     (build))
-        app (AuthorizationCodeInstalledApp. flow receiver)]
-    (.authorize app "user")))
+(defn get-client-secret []
+  (-> google-client-secret-path
+      slurp
+      (json/parse-string true)
+      (get :installed)
+      (update-in [:redirect_uris 0] #(clojure.string/replace % #"^(http://localhost)(:\d+)?" (str "$1:" default-oauth-callback-port)))))
 
-(defn sheets-service ^Sheets [^Credential credentials]
-  (.. (Sheets$Builder. (default-http-transport)
-                       (default-json-factory)
-                       credentials)
-      (setApplicationName "parti-time CLI")
-      (build)))
+(defn init! []
+  (credentials/init! (get-client-secret)
+                     ["https://www.googleapis.com/auth/spreadsheets"]
+                     fetch-credentials
+                     save-credentials))
+
+; (gsheets/values-get$ (credentials/auth!) {:spreadsheetId "1rTZasIZLVx6G4xczbS9tt2ag3OhbRhUta04VstweaUw" :range "A:Z"})
 
 (defn get-cells
   "get-cells returns cells in a sheet as plain data.
@@ -77,18 +57,10 @@
   will return the third row. 1:3 and 3:1 are equivalent and both
   return the first until including the third row. A1:B3 returns the
   first 3 rows containing the first 2 columns."
-  [credentials sheet-id range]
-  (let [service (sheets-service credentials)
-        request (.. service
-                    (spreadsheets)
-                    (values)
-                    (get sheet-id
-                         range))
-        ^ValueRange response (. request execute)]
-    {:values (.. response
-                 getValues)
-     :range (.. response
-                getRange)}))
+  [sheet-id range]
+  (gsheets/values-get$ (credentials/auth!)
+                       {:spreadsheetId sheet-id
+                        :range range}))
 
 (defn get-last-row
   "get-last-row returns the last row in a sheet.
@@ -96,46 +68,34 @@
   It does so by an API trick: When appending to a sheet, the Google
   Sheets API returns the range that got updated. When trying an empty
   append, this will reveal exactly the range that we desire."
-  ([credentials sheet-id]
-   (get-last-row credentials sheet-id "A:Z"))
-  ([credentials sheet-id search-range]
-   (let [service (sheets-service credentials)
-         empty-value-range (ValueRange.)
-         request (.. service
-                     (spreadsheets)
-                     (values)
-                     (append sheet-id
-                             search-range
-                             empty-value-range)
-                     (setValueInputOption "USER_ENTERED"))
-         ^AppendValuesResponse response (. request execute)
-         first-empty-cell (.. response
-                              getUpdates
-                              getUpdatedRange)
-         [_ _ _ first-empty-row-number] (re-find #"(?<sheet>[^!]*)!(?<column>[A-Z]*)(?<row>[0-9]*)" first-empty-cell) ;; TODO replace by range functions
+  ([sheet-id]
+   (get-last-row sheet-id "A:Z"))
+  ([sheet-id search-range]
+   (let [response (gsheets/values-append$ (credentials/auth!)
+                           {:spreadsheetId sheet-id
+                            :range search-range
+                            :valueInputOption "USER_ENTERED"}
+                           {:values [[]]})
+         first-empty-cell (get-in response [:updates :updatedRange])
+         [_ _ _ first-empty-row-number] (re-find #"(?<sheet>[^!]*)!(?<column>[A-Z]*)(?<row>[0-9]*)" first-empty-cell)
+         ;; TODO replace by range functions
          first-empty-row (Integer/parseInt first-empty-row-number)
          last-row (- first-empty-row 1)
          last-row-range (str "A" last-row ":F" last-row)] ;; TODO make generic depend on search-range
-     (get-cells credentials sheet-id last-row-range))))
+     (get-cells sheet-id last-row-range))))
 
 (defn append-rows
   "append rows to a Google sheet, identified by sheet-id.
 
   The rows is given as a nested List, e.g. [[1 2 3] [4 5 6]]."
-  ([credentials sheet-id rows]
-   (append-rows credentials sheet-id rows "A:Z"))
-  ([credentials sheet-id rows input-range]
-   (let [service (sheets-service credentials)
-         value-range (.. (ValueRange.)
-                         (setValues rows))
-         request (.. service
-                     (spreadsheets)
-                     (values)
-                     (append sheet-id
-                             input-range
-                             value-range)
-                    (setValueInputOption "USER_ENTERED"))
-         ^AppendValuesResponse response (. request execute)]
+  ([sheet-id rows]
+   (append-rows sheet-id rows "A:Z"))
+  ([sheet-id rows input-range]
+   (let [response (gsheets/values-append$ (credentials/auth!)
+                           {:spreadsheetId sheet-id
+                            :range input-range
+                            :valueInputOption "USER_ENTERED"}
+                           {:values rows})]
      (get-in response ["updates" "updatedRange"]))))
 
 ;; Known limitation: No explicit login/logout commands yet
@@ -146,3 +106,7 @@
 ;;  login --ttl: not possible for Google's API limitations
 ;;  -> running a command without being logged in could use an in-memory data store option, i.e. forcing auth on every command
 ;;  -> https://cloud.google.com/java/docs/reference/google-http-client/latest/com.google.api.client.util.store.MemoryDataStoreFactory?hl=en#com_google_api_client_util_store_MemoryDataStoreFactory_getDefaultInstance__
+
+;; Known limitation: Google login screen redirects you to a page "Not able to connect" instead of a page saying "You can close that page now" (that limitation is inherited by using happygapi)
+
+;; Known limitation: We listen on a fixed port 42424 instead of a random port

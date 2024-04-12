@@ -9,11 +9,119 @@
   }, {
     "pattern":"\\QMETA-INF/services/java.time.zone.ZoneRulesProvider\\E"
   }, {
+    "pattern":"\\QMETA-INF/services/org.apache.commons.logging.LogFactory\\E"
+  }, {
+    "pattern":"\\Qbuddy/core/bytes.clj\\E"
+  }, {
+    "pattern":"\\Qbuddy/core/bytes__init.class\\E"
+  }, {
+    "pattern":"\\Qbuddy/core/codecs.clj\\E"
+  }, {
+    "pattern":"\\Qbuddy/core/codecs/base64.clj\\E"
+  }, {
+    "pattern":"\\Qbuddy/core/codecs/base64__init.class\\E"
+  }, {
+    "pattern":"\\Qbuddy/core/codecs__init.class\\E"
+  }, {
+    "pattern":"\\Qbuddy/core/crypto.clj\\E"
+  }, {
+    "pattern":"\\Qbuddy/core/crypto__init.class\\E"
+  }, {
+    "pattern":"\\Qbuddy/core/dsa.clj\\E"
+  }, {
+    "pattern":"\\Qbuddy/core/dsa__init.class\\E"
+  }, {
+    "pattern":"\\Qbuddy/core/hash.clj\\E"
+  }, {
+    "pattern":"\\Qbuddy/core/hash__init.class\\E"
+  }, {
+    "pattern":"\\Qbuddy/core/keys.clj\\E"
+  }, {
+    "pattern":"\\Qbuddy/core/keys/jwk/ec.clj\\E"
+  }, {
+    "pattern":"\\Qbuddy/core/keys/jwk/ec__init.class\\E"
+  }, {
+    "pattern":"\\Qbuddy/core/keys/jwk/eddsa.clj\\E"
+  }, {
+    "pattern":"\\Qbuddy/core/keys/jwk/eddsa__init.class\\E"
+  }, {
+    "pattern":"\\Qbuddy/core/keys/jwk/okp.clj\\E"
+  }, {
+    "pattern":"\\Qbuddy/core/keys/jwk/okp__init.class\\E"
+  }, {
+    "pattern":"\\Qbuddy/core/keys/jwk/proto.clj\\E"
+  }, {
+    "pattern":"\\Qbuddy/core/keys/jwk/proto__init.class\\E"
+  }, {
+    "pattern":"\\Qbuddy/core/keys/jwk/rsa.clj\\E"
+  }, {
+    "pattern":"\\Qbuddy/core/keys/jwk/rsa__init.class\\E"
+  }, {
+    "pattern":"\\Qbuddy/core/keys/pem.clj\\E"
+  }, {
+    "pattern":"\\Qbuddy/core/keys/pem__init.class\\E"
+  }, {
+    "pattern":"\\Qbuddy/core/keys__init.class\\E"
+  }, {
+    "pattern":"\\Qbuddy/core/mac.clj\\E"
+  }, {
+    "pattern":"\\Qbuddy/core/mac__init.class\\E"
+  }, {
+    "pattern":"\\Qbuddy/core/nonce.clj\\E"
+  }, {
+    "pattern":"\\Qbuddy/core/nonce__init.class\\E"
+  }, {
+    "pattern":"\\Qbuddy/core/padding.clj\\E"
+  }, {
+    "pattern":"\\Qbuddy/core/padding__init.class\\E"
+  }, {
+    "pattern":"\\Qbuddy/sign/jwe.clj\\E"
+  }, {
+    "pattern":"\\Qbuddy/sign/jwe/cek.clj\\E"
+  }, {
+    "pattern":"\\Qbuddy/sign/jwe/cek__init.class\\E"
+  }, {
+    "pattern":"\\Qbuddy/sign/jwe__init.class\\E"
+  }, {
+    "pattern":"\\Qbuddy/sign/jws.clj\\E"
+  }, {
+    "pattern":"\\Qbuddy/sign/jws__init.class\\E"
+  }, {
+    "pattern":"\\Qbuddy/sign/jwt.clj\\E"
+  }, {
+    "pattern":"\\Qbuddy/sign/jwt__init.class\\E"
+  }, {
+    "pattern":"\\Qbuddy/sign/util.clj\\E"
+  }, {
+    "pattern":"\\Qbuddy/sign/util__init.class\\E"
+  }, {
+    "pattern":"\\Qbuddy/util/deflate.clj\\E"
+  }, {
+    "pattern":"\\Qbuddy/util/deflate__init.class\\E"
+  }, {
+    "pattern":"\\Qbuddy/util/ecdsa.clj\\E"
+  }, {
+    "pattern":"\\Qbuddy/util/ecdsa__init.class\\E"
+  }, {
     "pattern":"\\Qcheshire/core.clj\\E"
   }, {
-    "pattern":"\\Qcheshire/core.cljc\\E"
-  }, {
     "pattern":"\\Qcheshire/core__init.class\\E"
+  }, {
+    "pattern":"\\Qcheshire/factory.clj\\E"
+  }, {
+    "pattern":"\\Qcheshire/factory__init.class\\E"
+  }, {
+    "pattern":"\\Qcheshire/generate.clj\\E"
+  }, {
+    "pattern":"\\Qcheshire/generate__init.class\\E"
+  }, {
+    "pattern":"\\Qcheshire/generate_seq.clj\\E"
+  }, {
+    "pattern":"\\Qcheshire/generate_seq__init.class\\E"
+  }, {
+    "pattern":"\\Qcheshire/parse.clj\\E"
+  }, {
+    "pattern":"\\Qcheshire/parse__init.class\\E"
   }, {
     "pattern":"\\Qcli_matic/core.clj\\E"
   }, {
@@ -71,6 +179,42 @@
   }, {
     "pattern":"\\Qcli_matic/utils_v2__init.class\\E"
   }, {
+    "pattern":"\\Qclj_http/client.clj\\E"
+  }, {
+    "pattern":"\\Qclj_http/client__init.class\\E"
+  }, {
+    "pattern":"\\Qclj_http/conn_mgr.clj\\E"
+  }, {
+    "pattern":"\\Qclj_http/conn_mgr__init.class\\E"
+  }, {
+    "pattern":"\\Qclj_http/cookies.clj\\E"
+  }, {
+    "pattern":"\\Qclj_http/cookies__init.class\\E"
+  }, {
+    "pattern":"\\Qclj_http/core.clj\\E"
+  }, {
+    "pattern":"\\Qclj_http/core__init.class\\E"
+  }, {
+    "pattern":"\\Qclj_http/headers.clj\\E"
+  }, {
+    "pattern":"\\Qclj_http/headers__init.class\\E"
+  }, {
+    "pattern":"\\Qclj_http/links.clj\\E"
+  }, {
+    "pattern":"\\Qclj_http/links__init.class\\E"
+  }, {
+    "pattern":"\\Qclj_http/multipart.clj\\E"
+  }, {
+    "pattern":"\\Qclj_http/multipart__init.class\\E"
+  }, {
+    "pattern":"\\Qclj_http/util.clj\\E"
+  }, {
+    "pattern":"\\Qclj_http/util__init.class\\E"
+  }, {
+    "pattern":"\\Qclj_tuple.clj\\E"
+  }, {
+    "pattern":"\\Qclj_tuple__init.class\\E"
+  }, {
     "pattern":"\\Qclj_yaml/core.clj\\E"
   }, {
     "pattern":"\\Qclj_yaml/core.cljc\\E"
@@ -92,6 +236,10 @@
     "pattern":"\\Qclojure/core/server.clj\\E"
   }, {
     "pattern":"\\Qclojure/core/server__init.class\\E"
+  }, {
+    "pattern":"\\Qclojure/core/specs/alpha.clj\\E"
+  }, {
+    "pattern":"\\Qclojure/core/specs/alpha__init.class\\E"
   }, {
     "pattern":"\\Qclojure/core__init.class\\E"
   }, {
@@ -127,9 +275,17 @@
   }, {
     "pattern":"\\Qclojure/instant__init.class\\E"
   }, {
+    "pattern":"\\Qclojure/java/browse.clj\\E"
+  }, {
+    "pattern":"\\Qclojure/java/browse__init.class\\E"
+  }, {
     "pattern":"\\Qclojure/java/io.clj\\E"
   }, {
     "pattern":"\\Qclojure/java/io__init.class\\E"
+  }, {
+    "pattern":"\\Qclojure/java/shell.clj\\E"
+  }, {
+    "pattern":"\\Qclojure/java/shell__init.class\\E"
   }, {
     "pattern":"\\Qclojure/main.clj\\E"
   }, {
@@ -179,15 +335,33 @@
   }, {
     "pattern":"\\Qclojure/spec/gen/alpha__init.class\\E"
   }, {
+    "pattern":"\\Qclojure/stacktrace.clj\\E"
+  }, {
+    "pattern":"\\Qclojure/stacktrace__init.class\\E"
+  }, {
     "pattern":"\\Qclojure/string.clj\\E"
   }, {
     "pattern":"\\Qclojure/string__init.class\\E"
+  }, {
+    "pattern":"\\Qclojure/template.clj\\E"
+  }, {
+    "pattern":"\\Qclojure/template__init.class\\E"
+  }, {
+    "pattern":"\\Qclojure/test.clj\\E"
+  }, {
+    "pattern":"\\Qclojure/test__init.class\\E"
   }, {
     "pattern":"\\Qclojure/tools/cli.clj\\E"
   }, {
     "pattern":"\\Qclojure/tools/cli.cljc\\E"
   }, {
     "pattern":"\\Qclojure/tools/cli__init.class\\E"
+  }, {
+    "pattern":"\\Qclojure/tools/reader/edn.clj\\E"
+  }, {
+    "pattern":"\\Qclojure/tools/reader/edn.cljc\\E"
+  }, {
+    "pattern":"\\Qclojure/tools/reader/edn__init.class\\E"
   }, {
     "pattern":"\\Qclojure/uuid.clj\\E"
   }, {
@@ -203,11 +377,19 @@
   }, {
     "pattern":"\\Qclojure_csv/core__init.class\\E"
   }, {
-    "pattern":"\\Qcom/google/api/client/googleapis/google-api-client.properties\\E"
+    "pattern":"\\Qcognitect/transit.clj\\E"
   }, {
-    "pattern":"\\Qcom/google/api/client/googleapis/google.p12\\E"
+    "pattern":"\\Qcognitect/transit.cljc\\E"
   }, {
-    "pattern":"\\Qcom/google/api/client/http/google-http-client.properties\\E"
+    "pattern":"\\Qcognitect/transit__init.class\\E"
+  }, {
+    "pattern":"\\Qcommons-logging.properties\\E"
+  }, {
+    "pattern":"\\Qcrouton/html.clj\\E"
+  }, {
+    "pattern":"\\Qcrouton/html.cljc\\E"
+  }, {
+    "pattern":"\\Qcrouton/html__init.class\\E"
   }, {
     "pattern":"\\Qdata_readers.clj\\E"
   }, {
@@ -260,6 +442,26 @@
     "pattern":"\\Qflatland/ordered/set.clj\\E"
   }, {
     "pattern":"\\Qflatland/ordered/set__init.class\\E"
+  }, {
+    "pattern":"\\Qhappy/oauth2.clj\\E"
+  }, {
+    "pattern":"\\Qhappy/oauth2__init.class\\E"
+  }, {
+    "pattern":"\\Qhappy/oauth2_capture_redirect.clj\\E"
+  }, {
+    "pattern":"\\Qhappy/oauth2_capture_redirect__init.class\\E"
+  }, {
+    "pattern":"\\Qhappy/oauth2_credentials.clj\\E"
+  }, {
+    "pattern":"\\Qhappy/oauth2_credentials__init.class\\E"
+  }, {
+    "pattern":"\\Qhappy/util.clj\\E"
+  }, {
+    "pattern":"\\Qhappy/util__init.class\\E"
+  }, {
+    "pattern":"\\Qhappygapi/sheets/spreadsheets.clj\\E"
+  }, {
+    "pattern":"\\Qhappygapi/sheets/spreadsheets__init.class\\E"
   }, {
     "pattern":"\\Qinstaparse/abnf.clj\\E"
   }, {
@@ -327,11 +529,15 @@
   }, {
     "pattern":"\\Qmedley/core__init.class\\E"
   }, {
+    "pattern":"\\Qmozilla/public-suffix-list.txt\\E"
+  }, {
     "pattern":"\\Qorchestra/spec/test.clj\\E"
   }, {
     "pattern":"\\Qorchestra/spec/test.cljc\\E"
   }, {
     "pattern":"\\Qorchestra/spec/test__init.class\\E"
+  }, {
+    "pattern":"\\Qorg/apache/http/client/version.properties\\E"
   }, {
     "pattern":"\\Qparti_time/cli.clj\\E"
   }, {
@@ -393,6 +599,74 @@
   }, {
     "pattern":"\\Qparti_time/util/time__init.class\\E"
   }, {
+    "pattern":"\\Qpotemkin.clj\\E"
+  }, {
+    "pattern":"\\Qpotemkin/collections.clj\\E"
+  }, {
+    "pattern":"\\Qpotemkin/collections__init.class\\E"
+  }, {
+    "pattern":"\\Qpotemkin/macros.clj\\E"
+  }, {
+    "pattern":"\\Qpotemkin/macros__init.class\\E"
+  }, {
+    "pattern":"\\Qpotemkin/namespaces.clj\\E"
+  }, {
+    "pattern":"\\Qpotemkin/namespaces__init.class\\E"
+  }, {
+    "pattern":"\\Qpotemkin/types.clj\\E"
+  }, {
+    "pattern":"\\Qpotemkin/types__init.class\\E"
+  }, {
+    "pattern":"\\Qpotemkin/utils.clj\\E"
+  }, {
+    "pattern":"\\Qpotemkin/utils__init.class\\E"
+  }, {
+    "pattern":"\\Qpotemkin/walk.clj\\E"
+  }, {
+    "pattern":"\\Qpotemkin/walk__init.class\\E"
+  }, {
+    "pattern":"\\Qpotemkin__init.class\\E"
+  }, {
+    "pattern":"\\Qriddley/compiler.clj\\E"
+  }, {
+    "pattern":"\\Qriddley/compiler__init.class\\E"
+  }, {
+    "pattern":"\\Qriddley/walk.clj\\E"
+  }, {
+    "pattern":"\\Qriddley/walk__init.class\\E"
+  }, {
+    "pattern":"\\Qring/adapter/jetty.clj\\E"
+  }, {
+    "pattern":"\\Qring/adapter/jetty__init.class\\E"
+  }, {
+    "pattern":"\\Qring/core/protocols.clj\\E"
+  }, {
+    "pattern":"\\Qring/core/protocols__init.class\\E"
+  }, {
+    "pattern":"\\Qring/util/codec.clj\\E"
+  }, {
+    "pattern":"\\Qring/util/codec__init.class\\E"
+  }, {
+    "pattern":"\\Qring/util/jakarta/servlet.clj\\E"
+  }, {
+    "pattern":"\\Qring/util/jakarta/servlet__init.class\\E"
+  }, {
+    "pattern":"\\Qring/websocket.clj\\E"
+  }, {
+    "pattern":"\\Qring/websocket/protocols.clj\\E"
+  }, {
+    "pattern":"\\Qring/websocket/protocols__init.class\\E"
+  }, {
+    "pattern":"\\Qring/websocket__init.class\\E"
+  }, {
+    "pattern":"\\Qslingshot/slingshot.clj\\E"
+  }, {
+    "pattern":"\\Qslingshot/slingshot__init.class\\E"
+  }, {
+    "pattern":"\\Qslingshot/support.clj\\E"
+  }, {
+    "pattern":"\\Qslingshot/support__init.class\\E"
+  }, {
     "pattern":"\\Quser.clj\\E"
   }, {
     "pattern":"\\Qyaml/core.clj\\E"
@@ -413,5 +687,11 @@
   }, {
     "pattern":"java.base:\\Qsun/net/idn/uidna.spp\\E"
   }]},
-  "bundles":[]
+  "bundles":[{
+    "name":"sun.text.resources.cldr.FormatData",
+    "locales":["en", "en-US", "und"]
+  }, {
+    "name":"sun.util.resources.cldr.CalendarData",
+    "locales":["und"]
+  }]
 }
