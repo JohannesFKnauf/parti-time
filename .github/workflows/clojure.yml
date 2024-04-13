@@ -21,7 +21,7 @@ jobs:
     - name: Run tests
       run: lein test
     - uses: graalvm/setup-graalvm@v1
-#      if: ${{ startsWith(github.ref, 'refs/tags/v') }}
+      if: ${{ startsWith(github.ref, 'refs/tags/v') }}
       with:
         version: '22.0.0'
         java-version: '22'
@@ -30,7 +30,7 @@ jobs:
         native-image-musl: true
         github-token: ${{ secrets.GITHUB_TOKEN }}
     - name: Build native image
-#      if: ${{ startsWith(github.ref, 'refs/tags/v') }}
+      if: ${{ startsWith(github.ref, 'refs/tags/v') }}
       run: |
         lein native-image
         mv target/parti-time ./parti-time-linux-x86_64

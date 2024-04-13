@@ -41,11 +41,9 @@
                         ~(str "--initialize-at-run-time="
                               (clojure.string/join ","
                                                    ["buddy.core.bytes__init"
-;                                                    "cli_matic.optionals__init"
                                                     "clojure.core.server__init"
                                                     "clojure.data.json__init"
                                                     "flatland.ordered.map__init"
-;                                                    "instaparse.abnf__init"
                                                     "org.apache.http.impl.auth.NTLMEngineImpl"]))
                         "--no-fallback"
                         "--no-server"
