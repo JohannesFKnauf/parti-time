@@ -1,4 +1,4 @@
-(defproject parti-time "1.2.1-SNAPSHOT"
+(defproject parti-time "lein-git-inject/version"
   :description "parti-time is a tool for partitioning timelines."
   :url "https://github.com/JohannesFKnauf/parti-time"
   :min-lein-version "2.11.1"
@@ -15,7 +15,9 @@
                  [org.clojure/test.check "1.1.1"]
                  [org.flatland/ordered "1.15.11"]
                  [ring/ring-jetty-adapter "1.12.1"]]
-  :plugins [[io.taylorwood/lein-native-image "0.3.1"]]
+  :plugins [[day8/lein-git-inject "0.0.13"]
+            [io.taylorwood/lein-native-image "0.3.1"]]
+  :middleware [leiningen.git-inject/middleware]
 
   :source-paths ["src/main/clj"]
   :test-paths ["src/test/clj" "src/itest/clj"]
@@ -39,11 +41,9 @@
                         ~(str "--initialize-at-run-time="
                               (clojure.string/join ","
                                                    ["buddy.core.bytes__init"
-                                                    "cli_matic.optionals__init"
                                                     "clojure.core.server__init"
                                                     "clojure.data.json__init"
                                                     "flatland.ordered.map__init"
-                                                    "instaparse.abnf__init"
                                                     "org.apache.http.impl.auth.NTLMEngineImpl"]))
                         "--no-fallback"
                         "--no-server"
