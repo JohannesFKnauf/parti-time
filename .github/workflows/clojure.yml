@@ -23,8 +23,8 @@ jobs:
     - uses: graalvm/setup-graalvm@v1
 #      if: ${{ startsWith(github.ref, 'refs/tags/v') }}
       with:
-        version: 'latest'
-        java-version: '21'
+        version: '22.0.0'
+        java-version: '22'
         components: 'native-image'
         distribution: 'graalvm-community'
         native-image-musl: true
