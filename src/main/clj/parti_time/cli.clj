@@ -77,11 +77,16 @@
     (parti-time.google-sheets.timeline/append-timeline! google-sheet-id timeline)
     (println (str "Successfully appended timeline to google sheet '" google-sheet-id "'"))))
  
+(defmacro get-version
+  "Get project version in compilation phase. Only applicable
+  to Leiningen projects."
+  []
+  `~(System/getProperty "parti-time.version"))
 
 (def APP-CONFIGURATION
   {:app {:command "parti-time"
          :description "Partition your time"
-         :version "1.2.1-SNAPSHOT"}
+         :version (get-version)}
    :commands [{:command "invoice-report"
                :description "Print an importable invoice report CSV"
                :opts [{:option "input-format" :as "Input file format" :type :string :default "tl"}
