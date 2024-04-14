@@ -5,10 +5,10 @@
             [happygapi.sheets.spreadsheets :as gsheets]
             [happy.oauth2-credentials :as credentials]))
 
-(def google-client-secret-path
+(defn google-client-secret-path []
   (str (System/getProperty "user.home") "/.config/parti-time/credentials.json"))
 
-(def credentials-cache-path
+(defn credentials-cache-path []
   (str (System/getProperty "user.home") "/.cache/parti-time/tokens"))
 
 (def *credentials-cache
@@ -16,14 +16,14 @@
 
 (defn fetch-credentials [user]
   (or (get @*credentials-cache user)
-      (let [credentials-file (io/file credentials-cache-path (str user ".edn"))]
+      (let [credentials-file (io/file (credentials-cache-path) (str user ".edn"))]
         (when (.exists credentials-file)
           (edn/read-string (slurp credentials-file))))))
 
 (defn save-credentials [user new-credentials]
   (when (not= @*credentials-cache new-credentials)
     (swap! *credentials-cache assoc user new-credentials)
-    (spit (io/file (doto (io/file credentials-cache-path) (.mkdirs))
+    (spit (io/file (doto (io/file (credentials-cache-path)) (.mkdirs))
                    (str user ".edn"))
           new-credentials)))
 
@@ -31,7 +31,7 @@
   42424)
 
 (defn get-client-secret []
-  (-> google-client-secret-path
+  (-> (google-client-secret-path)
       slurp
       (json/parse-string true)
       (get :installed)
