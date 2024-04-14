@@ -8,7 +8,7 @@ Partitioning implies:
 * 1 single timeline
 * strict order
 
-Otherwise keeping a partitioned timeline is similar to classical time-tracking. People typically use it to remember e.g. how long they were working on which projects and occupations.
+Otherwise keeping a partitioned timeline is similar to classical time-tracking. People use it to remember and document how long they've been working on which projects and occupations.
 
 parti-time enables users to
 * keep their timeline in plain text
@@ -58,31 +58,37 @@ Here is a sample day's declaration as timeline:
          Decision draft Project Y
     1730 Private
 
-In [`src/itest/resources/examples/v2_tl/TimeTracker.sample.tl`](https://github.com/JohannesFKnauf/parti-time/blob/master/src/itest/resources/examples/v2_tl/TimeTracker.sample.tl) you find a tl version of the complete 2-day sample time partitioning for the project dimension.
+In [`src/itest/resources/examples/v2_tl/TimeTracker.sample.tl`](https://github.com/JohannesFKnauf/parti-time/blob/master/src/itest/resources/examples/v2_tl/TimeTracker.sample.tl) you find a complete 2-day tl sample.
 
-## Getting Started with CLI frontend
+## Getting Started with parti-time's CLI frontend
 
-For all CLI commands tl files and yaml files can be used interchangeably. parti-time decides based on filename extension how to properly read the file.
+### Download and install
+
+* Download the static release binary from https://github.com/JohannesFKnauf/parti-time/releases
+* Store it in your `PATH`, e.g. in `~/bin` on Ubuntu Linux
+* Highly Recommended: Create a symlink or alias `pt`
 
 ### Get project summary
 
-    lein run projects examples/v1_yaml/TimeTracker.sample.yml
+For all CLI commands `tl` files, `tt` files and `yaml` files can be used interchangeably. You specify the format using the `--input-format` option. The default format is `tl`.
+
+    pt projects --input-format yaml src/itest/resources/examples/v1_yaml/TimeTracker.sample.yml
 	
-    ["Customer X 2019-08" 19.25]
-    ["Metamorphant" 1.5]
-    ["Private" 14.5]
-    ["Customer Z 2019-08" 1.0]
+    "Customer X 2019-08" 19.25
+    "Customer Z 2019-08" 1.0
+    "Metamorphant" 1.5
+    "Private" 14.5
 
 Reports a summary of hours booked per project. Unsorted. This is used for basic cross-checks.
 
 ### Get invoice report
 
-    lein run invoice-report examples/v1_yaml/TimeTracker.sample.yml "Customer X 2019-08"
+    pt invoice-report src/itest/resources/examples/v2_tl/TimeTracker.sample.tl "Customer X 2019-08"
 	
 	2019-08-12,05:45,17:30,01:45,10:00,"Some Task, Development of Blarz, Interesting other stuff, Architecture Whiteboard Session, Incident Blubb, Decision draft Project Y"
     2019-08-13,05:45,16:15,01:15,09:15,"Roadmap planning, Legacy Stack Analysis, Visualisation of Dependencies, Monitoring stack, Log shipping Integration"
 
-Creates a CSV report with a daily summary of booked times on a selected project. The report satisfies the usual german [Gesetz über die Durchführung von Maßnahmen des Arbeitsschutzes zur Verbesserung der Sicherheit und des Gesundheitsschutzes der Beschäftigten bei der Arbeit (Arbeitsschutzgesetz - ArbSchG)](https://www.gesetze-im-internet.de/arbschg/) conditions. This is typically demanded for consulting projects with a labor leasing time & material contract model (cf. [Gesetz zur Regelung der Arbeitnehmerüberlassung](http://www.gesetze-im-internet.de/a_g/)).
+`pt invoice-report` creates a CSV report with a daily summary of booked times on a selected project. The report satisfies the usual german [Gesetz über die Durchführung von Maßnahmen des Arbeitsschutzes zur Verbesserung der Sicherheit und des Gesundheitsschutzes der Beschäftigten bei der Arbeit (Arbeitsschutzgesetz - ArbSchG)](https://www.gesetze-im-internet.de/arbschg/) conditions. This is typically demanded for consulting projects with a labor leasing time & material contract model (cf. [Gesetz zur Regelung der Arbeitnehmerüberlassung](http://www.gesetze-im-internet.de/a_g/)).
 
 Rules typically involve
 
@@ -95,7 +101,7 @@ The list of occupations is meant as a reminder for the involved parties about th
 
 ### Get timesheet
 
-    lein run timesheet TimeTracker.sample.yml
+    pt timesheet src/itest/resources/examples/v2_tl/TimeTracker.sample.tl
 	
     2019-08-12,05:45,07:00,,Some Task,Customer X 2019-08
     2019-08-12,07:00,07:45,,Proof-Reading Metamorphant Blog,Metamorphant
@@ -119,7 +125,7 @@ The timesheet feature generates a report that follows the usual format of classi
 
 ## Prerequisites
 
-* Install Oracle GraalVM >= 21.0.1+12.1
+* Install Oracle GraalVM >= 22+36.1
 * Setup an environment variable `GRAALVM_HOME` pointing to your graalvm installation (e.g. in your `~/.bashrc`), e.g.
 
 ```
@@ -180,4 +186,4 @@ parti-time has been featured in
 
 In [```src/itest/resources/examples/v1_yaml/TimeTracker.sample.yml```](https://github.com/JohannesFKnauf/parti-time/blob/master/src/itest/resources/examples/v1_yaml/TimeTracker.sample.yml) you find a 2-day sample v1 time partitioning. You won't need it, except if you have legacy files that you want to convert to a new format.
 
-v1 YAML timelines are deprecated and will be removed in future versions.
+v1 YAML timelines are deprecated and will be removed in future versions. Use `pt convert` to migrate.
