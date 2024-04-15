@@ -20,14 +20,14 @@
 
   :git-version {:status-to-version
                 (fn [{:keys [tag version branch ahead ahead? dirty? ref-short] :as git}]
-                  (assert (re-find #"v\d+\.\d+\.\d+" tag)
+                  (let [[tag-match prefix patch] (re-find #"(?<=v)(\d+\.\d+)\.(\d+)" tag)]
+                  (assert tag-match
                           "Tag is assumed to be a raw SemVer version with a 'v' prefix")
-                  (if (and tag (not ahead?) (not dirty?))
-                    tag
-                    (let [[_ prefix patch] (re-find #"v(\d+\.\d+)\.(\d+)" tag)
-                          patch            (Long/parseLong patch)
+                  (if (and tag-match (not ahead?) (not dirty?))
+                    tag-match
+                    (let [patch            (Long/parseLong patch)
                           patch+           (inc patch)]  ; SNAPSHOT versions are +1 patch version ahead of the latest stable release, i.e. the latest tag
-                      (format "%s.%d-SNAPSHOT" prefix patch+))))}
+                      (format "%s.%d-SNAPSHOT" prefix patch+)))))}
   
   :source-paths ["src/main/clj"]
   :test-paths ["src/test/clj" "src/itest/clj"]
