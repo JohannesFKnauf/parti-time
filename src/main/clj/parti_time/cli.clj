@@ -11,6 +11,7 @@
             [parti-time.output.api]
             [parti-time.output.tl]        ; import for side-effect: multimethod registration
             [parti-time.timesheet]
+            [parti-time.report.days]
             [parti-time.summary]
             [parti-time.util.cli]))
 
@@ -37,6 +38,14 @@
          (sort-by first)
          (map (fn [[project hours]] (str "\"" project "\" " hours)))
          (clojure.string/join "\n")
+         println)))
+
+(defn days [{:keys [input-format
+                    parti-file]}]
+  (parti-time.util.cli/assert-mandatory-argument parti-file)
+  (let [timeline (parti-time.input.api/read-timeline input-format parti-file)]
+    (->> timeline
+         parti-time.report.days/days-report
          println)))
 
 ;; the function is named cmd-cat instead of cat, in order not to shadow clojure.core/cat
@@ -103,6 +112,11 @@
                :opts [{:option "input-format" :as "Input file format" :type :string :default "tl"}
                       {:option "parti-file" :as "" :type :string :short 0}]
                :runs (parti-time.util.cli/with-error-printer projects)}
+              {:command "days"
+               :description "Print a compact report about how days have been spent."
+               :opts [{:option "input-format" :as "Input file format" :type :string :default "tl"}
+                      {:option "parti-file" :as "" :type :string :short 0}]
+               :runs (parti-time.util.cli/with-error-printer days)}
               {:command "cat"
                :description "Read multiple input files and concatenate them to a single output file -- Beware! Performs no validation of the resulting output! Garbage-in, garbage-out."
                :opts [{:option "input-format" :as "Input file format" :type :string :default "tl"}
