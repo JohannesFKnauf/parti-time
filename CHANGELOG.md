@@ -12,7 +12,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [?.?.?] - Hyper Happening (Unreleased)
 
-## [?.?.?] - Geriatric Go-go (Unreleased)
+## [1.4.0] - Geriatric Go-go (2024-05-19)
+
+- Feature: Days Report
 
 ## [1.3.3] - Feuriger Feierabend (2024-04-14)
 
