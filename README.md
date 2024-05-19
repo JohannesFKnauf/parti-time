@@ -70,6 +70,13 @@ In [`src/itest/resources/examples/v2_tl/TimeTracker.sample.tl`](https://github.c
 
 ### Get project summary
 
+    pt projects src/itest/resources/examples/v2_tl/TimeTracker.sample.tl
+	
+    "Customer X 2019-08" 19.25
+    "Customer Z 2019-08" 1.0
+    "Metamorphant" 1.5
+    "Private" 14.5
+
 For all CLI commands `tl` files, `tt` files and `yaml` files can be used interchangeably. You specify the format using the `--input-format` option. The default format is `tl`.
 
     pt projects --input-format yaml src/itest/resources/examples/v1_yaml/TimeTracker.sample.yml
@@ -120,6 +127,32 @@ The list of occupations is meant as a reminder for the involved parties about th
     2019-08-13,17:00,18:00,,"Automated DEV host setup, Build pipelines",Customer Z 2019-08
 
 The timesheet feature generates a report that follows the usual format of classical timesheets, i.e. is time-slice oriented.
+
+### Get days report
+
+There is a report that enables you to check your bookings at a single glance: the days report.
+
+Each day is represented in a single line. The day is separated in 15m slots. Each 15m slot is displayed as a single character. Before the individual days, a key explains the character-project mappings. The days report requires a terminal width of at least 136 characters.
+
+```
+pt days src/itest/resources/examples/v2_tl/TimeTracker.sample.tl
+
+  Private
+. Customer X 2019-08
+_ Customer Z 2019-08
+- Metamorphant
+
+               0              3              6              9             12             15             18             21             24
+               |              |              |              |              |              |              |              |              |
+               |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |
+2019-08-12 Mon                              . .... ---. .... .... .... ..   .... .... .... ...   ... ..                                
+2019-08-13 Tue                              . ....    . .... .... .... ..   .... .... .... .... .--- ____
+```
+
+In the presented example, you can quickly make simple observations:
+* In general, the days have been used similarly for "Customer X 2019-08"
+* The time-window between 0700 and 0745 has been used differently: On 2019-08-12 it was used for Metamorphant, on 2019-08-13 for private activities.
+* At the end of 2019-08-13 there has been some Metamorphant activity and some Customer Z activity
 
 # Development
 
