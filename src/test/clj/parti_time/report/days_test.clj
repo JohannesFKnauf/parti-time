@@ -57,7 +57,7 @@
     :project "Customer Z 2019-08"
     :occupations ["Automated DEV host setup"
                   "Build pipelines"]}
-   {:start-time (time/parse-iso-date-time "2019-08-13t18:00")
+   {:start-time (time/parse-iso-date-time "2019-08-13t18:15")
     :project "Private"
     :occupations []}])
 
@@ -108,5 +108,5 @@
               "               |              |              |              |              |              |              |              |              |\n"
               "               |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |    |\n"
               "2019-08-12 Mon                              . .... ---. .... .... .... ..   .... .... .... ...   ... ..                                \n"
-              "2019-08-13 Tue                              . ....    . .... .... .... ..   .... .... .... .... .--- ____\n")
+              "2019-08-13 Tue                              . ....    . .... .... .... ..   .... .... .... .... .--- ____ _\n")
              (sut/days-report example-timeline)))))
