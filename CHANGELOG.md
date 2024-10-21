@@ -12,6 +12,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [?.?.?] - Hyper Happening (Unreleased)
 
+## [1.4.1] - Geriatric Go-go (2024-10-21)
+
+- Fix: Show trailing timebits in days report even if they don't end in a full hour
+
 ## [1.4.0] - Geriatric Go-go (2024-05-19)
 
 - Feature: Days Report
