@@ -50,7 +50,7 @@
                  :as day}]
   (str (.format date (DateTimeFormatter/ofPattern "yyyy-MM-dd E"))
        "  "
-       (apply str (str (clojure.string/join " " (map (partial apply str) (partition 4 project-bits)))))
+       (apply str (str (clojure.string/join " " (map (partial apply str) (partition-all 4 project-bits)))))
        "\n"))
 
 (defn days-report [timeline]
