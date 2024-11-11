@@ -154,6 +154,11 @@ In the presented example, you can quickly make simple observations:
 * The time-window between 0700 and 0745 has been used differently: On 2019-08-12 it was used for Metamorphant, on 2019-08-13 for private activities.
 * At the end of 2019-08-13 there has been some Metamorphant activity and some Customer Z activity
 
+### Getting started with the Google Timesheet Integration
+
+See the [dedicated docs](docs/developer_docs/google_sheets_api.md).
+
+
 # Development
 
 ## Prerequisites
