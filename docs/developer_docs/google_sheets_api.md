@@ -25,7 +25,7 @@ This recipe is mostly equivalent to the setup described in the [Java Quickstart 
   * Name: "parti-time CLI"
 * Download `credentials.json` to `~/.config/parti-time/credentials.json`
 
-# How does a metamorphant Google Sheet format look like?
+# What does a metamorphant Google Sheet format look like?
 
 In order to use the google sheet download/append features, you will need a Google Sheet in a metamorphant compatible format.
 
