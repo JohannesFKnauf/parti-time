@@ -14,6 +14,16 @@ parti-time enables users to
 * keep their timeline in plain text
 * create reports about their working hours
 
+## Why should you want to keep a timeline in plain text?
+
+The big advantage of plain text is, that it provides you with well-designed, well-understood generic tooling.
+* Editors
+* Version Control
+
+Because plain text is such a universal interface it allows every one to select their tooling of choice. 
+
+Also, with plain text in decentralized version control (like git), your time-tracking will work offline without any hassle. It also means you never lose data or get manipulated without noticing. For a client-server SPA you'd have to do a lot to get there.
+
 ## Feature roadmap
 
 Status quo:
