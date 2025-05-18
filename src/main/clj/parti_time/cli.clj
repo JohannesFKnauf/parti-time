@@ -50,13 +50,14 @@
 
 ;; the function is named cmd-cat instead of cat, in order not to shadow clojure.core/cat
 (defn cmd-cat [{input-files :_arguments
+                include-private? :include-private
                 :keys [input-format
                        output-format
                        output-file]}]
-  (->> input-files
-       (map (partial parti-time.input.api/read-timeline input-format))
-       (apply concat)
-       (parti-time.output.api/write-timeline output-format output-file)))
+    (cond->> input-files
+      :always (mapcat (partial parti-time.input.api/read-timeline input-format))
+      (not include-private?) (parti-time.core/collapse-private-details)
+      :always (parti-time.output.api/write-timeline output-format output-file)))
 
 (defn convert [{:keys [input-format
                        input-parti-file
@@ -121,7 +122,8 @@
                :description "Read multiple input files and concatenate them to a single output file -- Beware! Performs no validation of the resulting output! Garbage-in, garbage-out."
                :opts [{:option "input-format" :as "Input file format" :type :string :default "tl"}
                       {:option "output-format" :as "Output file format" :type :string :default "tl"}
-                      {:option "output-file" :as "Output file name. Defaults to '-', i.e. output to STDOUT." :type :string :default "-"}]
+                      {:option "output-file" :as "Output file name. Defaults to '-', i.e. output to STDOUT." :type :string :default "-"}
+                      {:option "include-private" :as "Preserve all details from private entries. Defaults to 'true'." :type :flag :default true}]
                :runs (parti-time.util.cli/with-error-printer cmd-cat)}
               {:command "convert"
                :description "Convert between parti-time formats"
