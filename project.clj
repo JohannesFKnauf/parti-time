@@ -66,6 +66,8 @@
              {:aot :all
               :native-image {:jvm-opts ["-Dclojure.compiler.direct-linking=true"
                                         "-Dclojure.compiler.elide-meta=[:doc :file :line :added]"]
-                             :opts ["-O3"]}}}
+                             :opts ["-O3"]}}
+             :uberjar
+             {:aot :all}}
 
   :main parti-time.cli)
