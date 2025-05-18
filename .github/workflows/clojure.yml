@@ -19,6 +19,10 @@ jobs:
       with:
         path: ~/.m2/repository
         key: ${{ runner.os }}-maven-${{ hashFiles('**/project.clj') }}
+    - name: Install leiningen
+      run: |
+        sudo apt-get -y install leiningen
+        which lein
     - name: Install dependencies
       run: lein deps
     - name: Run tests
