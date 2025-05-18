@@ -24,20 +24,18 @@ Because plain text is such a universal interface it allows every one to select t
 
 Also, with plain text in decentralized version control (like git), your time-tracking will work offline without any hassle. It also means you never lose data or get manipulated without noticing. For a client-server SPA you'd have to do a lot to get there.
 
-## Feature roadmap
+## Features -- today and (maybe) tomorrow
 
 Status quo:
 * tl file based reporting
 * editor support for tl files in emacs and vi
 * Google Sheet append
 
-2024-Q2:
-* tl lenses: Separate storage from tl editor view
+Ideas for the future:
+* tl lenses: Separate storage from tl editor view, select/export/edit/import/process similar to vipe
 * tt-like command line operations
-
-post 2024-Q2:
 * Web App
-* Tightly scoped access tokens for untrusted customer devices
+* Tightly scoped access tokens for web app access from untrusted customer devices
 
 ### v2: tl, the timeline DSL
 
@@ -166,8 +164,8 @@ In the presented example, you can quickly make simple observations:
 
 ### Getting started with the Google Timesheet Integration
 
-See the [dedicated docs](docs/developer_docs/google_sheets_api.md).
-
+* As a developer, see the dedicated [google sheets integration developer docs](docs/developer_docs/google_sheets_api.md).
+* As a user, see the dedicated [google sheets integration user docs](docs/user_guide/google_sheets_api.md).
 
 # Development
 

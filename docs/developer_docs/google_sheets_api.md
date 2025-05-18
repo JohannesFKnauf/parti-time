@@ -1,4 +1,12 @@
-# Where can I learn about the Google Sheets API?
+# Google Sheets Integration Developer Docs
+
+This guide is meant for developers, who want to start modifying the google sheets integration features.
+
+If you just ask yourself how to use it, see the [google sheets integration user guide](../user_guide/google_sheets_api.md).
+
+# FAQ
+
+## Where can I learn about the Google Sheets API?
 
 Start with the [Java Quickstart Guide for the Google Sheets API](https://developers.google.com/sheets/api/quickstart/java).
 
@@ -12,20 +20,11 @@ All Java APIs are just auto-generated wrappers of the underlying [Google Sheets 
 
 Starting with version 1.3.1, parti-time is using [Timothy Pratley's native clojure Google Client lib happygapi](https://github.com/timothypratley/happygapi).
 
-# How do I have to setup my Google API Client?
+## How do I have to setup my Google API Client?
 
-This recipe is mostly equivalent to the setup described in the [Java Quickstart Guide for the Google Sheets API](https://developers.google.com/sheets/api/quickstart/java).
+See the [google sheets integration user guide](../user_guide/google_sheets_api.md).
 
-* Create a new project `parti-time` in [Google Cloud Console](https://console.cloud.google.com/welcome?project=parti-time).
-* Enable the Google Sheets API ("Enabled APIs & services")
-* Configure the "OAuth Consent Screen" (only the minimum config needed)
-* Authorize "Credentials"
-  * Create "OAuth Client ID"
-  * Type: Desktop App
-  * Name: "parti-time CLI"
-* Download `credentials.json` to `~/.config/parti-time/credentials.json`
-
-# What does a metamorphant Google Sheet format look like?
+## What does a metamorphant Google Sheet format look like?
 
 In order to use the google sheet download/append features, you will need a Google Sheet in a metamorphant compatible format.
 
