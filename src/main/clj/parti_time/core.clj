@@ -34,3 +34,21 @@
          (mapv gen-time-slices
                time-windows
                (concat (drop 1 time-windows) [nil]))))
+
+(defn is-private? [time-slice]
+  (= "Private" (:project time-slice)))
+
+(defn wipe-occupations [time-slice]
+  (if (contains? time-slice :occupations)
+    (assoc time-slice :occupations [])
+    time-slice))
+
+(defn collapse-private-details [time-line]
+  (lazy-seq
+   (when-let [s (seq time-line)]
+     (let [fst (first s)]
+       (if (is-private? fst)
+         (let [collapsed-private (wipe-occupations fst)
+               remainder (drop-while is-private? s)]
+           (cons collapsed-private (collapse-private-details remainder)))
+         (cons (first s) (collapse-private-details (next s))))))))

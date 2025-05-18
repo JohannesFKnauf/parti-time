@@ -115,3 +115,48 @@
                :project "Private"}]
              (sut/time-windows->time-line [{:start-time (time/parse-iso-date-time "2024-03-03t11:00")
                                            :end-time (time/parse-iso-date-time "2024-03-03t11:30")}])))))
+
+(t/deftest private--test
+  (t/testing "Privateness check"
+    (t/is (= true (sut/is-private? {:project "Private"})))
+    (t/is (= false (sut/is-private? {:project "Something Else"}))))
+  (t/testing "Collapsing consecutive private entries"
+    (t/is (= [{:start-time (time/parse-iso-date-time "2019-07-02t11:30")
+               :project "Private"
+               :occupations []}
+              {:start-time (time/parse-iso-date-time "2019-07-02t13:00")
+               :project "Customer X"}
+              {:start-time (time/parse-iso-date-time "2019-07-02t15:00")
+               :project "Customer X"}
+              {:start-time (time/parse-iso-date-time "2019-07-02t17:00")
+               :project "Private"}
+              {:start-time (time/parse-iso-date-time "2019-07-03t08:00")
+               :project "Customer Y"}
+              {:start-time (time/parse-iso-date-time "2019-07-03t09:00")
+               :project "Private"
+               :occupations []}
+              {:start-time (time/parse-iso-date-time "2019-07-03t11:30")
+               :project "Customer Z"}]
+             (sut/collapse-private-details [{:start-time (time/parse-iso-date-time "2019-07-02t11:30")
+                                             :project "Private"
+                                             :occupations ["a" "b" "c"]}
+                                            {:start-time (time/parse-iso-date-time "2019-07-02t12:00")
+                                             :project "Private"
+                                             :occupations ["d" "e" "f"]}
+                                            {:start-time (time/parse-iso-date-time "2019-07-02t13:00")
+                                             :project "Customer X"}
+                                            {:start-time (time/parse-iso-date-time "2019-07-02t15:00")
+                                             :project "Customer X"}
+                                            {:start-time (time/parse-iso-date-time "2019-07-02t17:00")
+                                             :project "Private"}
+                                            {:start-time (time/parse-iso-date-time "2019-07-03t06:30")
+                                             :project "Private"}
+                                            {:start-time (time/parse-iso-date-time "2019-07-03t07:00")
+                                             :project "Private"}
+                                            {:start-time (time/parse-iso-date-time "2019-07-03t08:00")
+                                             :project "Customer Y"}
+                                            {:start-time (time/parse-iso-date-time "2019-07-03t09:00")
+                                             :project "Private"
+                                             :occupations ["g"]}
+                                            {:start-time (time/parse-iso-date-time "2019-07-03t11:30")
+                                             :project "Customer Z"}])))))
