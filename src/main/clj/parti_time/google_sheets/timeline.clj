@@ -90,11 +90,10 @@
 ;;                -> add a fixed value instead of a formula?
 ;;  - column E: wrap around
 
-;; Known limitation: Does not report details about the success, e.g. number of appended rows.
-
 ;; Known limitation: Does not remove and reset the filter on the sheet
 
 ;; Known limitation: Poor error messages, right now we don't keep context of sheet lines and print it in case of an error nor do we print more information about the data with the error e.g. the detailed time string that fails to be parsed
+
 ;; Known limitation: The program stops at the first error discovered when interpreting an existing sheet instead of using an error collection pattern on validation and returning all validation errors at once
 
 ;; Known limitation: Input validation is not very exhaustive

@@ -27,23 +27,18 @@
                    (str user ".edn"))
           new-credentials)))
 
-(def default-oauth-callback-port
-  42424)
-
 (defn get-client-secret []
   (-> (google-client-secret-path)
       slurp
       (json/parse-string true)
       (get :installed)
-      (update-in [:redirect_uris 0] #(clojure.string/replace % #"^(http://localhost)(:\d+)?" (str "$1:" default-oauth-callback-port)))))
+      (update-in [:redirect_uris 0] #(clojure.string/replace % #"^(http://localhost)(:\d+)?" "$1"))))
 
 (defn init! []
   (credentials/init! (get-client-secret)
                      ["https://www.googleapis.com/auth/spreadsheets"]
                      fetch-credentials
                      save-credentials))
-
-; (gsheets/values-get$ (credentials/auth!) {:spreadsheetId "1rTZasIZLVx6G4xczbS9tt2ag3OhbRhUta04VstweaUw" :range "A:Z"})
 
 (defn get-cells
   "get-cells returns cells in a sheet as plain data.
@@ -107,8 +102,5 @@
 ;;  -> running a command without being logged in could use an in-memory data store option, i.e. forcing auth on every command
 ;;  -> https://cloud.google.com/java/docs/reference/google-http-client/latest/com.google.api.client.util.store.MemoryDataStoreFactory?hl=en#com_google_api_client_util_store_MemoryDataStoreFactory_getDefaultInstance__
 
-;; Known limitation: Google login screen redirects you to a page "Not able to connect" instead of a page saying "You can close that page now" (that limitation is inherited by using happygapi)
-
-;; Known limitation: We listen on a fixed port 42424 instead of a random port
 
 ;; Known limitation: We are still stuck on https://github.com/timothypratley/happygapi -- last time we checked, https://github.com/timothypratley/happyapi wasn't ready for our use case, because the credential store/retrieve could not easily be overridden
