@@ -3,6 +3,7 @@
   (:require [parti-time.core]
             [parti-time.timesheet]
             [parti-time.google-sheets.client]
+            [parti-time.google-sheets.ranges]
             [parti-time.util.time]))
 
 (def standard-header-row
@@ -73,8 +74,12 @@
         report (parti-time.timesheet/report timeline)
         new-report (->> report
                         (drop-while (partial not-same-row? last-row))
-                        (drop 1))]
-    (parti-time.google-sheets.client/append-rows google-sheet-id new-report "A:F")))
+                        (drop 1))
+        updated-range (parti-time.google-sheets.client/append-rows google-sheet-id new-report "A:F")]
+    {:updated-rows-count (-> updated-range
+                             parti-time.google-sheets.ranges/A1->range
+                             parti-time.google-sheets.ranges/row-count)
+     :updated-rows-content new-report}))
 
 
 ;; Known limitation: appending doesn't force-format all appended rows
