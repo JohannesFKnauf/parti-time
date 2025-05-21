@@ -11,7 +11,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [?.?.?] - Irresistable Inn (Unreleased)
 
 ## [1.5.0] - Hyper Happening (Unreleased)
-- Feature: Diff Google Sheets timeline version with local timeline version
+- Feature: #31 Diff Google Sheets timeline version with local timeline version
+- Feature: #33 Improved feedback about append result
 
 ## [1.4.1] - Geriatric Go-go (2024-10-21)
 

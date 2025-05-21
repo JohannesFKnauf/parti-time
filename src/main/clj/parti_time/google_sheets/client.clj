@@ -96,7 +96,7 @@
                             :range input-range
                             :valueInputOption "USER_ENTERED"}
                            {:values rows})]
-     (get-in response ["updates" "updatedRange"]))))
+     (get-in response [:updates :updatedRange]))))
 
 ;; Known limitation: No explicit login/logout commands yet
 ;;  check if logged in: (.. default-data-store-factory (getDataStore "StoredCredential"))
@@ -110,3 +110,5 @@
 ;; Known limitation: Google login screen redirects you to a page "Not able to connect" instead of a page saying "You can close that page now" (that limitation is inherited by using happygapi)
 
 ;; Known limitation: We listen on a fixed port 42424 instead of a random port
+
+;; Known limitation: We are still stuck on https://github.com/timothypratley/happygapi -- last time we checked, https://github.com/timothypratley/happyapi wasn't ready for our use case, because the credential store/retrieve could not easily be overridden

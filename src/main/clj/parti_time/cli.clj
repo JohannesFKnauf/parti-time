@@ -15,6 +15,10 @@
             [parti-time.summary]
             [parti-time.util.cli]))
 
+(defn println-err [msg]
+  (binding [*out* *err*]
+    (println msg)))
+
 (defn invoice-report [{:keys [input-format
                               parti-file
                               project]}]
@@ -78,14 +82,19 @@
        (parti-time.google-sheets.timeline/google-sheet->timeline)
        (parti-time.output.api/write-timeline output-format output-parti-file)))
 
-(defn append [{:keys [google-sheet-id
+(defn append [{verbose? :verbose
+               :keys [google-sheet-id
                       input-format
                       input-parti-file]}]
   (parti-time.util.cli/assert-mandatory-argument google-sheet-id)
   (parti-time.google-sheets.client/init!)
-  (let [timeline (parti-time.input.api/read-timeline input-format input-parti-file)]
-    (parti-time.google-sheets.timeline/append-timeline! google-sheet-id timeline)
-    (println (str "Successfully appended timeline to google sheet '" google-sheet-id "'"))))
+  (let [timeline (parti-time.input.api/read-timeline input-format input-parti-file)
+        result-metadata (parti-time.google-sheets.timeline/append-timeline! google-sheet-id timeline)]
+    (println-err (str "Successfully appended " (:updated-rows-count result-metadata) " timeline rows to google sheet '" google-sheet-id "'"))
+    (when verbose?
+      (let [content (:updated-rows-content result-metadata)]
+        (doseq [line content]
+          (println-err (clojure.string/join "\t" line)))))))
  
 (defmacro get-version
   "Get project version in compilation phase. Only applicable
@@ -142,7 +151,8 @@
                :description "Append your times to a Google Sheet"
                :opts [{:option "google-sheet-id" :as "" :type :string}
                       {:option "input-format" :as "" :type :string :default "tl"}
-                      {:option "input-parti-file" :as "" :type :string :short 0}]
+                      {:option "input-parti-file" :as "" :type :string :short 0}
+                      {:option "verbose" :as "" :type :with-flag :default false}]
                :runs (parti-time.util.cli/with-error-printer append)}]})
 
 (defn -main [& args]
