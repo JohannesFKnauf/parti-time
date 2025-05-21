@@ -55,7 +55,21 @@
               :end-col 6
               :end-row 6}
              (sut/A1->range "A3:F6"))
-          "Parsing a simple range without sheet name"))
+          "Parsing a simple range without sheet name")
+    (t/is (= {:sheet-name nil
+              :start-col 1
+              :start-row 3
+              :end-col 1
+              :end-row 3}
+             (sut/A1->range "A3"))
+          "Parsing a single-cell range")
+        (t/is (= {:sheet-name "Sheet5"
+                  :start-col 17
+                  :start-row 34
+                  :end-col 17
+                  :end-row 34}
+                 (sut/A1->range "Sheet5!Q34"))
+          "Parsing a single-cell range"))
   (t/testing "Violating constraints"
     (t/is (thrown? RuntimeException
              (sut/A1->range "Sheet1!F3:A6"))
@@ -70,6 +84,11 @@
       "Sheet1!A3:F6"
       "Sheet1!A3:CE6"
       "A3:F6")))
+
+(t/deftest range-metrics
+  (t/testing "counts"
+    (t/is (= 4) (sut/row-count (sut/A1->range "A3:F6")))
+    (t/is (= 6) (sut/col-count (sut/A1->range "A3:F6")))))
 
 (t/deftest intersect-ranges
   (t/testing "Ranges with some overlap"
