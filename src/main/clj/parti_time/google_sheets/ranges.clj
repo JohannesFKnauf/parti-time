@@ -68,13 +68,15 @@
 
 
 (defn A1->range [a1]
-  (let [m (re-matcher #"((?<sheetName>[^!]*)!)?(?<startColumn>[A-Z]*)(?<startRow>[0-9]*):(?<endColumn>[A-Z]*)(?<endRow>[0-9]*)" a1)
+  (let [m (re-matcher #"((?<sheetName>[^!]*)!)?(?<startColumn>[A-Z]*)(?<startRow>[0-9]*)(:(?<endColumn>[A-Z]*)(?<endRow>[0-9]*))?" a1)
         _ (re-find m)
         range {:sheet-name (.group m "sheetName")
                :start-col (AZ->int (.group m "startColumn"))
                :start-row (Integer/parseInt (.group m "startRow"))
-               :end-col (AZ->int (.group m "endColumn"))
-               :end-row (Integer/parseInt (.group m "endRow"))}]
+               :end-col (AZ->int (or (.group m "endColumn")
+                                     (.group m "startColumn")))
+               :end-row (Integer/parseInt (or (.group m "endRow")
+                                              (.group m "startRow")))}]
     (when (< (:end-col range) (:start-col range))
       (throw (RuntimeException. (str "end column '" (:end-col range) "' is smaller than start column '" (:start-col range) "'"))))
     (when (< (:end-row range) (:start-row range))
@@ -89,6 +91,14 @@
        ":"
        (int->AZ (:end-col range))
        (:end-row range)))
+
+(defn row-count [range]
+  (- (:end-row range)
+     (:start-row range)))
+
+(defn col-count [range]
+  (- (:end-col range)
+     (:start-col range)))
 
 (defn intersect
   "Intersect two ranges, i.e. get the subrange that's included in both ranges."
