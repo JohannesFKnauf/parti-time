@@ -26,6 +26,8 @@
         (binding [*out* *err*]
           (println "An error occured:")
           (println (.toString ex))
-          (println (.getMessage ex)))
+          (println (.getMessage ex))
+          (when (:debug args)
+            (.printStackTrace ex)))
         1   ; return code for cli-matic
         ))))

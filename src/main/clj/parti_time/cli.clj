@@ -106,6 +106,7 @@
   {:app {:command "parti-time"
          :description "Partition your time"
          :version (get-version)}
+   :global-opts [{:option "debug" :as "Print complete stacktraces in case of an error" :type :with-flag :default false}]
    :commands [{:command "invoice-report"
                :description "Print an importable invoice report CSV"
                :opts [{:option "input-format" :as "Input file format" :type :string :default "tl"}

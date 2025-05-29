@@ -54,6 +54,8 @@
                                                      "clojure.core.server__init"
                                                      "clojure.data.json__init"
                                                      "flatland.ordered.map__init"
+                                                     "happy.oauth2__init"
+                                                     "happy.oauth2_capture_redirect__init"
                                                      "instaparse.abnf__init"
                                                      "org.apache.http.impl.auth.NTLMEngineImpl"]))]}
   :profiles {:development  ; lein with-profile +development native-image

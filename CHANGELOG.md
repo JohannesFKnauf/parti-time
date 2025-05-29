@@ -13,6 +13,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.5.0] - Hyper Happening (Unreleased)
 - Feature: #31 Diff Google Sheets timeline version with local timeline version
 - Feature: #33 Improved feedback about append result
+- Feature: Use random ports for Google Auth (instead of a static default port)
+- Feature: Fill Google Sheet duration column formula on append
+- Feature: Apply Google Sheet formats for all appended columns
+- Feature: Global option --debug to print stacktraces in case of an exception
+- Fix: Use a proper grammar for A1 notation ranges instead of a half-baken bug-ridden regex
 
 ## [1.4.1] - Geriatric Go-go (2024-10-21)
 

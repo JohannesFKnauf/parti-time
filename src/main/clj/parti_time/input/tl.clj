@@ -1,22 +1,12 @@
 (ns parti-time.input.tl
   (:require [instaparse.core :as insta]
+            [parti-time.util.instaparse :as instautil]
             [parti-time.util.time :as time]
             [parti-time.input.api :as api])
   (:import [java.time LocalDate LocalTime]))
 
 (insta/defparser timeline-parser
-  "./src/main/resources/tl/timeline_grammar.ebnf")
-
-(defn get-parse-error ^String [parser-failure]
-  (with-out-str
-    (-> parser-failure
-        insta/get-failure
-        print)))
-
-(defn throw-parse-errors [parser-result]
-  (when (insta/failure? parser-result)
-    (throw (RuntimeException. (get-parse-error parser-result))))
-  parser-result)
+  "./src/main/ebnf/timeline_grammar.ebnf")
 
 (defn entry->timeslice [^LocalDate reference-date
                         {:keys [^LocalTime time
@@ -46,7 +36,7 @@
 (defn import-timeline [tl-timeline]
   (->> tl-timeline
        timeline-parser
-       throw-parse-errors
+       instautil/throw-parse-errors
        ast->entries))
 
 (defn read-timeline [filename]

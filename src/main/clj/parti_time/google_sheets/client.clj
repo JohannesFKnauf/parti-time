@@ -93,6 +93,73 @@
                            {:values rows})]
      (get-in response [:updates :updatedRange]))))
 
+(defn range->google-grid-range
+  "Google sheets's RepeatCellRequest requires a GridRange JSON structure.
+
+  In contrast to parti-time.google-sheets.ranges, Google's GridRange
+   - starts counting from 0
+   - uses [inclusive-start, exclusive-end) ranges
+   - uses internal ids to identity sheets (tabs) instead of sheet names"
+  [sheet-id {:keys [sheet-name
+                    start-col
+                    start-row
+                    end-col
+                    end-row]}]
+  (let [spreadsheet (gsheets/get$ (credentials/auth!)
+                                  {:spreadsheetId sheet-id})
+        sub-sheet-id (if (nil? sheet-name)
+                       0
+                       (->> spreadsheet
+                            :sheets
+                            (filter #(= sheet-name (get-in %1 [:properties :title]) ))
+                            first
+                            :properties
+                            :sheetId))]
+    {:sheetId sub-sheet-id
+     :startRowIndex (dec start-row) ; correct for starting at 0 vs. 1
+     :startColumnIndex (dec start-col)
+     :endRowIndex end-row ; start-correcture (-1) vs. exclusive-range (+1) are cancelling each other out
+     :endColumnIndex end-col}))
+
+(defn set-formula
+  "Fill a range with a given formula.
+
+  The formula is applied to the upper left cell and cell references
+  are incremented just like for user-entered formulas. You can use
+  absolute references (prefixed by $) as usual.
+  
+  https://developers.google.com/workspace/sheets/api/reference/rest/v4/spreadsheets/request#repeatcellrequest
+
+  HappyGAPI will throw an exception, when the API response contains an error."
+  [sheet-id range formula]
+  (gsheets/batchUpdate$ (credentials/auth!)
+                        {:spreadsheetId sheet-id}
+                        {:requests
+                         [{:repeatCell
+                           {:range (parti-time.google-sheets.client/range->google-grid-range sheet-id range)
+                            :cell {:userEnteredValue
+                                   {:formulaValue formula}}
+                            :fields "userEnteredValue.formulaValue"}}]}))
+
+(defn set-number-format
+  "update the given range to a custom number format
+
+  You can find a list of format-types in
+  https://developers.google.com/workspace/sheets/api/reference/rest/v4/spreadsheets/cells#numberformattype
+
+  HappyGAPI will throw an exception, when the API response contains an error."
+  [sheet-id range format-type format-pattern]
+  (gsheets/batchUpdate$ (credentials/auth!)
+                        {:spreadsheetId sheet-id}
+                        {:requests
+                         [{:repeatCell
+                           {:range (parti-time.google-sheets.client/range->google-grid-range sheet-id range)
+                            :cell {:userEnteredFormat
+                                   {:numberFormat
+                                    {:type format-type
+                                     :pattern format-pattern}}}
+                            :fields "userEnteredFormat.numberFormat"}}]}))
+
 ;; Known limitation: No explicit login/logout commands yet
 ;;  check if logged in: (.. default-data-store-factory (getDataStore "StoredCredential"))
 ;;  logoff: remove credentials (.. default-data-store-factory (getDataStore "StoredCredential") (clear))

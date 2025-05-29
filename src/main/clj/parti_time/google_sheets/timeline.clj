@@ -57,6 +57,49 @@
     ;; converting to a time-line also verifies, that the time windows are ordered and overlap-free
     (parti-time.core/time-windows->time-line time-windows)))
 
+(defn format-timesheet-range!
+  "Apply formatting and inject default formulas into a Google Sheet time sheet."
+  [google-sheet-id
+   range]
+  {:pre [(contains? range :start-col)
+         (contains? range :end-col)
+         (contains? range :start-row)
+         (contains? range :end-row)
+         (= (:start-col range) 1)  ; A
+         (= (:end-col range) 6)]}  ; F
+  (let [date-column (assoc range :start-col 1 :end-col 1)
+        start-times (assoc range :start-col 2 :end-col 2)
+        end-times (assoc range :start-col 3 :end-col 3)
+        durations (assoc range :start-col 4 :end-col 4)
+        duration-start-cell (parti-time.google-sheets.ranges/start-cell durations)
+        reference-end-time (-> duration-start-cell
+                               (assoc :col 3)
+                               parti-time.google-sheets.ranges/cell->A1)
+        reference-start-time (-> duration-start-cell
+                                 (assoc :col 2)
+                                 parti-time.google-sheets.ranges/cell->A1)
+        duration-formula (str "=" reference-end-time "-" reference-start-time)]
+    (parti-time.google-sheets.client/set-formula google-sheet-id
+                                                 durations
+                                                 duration-formula)
+    (parti-time.google-sheets.client/set-number-format google-sheet-id
+                                                       durations
+                                                       "TIME"
+                                                       "[h]:mm")
+    (parti-time.google-sheets.client/set-number-format google-sheet-id
+                                                       date-column
+                                                       "DATE"
+                                                       "yyyy-mm-dd")
+    (parti-time.google-sheets.client/set-number-format google-sheet-id
+                                                       start-times
+                                                       "TIME"
+                                                       "hh:mm")
+    (parti-time.google-sheets.client/set-number-format google-sheet-id
+                                                       end-times
+                                                       "TIME"
+                                                       "hh:mm")
+    :success))
+
 (defn append-timeline!
   "Append a timeline to a google-sheet.
 
@@ -75,20 +118,18 @@
         new-report (->> report
                         (drop-while (partial not-same-row? last-row))
                         (drop 1))
-        updated-range (parti-time.google-sheets.client/append-rows google-sheet-id new-report "A:F")]
-    {:updated-rows-count (-> updated-range
-                             parti-time.google-sheets.ranges/A1->range
-                             parti-time.google-sheets.ranges/row-count)
-     :updated-rows-content new-report}))
+        new-report-rows-count (count new-report)]
+    (if (= 0 new-report-rows-count)
+      {:updated-rows-count 0
+       :updated-rows-content []}
+      (let [updated-range-A1 (parti-time.google-sheets.client/append-rows google-sheet-id new-report "A:F")
+            updated-range (parti-time.google-sheets.ranges/A1->range updated-range-A1)
+            updated-rows-count (parti-time.google-sheets.ranges/row-count updated-range)]
+        (assert (= new-report-rows-count updated-rows-count))
+        (format-timesheet-range! google-sheet-id updated-range)
+        {:updated-rows-count updated-rows-count
+         :updated-rows-content new-report}))))
 
-
-;; Known limitation: appending doesn't force-format all appended rows
-;;  - column A: DATE with pattern yyyy-mm-dd
-;;  - column B+C: TIME with pattern hh:mm
-;;  - column D: formula =C-B and format custom number [hh]:mm (effectively duration)
-;;              how to fix the quicksum and prevent it from wrapping sums >24h?
-;;                -> add a fixed value instead of a formula?
-;;  - column E: wrap around
 
 ;; Known limitation: Does not remove and reset the filter on the sheet
 

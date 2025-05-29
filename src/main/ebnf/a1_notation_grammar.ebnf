@@ -1,0 +1,17 @@
+(* Example: 'Some Sheet Name'!A3:F6 *)
+a1 = sheet-name? start-cell ( <#":"> end-cell )?
+
+sheet-name = ( unquoted-sheet-name | quoted-sheet-name ) <#"!">
+(* It's absolutely fine for our purpose to be overly restrictive on sheet names. *)
+(* In other words: We happily accept excluding some sheet names, which are perfectly valid in Google Sheets sheet names (but of no good use). *)
+<unquoted-sheet-name> = #"[A-Za-z0-9_-]+"
+<quoted-sheet-name> = <#"'"> #"[A-Za-z0-9_ -]+" <#"'">
+
+start-cell = cell
+end-cell = cell
+
+<cell> = ( row | col | col-row )
+
+<col-row> = col row
+col = #"[A-Z]+"
+row = #"[0-9]+"
