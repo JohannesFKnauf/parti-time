@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [?.?.?] - Irresistable Inn (Unreleased)
 
-## [1.5.0] - Hyper Happening (Unreleased)
+## [1.5.0] - Hyper Happening (2025-05-29)
 - Feature: #31 Diff Google Sheets timeline version with local timeline version
 - Feature: #33 Improved feedback about append result
 - Feature: Use random ports for Google Auth (instead of a static default port)
