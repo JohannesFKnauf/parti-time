@@ -1,7 +1,7 @@
 (defproject parti-time "_"
   :description "parti-time is a tool for partitioning timelines."
   :url "https://github.com/JohannesFKnauf/parti-time"
-  :min-lein-version "2.11.2"
+  :min-lein-version "2.10.0"
   :global-vars {*warn-on-reflection* true}
   :dependencies [[cheshire "6.0.0"]
                  [cli-matic "0.5.4"]
