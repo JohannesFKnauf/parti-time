@@ -30,8 +30,8 @@ jobs:
     - uses: graalvm/setup-graalvm@v1
       if: ${{ startsWith(github.ref, 'refs/tags/v') }}
       with:
-        version: '22.0.0'
-        java-version: '22'
+        version: '24.0.1'
+        java-version: '24'
         distribution: 'graalvm-community'
         native-image-musl: true
         github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -39,8 +39,8 @@ jobs:
       if: ${{ startsWith(github.ref, 'refs/tags/v') }}
       run: |
         lein with-profile +release native-image
-        mv --verbose target/parti-time ./$(lein print-binary)
-        sha512sum ./$(lein print-binary) > ./$(lein print-binary).sha512
+        mv --verbose "./target/parti-time" "./$(lein print-binary)"
+        sha512sum "./$(lein print-binary)" > "./$(lein print-binary).sha512"
     - uses: actions/upload-artifact@v4
       if: ${{ startsWith(github.ref, 'refs/tags/v') }}
       with:
