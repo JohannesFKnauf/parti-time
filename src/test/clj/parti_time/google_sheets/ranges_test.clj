@@ -49,25 +49,19 @@
               :end-row 6}
              (sut/A1->range "Sheet1!A3:CE6"))
           "Parsing a simple range with column index >Z")
-    (t/is (= {:sheet-name nil
-              :start-col 1
+    (t/is (= {:start-col 1
               :start-row 3
               :end-col 6
               :end-row 6}
              (sut/A1->range "A3:F6"))
           "Parsing a simple range without sheet name")
-    (t/is (= {:sheet-name nil
-              :start-col 1
-              :start-row 3
-              :end-col 1
-              :end-row 3}
+    (t/is (= {:start-col 1
+              :start-row 3}
              (sut/A1->range "A3"))
           "Parsing a single-cell range")
         (t/is (= {:sheet-name "Sheet5"
                   :start-col 17
-                  :start-row 34
-                  :end-col 17
-                  :end-row 34}
+                  :start-row 34}
                  (sut/A1->range "Sheet5!Q34"))
           "Parsing a single-cell range"))
   (t/testing "Violating constraints"
@@ -101,3 +95,18 @@
       "Sheet1!B2:E5" "Sheet1!B2:E5" "Sheet1!A1:F6"  ; range 1 subset of range 2
       "Sheet1!B2:D6" "Sheet1!A1:D6" "Sheet1!B2:F8"  ; some overlap
       )))
+
+(t/deftest cells
+  (t/testing "start cell"
+    (t/is (= {:sheet-name "Sheet1"
+              :col 1
+              :row 3}
+             (-> "Sheet1!A3:F6"
+                 sut/A1->range
+                 sut/start-cell))))
+  (t/testing "cell to A1"
+    (t/is (= "Sheet1!A3"
+             (-> "Sheet1!A3:F6"
+                 sut/A1->range
+                 sut/start-cell
+                 sut/cell->A1)))))

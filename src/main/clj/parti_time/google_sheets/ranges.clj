@@ -1,4 +1,6 @@
-(ns parti-time.google-sheets.ranges)
+(ns parti-time.google-sheets.ranges
+  (:require [instaparse.core :as insta]
+            [parti-time.util.instaparse :as instautil]))
 
 (def offset-A 64) ;; \A = 65 but \A should map to 1 instead of to 0
 
@@ -67,19 +69,61 @@
            (apply str))))
 
 
-(defn A1->range [a1]
-  (let [m (re-matcher #"((?<sheetName>[^!]*)!)?(?<startColumn>[A-Z]*)(?<startRow>[0-9]*)(:(?<endColumn>[A-Z]*)(?<endRow>[0-9]*))?" a1)
-        _ (re-find m)
-        range {:sheet-name (.group m "sheetName")
-               :start-col (AZ->int (.group m "startColumn"))
-               :start-row (Integer/parseInt (.group m "startRow"))
-               :end-col (AZ->int (or (.group m "endColumn")
-                                     (.group m "startColumn")))
-               :end-row (Integer/parseInt (or (.group m "endRow")
-                                              (.group m "startRow")))}]
-    (when (< (:end-col range) (:start-col range))
+(insta/defparser a1-parser
+  "./src/main/ebnf/a1_notation_grammar.ebnf")
+
+;(instautil/throw-parse-errors parser-result)
+
+(defn a1-ast->raw-range [parser-result]
+  (insta/transform {:sheet-name #(hash-map :sheet-name %)
+                    :row #(hash-map :row (Integer/parseInt %))
+                    :col #(hash-map :col (AZ->int %))
+                    :start-cell (comp #(clojure.set/rename-keys
+                                        %
+                                        {:row :start-row
+                                         :col :start-col})
+                                      merge)
+                    :end-cell (comp #(clojure.set/rename-keys
+                                      %
+                                      {:row :end-row
+                                       :col :end-col})
+                                    merge)
+                    :a1 merge}
+                   parser-result))
+
+(defn A1->range
+  "Converts a range in A1 notation to a range map representation.
+
+  Please note, that the representation is not equivalent to Google's Sheets API range JSON representation
+  https://developers.google.com/workspace/sheets/api/reference/rest/v4/spreadsheets/other#GridRange.
+  Google uses
+   - sheetId (numeric),
+   - startRowIndex (inclusive, starting with 0),
+   - endRowIndex (exclusive, starting with 0),
+   - startColumnIndex (inclusive, starting with 0),
+   - endColumnIndex (exclusive, starting with 0).
+
+  We use
+   - different names,
+   - inclusive ends and
+   - we start counting with 1.
+
+  Any missing element in the A1 notation will be missing in the resulting hash-map.
+  E.g. a missing sheet name prefix (think A1:B2) means there won't be a :sheet-name key.
+  E.g. a missing end of the range (think Sheet1!A3) means there won't be :end-col and :end-row keys.
+  E.g. an open-ended range without rows (think Sheet1!A:F) means there won't be :start-row and :end-row keys."
+  [a1]
+  (let [range (-> a1
+                  a1-parser
+                  instautil/throw-parse-errors
+                  a1-ast->raw-range)]
+    (when (and (contains? range :end-col)
+               (contains? range :start-col)
+               (< (:end-col range) (:start-col range)))
       (throw (RuntimeException. (str "end column '" (:end-col range) "' is smaller than start column '" (:start-col range) "'"))))
-    (when (< (:end-row range) (:start-row range))
+    (when (and (contains? range :end-row)
+               (contains? range :start-row)
+               (< (:end-row range) (:start-row range)))
       (throw (RuntimeException. (str "end row '" (:end-row range) "' is smaller than start row '" (:start-row range) "'"))))
     range))
 
@@ -93,12 +137,14 @@
        (:end-row range)))
 
 (defn row-count [range]
-  (- (:end-row range)
-     (:start-row range)))
+  (+ 1 
+     (- (:end-row range)
+        (:start-row range))))
 
 (defn col-count [range]
-  (- (:end-col range)
-     (:start-col range)))
+  (+ 1
+     (- (:end-col range)
+        (:start-col range))))
 
 (defn intersect
   "Intersect two ranges, i.e. get the subrange that's included in both ranges."
@@ -121,6 +167,25 @@
    :end-row (min end-row-1 end-row-2)})
 
 
+(defn start-cell
+  [{:keys [sheet-name
+           start-col
+           start-row]}]
+  {:sheet-name sheet-name
+   :col start-col
+   :row start-row})
+
+(defn cell->A1
+  [{:keys [sheet-name
+           col
+           row]}]
+  (str (when-let [sn sheet-name]
+         (str sn "!"))
+       (int->AZ col)
+       row))
+
+
 ;; Known limitation: intersect does not properly check for non-overlapping ranges
 
-;; Known limitation: the range parsing/printing does not properly support several special cases, e.g. no sheet, "A:F" without row numbers, "A3" single fields, ...
+;; Known limitation: the range parsing/printing does not properly support several special cases, e.g. no sheet, "A:F" without row numbers (i.e. open-ended ranges), "A3" single fields, single quotes around sheet names, trailing extra letters, ...
+;; -> minimum: have test cases documenting the (insufficient) current behaviour
