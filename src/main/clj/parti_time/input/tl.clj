@@ -46,3 +46,7 @@
 
 (defmethod api/read-timeline-from-reader "tl" [format reader-like]
   (read-timeline reader-like))
+
+
+;; Known limitation: No warnings about common aesthetic issues, especially trailing whitespace
+;; Known workaround: grep -E '[[:blank:]]$' MyTimeline.tl

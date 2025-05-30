@@ -168,6 +168,7 @@
 ;;  login --ttl: not possible for Google's API limitations
 ;;  -> running a command without being logged in could use an in-memory data store option, i.e. forcing auth on every command
 ;;  -> https://cloud.google.com/java/docs/reference/google-http-client/latest/com.google.api.client.util.store.MemoryDataStoreFactory?hl=en#com_google_api_client_util_store_MemoryDataStoreFactory_getDefaultInstance__
+;; Known workaround: To logout, delete ~/.cache/parti-time/tokens/user.edn
 
 
 ;; Known limitation: We are still stuck on https://github.com/timothypratley/happygapi -- last time we checked, https://github.com/timothypratley/happyapi wasn't ready for our use case, because the credential store/retrieve could not easily be overridden
