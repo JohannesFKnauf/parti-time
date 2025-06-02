@@ -48,11 +48,15 @@
       time-window)
     (catch Exception ex (throw (RuntimeException. (str "Failed to parse row: " row) ex)))))
 
-(defn google-sheet->timeline [google-sheet-id]
-  (let [{raw-timesheet :values
-         range :range} (parti-time.google-sheets.client/get-cells google-sheet-id "A:F")
-        timesheet-with-header-row (drop-while (partial not= standard-header-row) raw-timesheet)
-        timesheet (drop 1 timesheet-with-header-row)
+(defn google-sheet->timeline
+  "Retrieve a Google Sheet and reconstruct the equivalent timeline.
+
+  Of course, the resulting timeline won't contain any private details,
+  since those have been stripped while uploading / appending."
+  [google-sheet-id]
+  (check-headers google-sheet-id)
+  (let [{timesheet :values
+         range :range} (parti-time.google-sheets.client/get-cells google-sheet-id "A4:F")
         time-windows (map row->time-window timesheet)]
     ;; converting to a time-line also verifies, that the time windows are ordered and overlap-free
     (parti-time.core/time-windows->time-line time-windows)))
@@ -110,19 +114,21 @@
   [google-sheet-id
    timeline]
   (check-headers google-sheet-id)
-  (let [{[last-row] :values} (parti-time.google-sheets.client/get-last-row google-sheet-id "A:F")
+  (let [{[last-row] :values} (parti-time.google-sheets.client/get-last-row google-sheet-id "A4:F")
         not-same-row? (fn [row1 row2]
                         (not= (row->time-window row1)
                               (row->time-window row2)))
         report (parti-time.timesheet/report timeline)
-        new-report (->> report
+        new-report (if (= standard-header-row last-row)  ; correct for Google Sheets's strange behaviour to get a row outside of the requested range, if none can be found in the range
+                     report
+                     (->> report
                         (drop-while (partial not-same-row? last-row))
-                        (drop 1))
+                        (drop 1)))
         new-report-rows-count (count new-report)]
     (if (= 0 new-report-rows-count)
       {:updated-rows-count 0
        :updated-rows-content []}
-      (let [updated-range-A1 (parti-time.google-sheets.client/append-rows google-sheet-id new-report "A:F")
+      (let [updated-range-A1 (parti-time.google-sheets.client/append-rows google-sheet-id new-report "A4:F")
             updated-range (parti-time.google-sheets.ranges/A1->range updated-range-A1)
             updated-rows-count (parti-time.google-sheets.ranges/row-count updated-range)]
         (assert (= new-report-rows-count updated-rows-count))
