@@ -10,7 +10,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [?.?.?] - Irresistable Inn (Unreleased)
 
-## [1.5.1] - Hyper Happening (Unreleased)
+## [1.5.1] - Hyper Happening (2025-06-02)
+- Fix: #40 Improve stability of Google Sheet append
 - Fix: #38 Assert that user-provided google sheet ID is non-empty
 
 ## [1.5.0] - Hyper Happening (2025-05-29)
