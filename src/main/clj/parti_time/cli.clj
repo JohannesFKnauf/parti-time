@@ -76,7 +76,7 @@
 (defn download [{:keys [google-sheet-id
                         output-format
                         output-parti-file]}]
-  (parti-time.util.cli/assert-mandatory-argument google-sheet-id)
+  (parti-time.util.cli/assert-non-empty-argument google-sheet-id)
   (parti-time.google-sheets.client/init!)
   (->> google-sheet-id
        (parti-time.google-sheets.timeline/google-sheet->timeline)
@@ -86,7 +86,7 @@
                :keys [google-sheet-id
                       input-format
                       input-parti-file]}]
-  (parti-time.util.cli/assert-mandatory-argument google-sheet-id)
+  (parti-time.util.cli/assert-non-empty-argument google-sheet-id)
   (parti-time.google-sheets.client/init!)
   (let [timeline (parti-time.input.api/read-timeline input-format input-parti-file)
         result-metadata (parti-time.google-sheets.timeline/append-timeline! google-sheet-id timeline)]
