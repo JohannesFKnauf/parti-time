@@ -2,8 +2,6 @@
 
 ## How do I have to setup my Google API Client?
 
-See the [google sheets integration user guide](../user_guide/google_sheets_api.md).
-
 This recipe is mostly equivalent to the setup described in the [Java Quickstart Guide for the Google Sheets API](https://developers.google.com/sheets/api/quickstart/java).
 
 * Create a new project `parti-time` in [Google Cloud Console](https://console.cloud.google.com/welcome?project=parti-time).
