@@ -5,9 +5,11 @@
   :global-vars {*warn-on-reflection* true}
   :dependencies [[cheshire "6.0.0"]
                  [cli-matic "0.5.4"]
+                 [clj-http "3.13.0"]
                  [clojure-csv "2.0.2"]
                  [dev.weavejester/medley "1.8.1"]
-                 [happygapi "0.4.10"]
+                 [io.github.timothypratley/happyapi "1.0.139-beta"]
+                 [io.github.timothypratley/happyapi.google "1.0.7-beta"]
                  [instaparse "1.5.0"]
                  [io.forward/yaml "1.0.11"]
                  [org.clojure/clojure "1.12.0"]
