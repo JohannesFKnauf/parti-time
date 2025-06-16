@@ -146,3 +146,6 @@
 ;; Known limitation: Input validation is not very exhaustive
 
 ;; Known limitation: row->time-window doesn't validate that project isn't empty
+
+
+;; Known limitation: Currently there is no way to create a sheet complying with the standard
