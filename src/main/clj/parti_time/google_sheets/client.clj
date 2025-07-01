@@ -54,15 +54,6 @@
                             :save-credentials   save-credentials})]
     (google/setup! config)))
 
-(defn strip-scopes
-  "strip-scopes is a hack for a known issue with happyapi:
-  happyapi enforces presence of ALL scopes mentioned in the discovery document, while google only requires presence of ANY scope.
-
-  In our case, we only use the https://www.googleapis.com/auth/spreadsheets scope."
-  [request]
-  (assoc request
-         :scopes ["https://www.googleapis.com/auth/spreadsheets"]))
-
 (defn get-cells
   "get-cells returns cells in a sheet as plain data.
 
@@ -78,7 +69,6 @@
   [sheet-id range]
   (-> (gsheets/spreadsheets-values-get sheet-id
                                        range)
-      strip-scopes
       google/api-request))
 
 (defn get-last-row
@@ -95,7 +85,6 @@
                                                           {:range search-range
                                                            :values [[]]}
                                                           {:valueInputOption "USER_ENTERED"})
-                      strip-scopes
                       google/api-request)
          first-empty-cell (get-in response [:updates :updatedRange])
          [_ _ _ first-empty-row-number] (re-find #"(?<sheet>[^!]*)!(?<column>[A-Z]*)(?<row>[0-9]*)" first-empty-cell)
@@ -117,7 +106,6 @@
                                                           {:range input-range
                                                            :values rows}
                                                           {:valueInputOption "USER_ENTERED"})
-                      strip-scopes
                       google/api-request)]
      (get-in response [:updates :updatedRange]))))
 
@@ -134,7 +122,6 @@
                     end-col
                     end-row]}]
   (let [spreadsheet (-> (gsheets/spreadsheets-get sheet-id)
-                        strip-scopes
                         google/api-request)
         sub-sheet-id (if (nil? sheet-name)
                        0
@@ -168,7 +155,6 @@
                                             :cell {:userEnteredValue
                                                    {:formulaValue formula}}
                                             :fields "userEnteredValue.formulaValue"}}]})
-      strip-scopes
       google/api-request))
 
 (defn set-number-format
@@ -188,7 +174,6 @@
                                                     {:type format-type
                                                      :pattern format-pattern}}}
                                             :fields "userEnteredFormat.numberFormat"}}]})
-      strip-scopes
       google/api-request))
 
 ;; Known limitation: No explicit login/logout commands yet
