@@ -2,8 +2,9 @@
   (:require [cheshire.core :as json]
             [clojure.edn :as edn]
             [clojure.java.io :as io]
-            [happygapi.sheets.spreadsheets :as gsheets]
-            [happy.oauth2-credentials :as credentials]))
+            [happyapi.google.sheets-v4 :as gsheets]
+            [happyapi.oauth2.capture-redirect :as capture-redirect]
+            [happyapi.providers.google :as google]))
 
 (defn google-client-secret-path []
   (str (System/getProperty "user.home") "/.config/parti-time/credentials.json"))
@@ -14,13 +15,15 @@
 (def *credentials-cache
   (atom nil))
 
-(defn fetch-credentials [user]
+(defn read-credentials
+  [provider user]
   (or (get @*credentials-cache user)
       (let [credentials-file (io/file (credentials-cache-path) (str user ".edn"))]
         (when (.exists credentials-file)
           (edn/read-string (slurp credentials-file))))))
 
-(defn save-credentials [user new-credentials]
+(defn save-credentials
+  [provider user new-credentials]
   (when (not= @*credentials-cache new-credentials)
     (swap! *credentials-cache assoc user new-credentials)
     (spit (io/file (doto (io/file (credentials-cache-path)) (.mkdirs))
@@ -32,13 +35,24 @@
       slurp
       (json/parse-string true)
       (get :installed)
-      (update-in [:redirect_uris 0] #(clojure.string/replace % #"^(http://localhost)(:\d+)?" "$1"))))
+      (select-keys [:client_id
+                    :client_secret])
+      (assoc :keywordize-keys true)))
 
-(defn init! []
-  (credentials/init! (get-client-secret)
-                     ["https://www.googleapis.com/auth/spreadsheets"]
-                     fetch-credentials
-                     save-credentials))
+(defn init!
+  "Configure the google HTTP client.
+
+  Essentially the client is a happyapi client with a bunch of appropriate middlewares.
+  We use happyapi.providers.google, which relies on stateful globals,
+  because in our case we can accept the inherent limitations."
+  []
+  (let [config (assoc (get-client-secret)
+                      :deps [:jetty :clj-http :cheshire]
+                      :scopes ["https://www.googleapis.com/auth/spreadsheets"]
+                      :fns {:read-credentials   read-credentials
+                            :update-credentials capture-redirect/update-credentials
+                            :save-credentials   save-credentials})]
+    (google/setup! config)))
 
 (defn get-cells
   "get-cells returns cells in a sheet as plain data.
@@ -53,9 +67,9 @@
   return the first until including the third row. A1:B3 returns the
   first 3 rows containing the first 2 columns."
   [sheet-id range]
-  (gsheets/values-get$ (credentials/auth!)
-                       {:spreadsheetId sheet-id
-                        :range range}))
+  (-> (gsheets/spreadsheets-values-get sheet-id
+                                       range)
+      google/api-request))
 
 (defn get-last-row
   "get-last-row returns the last row in a sheet.
@@ -66,11 +80,12 @@
   ([sheet-id]
    (get-last-row sheet-id "A:Z"))
   ([sheet-id search-range]
-   (let [response (gsheets/values-append$ (credentials/auth!)
-                           {:spreadsheetId sheet-id
-                            :range search-range
-                            :valueInputOption "USER_ENTERED"}
-                           {:values [[]]})
+   (let [response (-> (gsheets/spreadsheets-values-append sheet-id
+                                                          search-range
+                                                          {:range search-range
+                                                           :values [[]]}
+                                                          {:valueInputOption "USER_ENTERED"})
+                      google/api-request)
          first-empty-cell (get-in response [:updates :updatedRange])
          [_ _ _ first-empty-row-number] (re-find #"(?<sheet>[^!]*)!(?<column>[A-Z]*)(?<row>[0-9]*)" first-empty-cell)
          ;; TODO replace by range functions
@@ -86,11 +101,12 @@
   ([sheet-id rows]
    (append-rows sheet-id rows "A:Z"))
   ([sheet-id rows input-range]
-   (let [response (gsheets/values-append$ (credentials/auth!)
-                           {:spreadsheetId sheet-id
-                            :range input-range
-                            :valueInputOption "USER_ENTERED"}
-                           {:values rows})]
+   (let [response (-> (gsheets/spreadsheets-values-append sheet-id
+                                                          input-range
+                                                          {:range input-range
+                                                           :values rows}
+                                                          {:valueInputOption "USER_ENTERED"})
+                      google/api-request)]
      (get-in response [:updates :updatedRange]))))
 
 (defn range->google-grid-range
@@ -105,8 +121,8 @@
                     start-row
                     end-col
                     end-row]}]
-  (let [spreadsheet (gsheets/get$ (credentials/auth!)
-                                  {:spreadsheetId sheet-id})
+  (let [spreadsheet (-> (gsheets/spreadsheets-get sheet-id)
+                        google/api-request)
         sub-sheet-id (if (nil? sheet-name)
                        0
                        (->> spreadsheet
@@ -132,14 +148,14 @@
 
   HappyGAPI will throw an exception, when the API response contains an error."
   [sheet-id range formula]
-  (gsheets/batchUpdate$ (credentials/auth!)
-                        {:spreadsheetId sheet-id}
-                        {:requests
-                         [{:repeatCell
-                           {:range (parti-time.google-sheets.client/range->google-grid-range sheet-id range)
-                            :cell {:userEnteredValue
-                                   {:formulaValue formula}}
-                            :fields "userEnteredValue.formulaValue"}}]}))
+  (-> (gsheets/spreadsheets-batchUpdate sheet-id
+                                        {:requests
+                                         [{:repeatCell
+                                           {:range (parti-time.google-sheets.client/range->google-grid-range sheet-id range)
+                                            :cell {:userEnteredValue
+                                                   {:formulaValue formula}}
+                                            :fields "userEnteredValue.formulaValue"}}]})
+      google/api-request))
 
 (defn set-number-format
   "update the given range to a custom number format
@@ -149,16 +165,16 @@
 
   HappyGAPI will throw an exception, when the API response contains an error."
   [sheet-id range format-type format-pattern]
-  (gsheets/batchUpdate$ (credentials/auth!)
-                        {:spreadsheetId sheet-id}
-                        {:requests
-                         [{:repeatCell
-                           {:range (parti-time.google-sheets.client/range->google-grid-range sheet-id range)
-                            :cell {:userEnteredFormat
-                                   {:numberFormat
-                                    {:type format-type
-                                     :pattern format-pattern}}}
-                            :fields "userEnteredFormat.numberFormat"}}]}))
+  (-> (gsheets/spreadsheets-batchUpdate sheet-id
+                                        {:requests
+                                         [{:repeatCell
+                                           {:range (parti-time.google-sheets.client/range->google-grid-range sheet-id range)
+                                            :cell {:userEnteredFormat
+                                                   {:numberFormat
+                                                    {:type format-type
+                                                     :pattern format-pattern}}}
+                                            :fields "userEnteredFormat.numberFormat"}}]})
+      google/api-request))
 
 ;; Known limitation: No explicit login/logout commands yet
 ;;  check if logged in: (.. default-data-store-factory (getDataStore "StoredCredential"))
@@ -172,3 +188,7 @@
 
 
 ;; Known limitation: We are still stuck on https://github.com/timothypratley/happygapi -- last time we checked, https://github.com/timothypratley/happyapi wasn't ready for our use case, because the credential store/retrieve could not easily be overridden
+
+
+;; Known limitation: we could require even less access using https://www.googleapis.com/auth/drive.file
+;; This would require having a separate AppScript for triggering the Picker Dialog + the complexities of installing it, 
