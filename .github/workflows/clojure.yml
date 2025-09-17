@@ -30,8 +30,7 @@ jobs:
     - uses: graalvm/setup-graalvm@v1
       if: ${{ startsWith(github.ref, 'refs/tags/v') }}
       with:
-        version: '24.0.1'
-        java-version: '24'
+        java-version: '25'
         distribution: 'graalvm-community'
         native-image-musl: true
         github-token: ${{ secrets.GITHUB_TOKEN }}
