@@ -1,5 +1,5 @@
 (ns parti-time.util.time
-  (:import [java.time.format DateTimeFormatter]
+  (:import [java.time.format DateTimeFormatter ResolverStyle]
            [java.time Instant LocalDate LocalDateTime LocalTime ZoneId]
            [java.time.temporal ChronoUnit Temporal TemporalAccessor]))
 
@@ -18,14 +18,18 @@
                   ^String in]
   (LocalTime/parse in (formatter fmt)))
 
+
 (defn parse-iso-date [^String in]
   (LocalDate/parse in DateTimeFormatter/ISO_LOCAL_DATE))
 
+;; for times alone, allowing for 24:00 would be misleading -- it would be parsed as 00:00
 (defn parse-iso-time [^String in]
   (LocalTime/parse in DateTimeFormatter/ISO_TIME))
 
+;; ResolverStyle/SMART enables using 24:00 times in Google Sheets
 (defn parse-iso-date-time [^String in]
-  (LocalDateTime/parse in DateTimeFormatter/ISO_LOCAL_DATE_TIME))
+  (LocalDateTime/parse in (.. DateTimeFormatter/ISO_LOCAL_DATE_TIME
+                              (withResolverStyle ResolverStyle/SMART))))
 
 (defn minutes-between [^Temporal a
                        ^Temporal b]

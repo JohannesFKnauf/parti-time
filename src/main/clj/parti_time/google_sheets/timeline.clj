@@ -36,10 +36,8 @@
 (defn row->time-window [[date from-time to-time duration occupations project :as row]]
   (try
     (let [base-date (parti-time.util.time/parse-iso-date date)
-          time-window {:start-time (LocalDateTime/of base-date
-                                                     (parti-time.util.time/parse-iso-time from-time))
-                       :end-time (LocalDateTime/of base-date
-                                                   (parti-time.util.time/parse-iso-time to-time))
+          time-window {:start-time (parti-time.util.time/parse-iso-date-time (str base-date  "T" from-time))
+                       :end-time (parti-time.util.time/parse-iso-date-time (str base-date  "T" to-time))
                        :occupations (as-> occupations o
                                       (clojure.string/split o #",")
                                       (map clojure.string/trim o)
