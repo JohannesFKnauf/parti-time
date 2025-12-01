@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [?.?.?] - Irresistable Inn (Unreleased)
 
+## [1.5.2] - Hyper Happening (2025-12-01)
+- Fix: Allow 24:00 times in Google Sheets
+
 ## [1.5.1] - Hyper Happening (2025-06-02)
 - Fix: #40 Improve stability of Google Sheet append
 - Fix: #38 Assert that user-provided google sheet ID is non-empty
