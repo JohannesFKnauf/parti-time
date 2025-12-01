@@ -21,6 +21,7 @@ jobs:
         key: ${{ runner.os }}-maven-${{ hashFiles('**/project.clj') }}
     - name: Install leiningen
       run: |
+        sudo apt-get update
         sudo apt-get -y install leiningen
         which lein
     - name: Install dependencies
