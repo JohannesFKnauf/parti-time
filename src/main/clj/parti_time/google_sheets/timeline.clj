@@ -17,6 +17,12 @@
   (when-not (= actual expected)
     (throw (RuntimeException. (format "Assertion failed: Value '%s' does not equal expected value '%s'." actual expected)))))
 
+(defn assert-in
+  [actual
+   expected-coll]
+  (when-not (contains? expected-coll actual)
+    (throw (RuntimeException. (format "Assertion failed: Value '%s' is not in collection of expected values '%s'." actual expected-coll)))))
+
 (defn assert-non-blank
   [value]
   (when (clojure.string/blank? value)
@@ -26,8 +32,11 @@
   [google-sheet-id]
   (let [[[title name]
          empty
-         header-row] (:values (parti-time.google-sheets.client/get-cells google-sheet-id "A1:F3"))]
-    (assert-equals title "Zeitnachweis")
+         header-row] (:values (parti-time.google-sheets.client/get-cells google-sheet-id "A1:F3"
+                                                                         {:valueRenderOption "FORMULA"}))]
+    (assert-in title #{"Zeitnachweis"         ; 2025 format
+                       "=Konfiguration!$B$13" ; 2026 format
+                       })
     (assert-non-blank name)
     (assert-equals empty [])
     (assert-equals header-row standard-header-row)))

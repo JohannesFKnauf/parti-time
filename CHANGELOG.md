@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [?.?.?] - Irresistable Inn (Unreleased)
 
+## [1.5.3] - Hyper Happening (2025-01-08)
+- Fix: Support 2026 Metamorphant Google Time Sheets
+
 ## [1.5.2] - Hyper Happening (2025-12-01)
 - Fix: Allow 24:00 times in Google Sheets
 
