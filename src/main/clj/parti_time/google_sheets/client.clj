@@ -52,10 +52,13 @@
   will return the third row. 1:3 and 3:1 are equivalent and both
   return the first until including the third row. A1:B3 returns the
   first 3 rows containing the first 2 columns."
-  [sheet-id range]
-  (gsheets/values-get$ (credentials/auth!)
-                       {:spreadsheetId sheet-id
-                        :range range}))
+  ([sheet-id range]
+   (get-cells sheet-id range {}))
+  ([sheet-id range options]
+   (gsheets/values-get$ (credentials/auth!)
+                        (merge {:spreadsheetId sheet-id
+                                :range range}
+                               options))))
 
 (defn get-last-row
   "get-last-row returns the last row in a sheet.
