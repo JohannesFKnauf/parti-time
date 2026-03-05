@@ -51,8 +51,10 @@
   (= project-name project))
 
 (defn csv-report [time-line project-name]
-  (let [records (parti-time.core/time-windows time-line)
-        project-records (filter #(matches-project? project-name %) records)
-        day-entries (group-by #(time/date (:start-time %1)) project-records)
-        day-records (map day-record day-entries)]
-    (csv/write-csv day-records)))
+  (->> time-line
+       (parti-time.core/time-windows)
+       (filter #(matches-project? project-name %))
+       (group-by #(time/date (:start-time %1)))
+       (sort-by key)
+       (map day-record)
+       (csv/write-csv)))
