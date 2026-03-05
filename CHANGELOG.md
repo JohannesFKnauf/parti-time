@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [?.?.?] - Irresistable Inn (Unreleased)
 
+## [1.5.4] - Hyper Happening (2025-03-05)
+- Fix: #44 Keep invoice-reports ordered for >32d timelines
+
 ## [1.5.3] - Hyper Happening (2025-01-08)
 - Fix: Support 2026 Metamorphant Google Time Sheets
 
