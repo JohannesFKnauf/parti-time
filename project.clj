@@ -3,18 +3,18 @@
   :url "https://github.com/JohannesFKnauf/parti-time"
   :min-lein-version "2.10.0"
   :global-vars {*warn-on-reflection* true}
-  :dependencies [[cheshire "6.0.0"]
+  :dependencies [[cheshire "6.1.0"]
                  [cli-matic "0.5.4"]
                  [clojure-csv "2.0.2"]
-                 [dev.weavejester/medley "1.8.1"]
+                 [dev.weavejester/medley "1.9.0"]
                  [happygapi "0.4.10"]
                  [instaparse "1.5.0"]
                  [io.forward/yaml "1.0.11"]
-                 [org.clojure/clojure "1.12.0"]
-                 [org.clojure/data.json "2.5.1"]
-                 [org.clojure/test.check "1.1.1"]
+                 [org.clojure/clojure "1.12.4"]
+                 [org.clojure/data.json "2.5.2"]
+                 [org.clojure/test.check "1.1.3"]
                  [org.flatland/ordered "1.15.12"]
-                 [ring/ring-jetty-adapter "1.14.1"]]
+                 [ring/ring-jetty-adapter "1.15.3"]]
   :plugins [[me.arrdem/lein-git-version "2.0.8"]
             [io.taylorwood/lein-native-image "0.3.1"]]
 
