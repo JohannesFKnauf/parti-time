@@ -44,10 +44,8 @@
                  :opts ["--initialize-at-build-time"
                         "-march=x86-64"
                         "--enable-https"   ;; required to use URI protocol https for talking to Google
-                        "--libc=musl"
                         "--no-fallback"
                         "--no-server"
-                        "--static"
                         "--future-defaults=all"
                         ~(str "--initialize-at-run-time="
                                (clojure.string/join ","
@@ -69,7 +67,9 @@
              {:aot :all
               :native-image {:jvm-opts ["-Dclojure.compiler.direct-linking=true"
                                         "-Dclojure.compiler.elide-meta=[:doc :file :line :added]"]
-                             :opts ["-O3"]}}
+                             :opts ["-O3"
+                                    "--libc=musl"
+                                    "--static"]}}
              :uberjar
              {:aot :all}}
 
