@@ -44,6 +44,18 @@
                          ^LocalDateTime b]
   (.isBefore a b))
 
+(defn date-time-after? [^LocalDateTime a
+                        ^LocalDateTime b]
+  (.isAfter a b))
+
+;; data calculations
+
+(defn start-of-next-day [^java.time.LocalDateTime date-time]
+  (.. date-time
+      (plusDays 1)
+      (toLocalDate)
+      (atStartOfDay)))
+
 
 ;; features concerning absolute date times and conversion to local date times (without time zone information)
 

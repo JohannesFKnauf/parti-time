@@ -3,18 +3,13 @@
             [clojure-csv.core :as csv]
             [parti-time.core]))
 
-(defn start-of-next-day [^java.time.LocalDateTime date-time]
-  (.. date-time
-      (plusDays 1)
-      (toLocalDate)
-      (atStartOfDay)))
 
-(defn split-into-days [{:keys [^java.time.LocalDateTime start-time
-                               ^java.time.LocalDateTime end-time]
+(defn split-into-days [{:keys [start-time
+                               end-time]
                         :as time-window}]
   (lazy-seq
-   (let [next-day (start-of-next-day start-time)]
-     (if (.. end-time (isAfter next-day))
+   (let [next-day (time/start-of-next-day start-time)]
+     (if (time/date-time-after? end-time next-day)
        (let [first-day-time-window (assoc time-window
                                           :end-time next-day)
              remaining-time-window (assoc time-window
@@ -27,14 +22,14 @@
   "day-row converts a time-window into a row of a timesheet -- for CSV export or sheet upload.
 
   Requires end-time to be on same day or midnight-next-day -- and won't check it again."
-  [{:keys [^java.time.LocalDateTime start-time
-           ^java.time.LocalDateTime end-time
+  [{:keys [start-time
+           end-time
            occupations
            project]
     :as time-window}]
   [(time/format-time "yyyy-MM-dd" start-time)
    (time/format-time "HH:mm" start-time)
-   (if (= end-time (start-of-next-day start-time))
+   (if (= end-time (time/start-of-next-day start-time))
      "24:00"
      (time/format-time "HH:mm" end-time))
    ""
