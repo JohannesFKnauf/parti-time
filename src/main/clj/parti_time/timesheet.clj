@@ -11,8 +11,10 @@
    (let [next-day (time/start-of-next-day start-time)]
      (if (time/date-time-after? end-time next-day)
        (let [first-day-time-window (assoc time-window
+                                          :duration-minutes (time/minutes-between start-time next-day)
                                           :end-time next-day)
              remaining-time-window (assoc time-window
+                                          :duration-minutes (time/minutes-between next-day end-time)
                                           :start-time next-day)]
          (cons first-day-time-window
                (split-into-days remaining-time-window)))
