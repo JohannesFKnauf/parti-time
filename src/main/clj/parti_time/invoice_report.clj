@@ -54,6 +54,9 @@
 (defn matches-project? [project-name {:keys [project]}]
   (= project-name project))
 
+;; design decision: days are split by midnight -- the only logical choice with a by-date invoice report sheet
+;; this can lead to incorrect night break time calculations
+;; e.g. when you work til 00:15 next day and start work on the next day at 11:15, it would be all legal, but on the invoice report it would look suspicious
 (defn csv-report [time-line project-name]
   (->> time-line
        parti-time.core/time-windows
