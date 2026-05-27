@@ -58,8 +58,9 @@
   (->> time-line
        parti-time.core/time-windows
        (filter #(matches-project? project-name %))
-       (map parti-time.timesheet/split-into-days)
+       (map parti-time.core/split-by-midnight)
        (apply concat)
+       (map parti-time.core/assoc-duration)
        (group-by #(time/date (:start-time %1)))
        (sort-by key)
        (map day-record)

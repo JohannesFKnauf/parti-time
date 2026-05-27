@@ -11,5 +11,6 @@
 (defn project-summary [time-line]
   (->> time-line
        parti-time.core/time-windows
+       (map parti-time.core/assoc-duration)
        (group-by :project)
        (medley.core/map-vals duration-hours)))

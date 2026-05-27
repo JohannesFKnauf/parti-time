@@ -7,21 +7,18 @@
   (t/testing "Time-Line Interpretation"
     (t/testing "Time-Window Creation"
       (t/is (= {:start-time (time/parse-iso-date-time "2019-07-02t11:30")
-                :end-time (time/parse-iso-date-time "2019-07-02t12:00")
-                :duration-minutes 30}
+                :end-time (time/parse-iso-date-time "2019-07-02t12:00")}
                (sut/time-window {:start-time (time/parse-iso-date-time "2019-07-02t11:30")}
                                 {:start-time (time/parse-iso-date-time "2019-07-02t12:00")}))
             "Timeframe contains calculated values for end-time and duration")
       (t/is (= {:start-time (time/parse-iso-date-time "2019-07-02t11:30:00")
                 :end-time (time/parse-iso-date-time "2019-07-02t12:00:00")
-                :duration-minutes 30
                 :foo "bar"}
                (sut/time-window {:start-time (time/parse-iso-date-time "2019-07-02t11:30") :foo "bar"}
                                 {:start-time (time/parse-iso-date-time "2019-07-02t12:00")}))
             "irrelevant keys pass through untouched")
       (t/is (= {:start-time (time/parse-iso-date-time "2019-07-02t11:30:00")
-                :end-time (time/parse-iso-date-time "2019-07-02t12:00:00")
-                :duration-minutes 30}
+                :end-time (time/parse-iso-date-time "2019-07-02t12:00:00")}
                (sut/time-window {:start-time (time/parse-iso-date-time "2019-07-02t11:30")}
                                 {:start-time (time/parse-iso-date-time "2019-07-02t12:00") :foo "bar"}))
             "keys from next time-slice are ignored")
@@ -31,11 +28,9 @@
             "Wrong order of time-slices causes Exception"))
     (t/testing "Time-Window streaming"
       (t/is (= [{:start-time (time/parse-iso-date-time "2019-07-02t11:30:00")
-                 :end-time (time/parse-iso-date-time "2019-07-02t12:00:00")
-                 :duration-minutes 30}
+                 :end-time (time/parse-iso-date-time "2019-07-02t12:00:00")}
                 {:start-time (time/parse-iso-date-time "2019-07-02t12:00:00")
-                 :end-time (time/parse-iso-date-time "2019-07-02t15:15:00")
-                 :duration-minutes (+ (* 3 60) 15)}]
+                 :end-time (time/parse-iso-date-time "2019-07-02t15:15:00")}]
                (sut/time-windows
                 [{:start-time (time/parse-iso-date-time "2019-07-02t11:30")}
                  {:start-time (time/parse-iso-date-time "2019-07-02t12:00")}
@@ -160,3 +155,53 @@
                                              :occupations ["g"]}
                                             {:start-time (time/parse-iso-date-time "2019-07-03t11:30")
                                              :project "Customer Z"}])))))
+
+
+(t/deftest split-test
+  (t/testing "Splitting into days"
+    (t/is (= [{:start-time (time/parse-iso-date-time "2019-07-02t11:30")
+               :end-time (time/parse-iso-date-time "2019-07-02t12:00")
+               :occupations ["Do this"
+                             "Do that"]
+               :project "Customer X"}]
+             (vec
+              (sut/split-by-midnight {:start-time (time/parse-iso-date-time "2019-07-02t11:30")
+                                      :end-time (time/parse-iso-date-time "2019-07-02t12:00")
+                                      :occupations ["Do this"
+                                                    "Do that"]
+                                      :project "Customer X"})))
+          "Simple time-window")
+    (t/is (= [{:start-time (time/parse-iso-date-time "2019-07-01t22:30")
+               :end-time (time/parse-iso-date-time "2019-07-02t00:00")
+               :occupations ["Do this"
+                             "Do that"]
+               :project "Customer X"}]
+             (vec
+              (sut/split-by-midnight {:start-time (time/parse-iso-date-time "2019-07-01t22:30")
+                                      :end-time (time/parse-iso-date-time "2019-07-02t00:00")
+                                      :occupations ["Do this"
+                                                  "Do that"]
+                                      :project "Customer X"})))
+          "Timeframe ends at midnight")
+    (t/is (= [{:start-time (time/parse-iso-date-time "2019-07-02t23:30")
+               :end-time (time/parse-iso-date-time "2019-07-03t00:00")
+               :occupations ["Do this"
+                             "Do that"]
+               :project "Customer X"}
+              {:start-time (time/parse-iso-date-time "2019-07-03t00:00")
+               :end-time (time/parse-iso-date-time "2019-07-04t00:00")
+               :occupations ["Do this"
+                             "Do that"]
+               :project "Customer X"}
+              {:start-time (time/parse-iso-date-time "2019-07-04t00:00")
+               :end-time (time/parse-iso-date-time "2019-07-04t02:00")
+               :occupations ["Do this"
+                             "Do that"]
+               :project "Customer X"}]
+             (vec
+              (sut/split-by-midnight {:start-time (time/parse-iso-date-time "2019-07-02t23:30")
+                                      :end-time (time/parse-iso-date-time "2019-07-04t02:00")
+                                      :occupations ["Do this"
+                                                    "Do that"]
+                                      :project "Customer X"})))
+          "A multi-day-booking splits at midnights")))

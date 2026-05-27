@@ -7,8 +7,7 @@
     (when (time/date-time-before? end-time start-time)
       (throw (java.lang.IllegalArgumentException. (str "End time '" end-time "' predates start time '" start-time "'. Times must be strictly ordered."))))
     (assoc time-frame
-           :end-time end-time
-           :duration-minutes (time/minutes-between start-time end-time))))
+           :end-time end-time)))
 
 (defn time-windows [time-line]
   (mapv time-window
@@ -52,3 +51,23 @@
                remainder (drop-while is-private? s)]
            (cons collapsed-private (collapse-private-details remainder)))
          (cons (first s) (collapse-private-details (next s))))))))
+
+(defn assoc-duration [{:keys [start-time
+                              end-time]
+                       :as time-window}]
+  (assoc time-window
+         :duration-minutes (time/minutes-between start-time end-time)))
+
+(defn split-by-midnight [{:keys [start-time
+                                 end-time]
+                          :as time-window}]
+  (lazy-seq
+   (let [next-day (time/start-of-next-day start-time)]
+     (if (time/date-time-after? end-time next-day)
+       (let [first-day-time-window (assoc time-window
+                                          :end-time next-day)
+             remaining-time-window (assoc time-window
+                                          :start-time next-day)]
+         (cons first-day-time-window
+               (split-by-midnight remaining-time-window)))
+       (list time-window)))))
