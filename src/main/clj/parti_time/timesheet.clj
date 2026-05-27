@@ -3,23 +3,6 @@
             [clojure-csv.core :as csv]
             [parti-time.core]))
 
-
-(defn split-into-days [{:keys [start-time
-                               end-time]
-                        :as time-window}]
-  (lazy-seq
-   (let [next-day (time/start-of-next-day start-time)]
-     (if (time/date-time-after? end-time next-day)
-       (let [first-day-time-window (assoc time-window
-                                          :duration-minutes (time/minutes-between start-time next-day)
-                                          :end-time next-day)
-             remaining-time-window (assoc time-window
-                                          :duration-minutes (time/minutes-between next-day end-time)
-                                          :start-time next-day)]
-         (cons first-day-time-window
-               (split-into-days remaining-time-window)))
-       (list time-window)))))
-
 (defn day-row
   "day-row converts a time-window into a row of a timesheet -- for CSV export or sheet upload.
 
@@ -42,7 +25,7 @@
   (->> time-line
        parti-time.core/time-windows
        (filter #(not (parti-time.core/is-private? %1)))
-       (map split-into-days)
+       (map parti-time.core/split-by-midnight)
        (apply concat)
        (map day-row)))
 
