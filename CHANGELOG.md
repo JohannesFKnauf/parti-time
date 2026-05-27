@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [?.?.?] - Irresistable Inn (Unreleased)
 
+## [1.5.6] - Hyper Happening (2026-05-27)
+- Fix: Split time-windows with midnight overflow or multi-day booking into multiple invoice report rows
+
 ## [1.5.5] - Hyper Happening (2026-05-25)
 - Fix: Split time-windows with midnight overflow or multi-day booking into multiple timesheet/append rows
 
