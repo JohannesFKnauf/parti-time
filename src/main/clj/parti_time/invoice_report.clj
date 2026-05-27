@@ -1,7 +1,8 @@
 (ns parti-time.invoice-report
   (:require [parti-time.util.time :as time]
             [clojure-csv.core :as csv]
-            [parti-time.core]))
+            [parti-time.core]
+            [parti-time.timesheet]))
 
 (defn if-cmp [cmp-fn a b]
   (if (cmp-fn a b)
@@ -42,6 +43,9 @@
     [(time/format-time "yyyy-MM-dd" date)
      (time/format-time "HH:mm" business-day-start-time)
      (time/format-time "HH:mm" business-day-end-time)
+     (if (= business-day-end-time (time/start-of-next-day business-day-start-time))
+       "24:00"
+       (time/format-time "HH:mm" business-day-end-time))
      (format-duration break-minutes)
      (format-duration work-minutes)
      (clojure.string/join ", " occupations)]))
@@ -52,8 +56,10 @@
 
 (defn csv-report [time-line project-name]
   (->> time-line
-       (parti-time.core/time-windows)
+       parti-time.core/time-windows
        (filter #(matches-project? project-name %))
+       (map parti-time.timesheet/split-into-days)
+       (apply concat)
        (group-by #(time/date (:start-time %1)))
        (sort-by key)
        (map day-record)
